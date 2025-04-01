@@ -17,26 +17,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 50px;
+            padding: 0 50px; /* Зменшуємо вертикальний padding для контролю висоти */
+            height: 70px; /* Фіксована висота навбару */
             background-color: white;
             box-shadow: 0 2px 10px rgba(93, 64, 55, 0.1);
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
+            height: 100%;
         }
-        
+
         .logo-img {
-            height: 40px;
+            height: 69px; /* Збільшуємо розмір логотипу */
             margin-right: 10px;
+            object-fit: contain; /* Для кращого масштабування */
         }
-        
+
         .logo-text {
             font-family: 'Open Sans', sans-serif;
-            font-weight: 600;
+            font-weight: 700; /* Трохи жирніший шрифт */
             color: #5D4037;
-            font-size: 20px;
+            font-size: 24px; /* Збільшуємо розмір тексту */
         }
         
         .nav-links {
@@ -88,26 +91,38 @@
             color: #5D4037;
         }
         
+        /* Збільшення іконки профілю */
         .profile-pic {
-            width: 40px;
-            height: 40px;
+            width: 50px; /* Збільшуємо розмір */
+            height: 50px;
             border-radius: 50%;
             background-color: #5D4037;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2); /* Трохи більше тіні для кращого вигляду */
+            cursor: pointer;
+            overflow: hidden; /* Для кращого контролю зображення */
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Для кращого масштабування */
         }
         
         .banner {
-            background-image: url('/api/placeholder/800/300');
+            background-image: url('pictures/fundraisings/baner-photo.jpg');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 60px 0;
+            padding: 40px 0; /* Зменшено відступ зверху та знизу */
             position: relative;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .banner:before {
@@ -128,37 +143,136 @@
             margin: 0 auto;
             padding: 0 20px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .banner-title {
-            font-size: 96px;
-            margin-bottom: 30px;
+            font-size: 110px; /* Збільшено розмір */
+            margin-bottom: 20px;
+            margin-top: 20px;
             font-family: 'Open Sans', sans-serif;
             font-style: italic;
             font-weight: 700;
             text-transform: uppercase;
         }
         
+        .divider {
+            width: 75%; /* Довша лінія */
+            height: 1px; /* Тонша лінія */
+            background-color: white;
+            margin: 15px auto 25px auto;
+        }
+
         .banner-text {
             max-width: 100%;
             font-size: 18px;
-            line-height: 1.5;
+            line-height: 1.6; /* Трохи збільшили для кращої читабельності */
             margin: 0 auto;
             font-weight: 300;
+            padding-top: 8px;
         }
         
-        .divider {
-            width: 50%;
-            height: 2px;
+        /* Фільтр */
+        .filter-container {
             background-color: white;
-            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15); /* Трохи більше тіні */
+            padding: 25px; /* Більший внутрішній відступ */
+            margin: 30px 80px 20px 80px;
+        }
+
+        .filter-title {
+            font-size: 20px; /* Більший розмір шрифту */
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px; /* Додаємо невеликий інтервал між літерами */
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px; /* Збільшений відступ між елементами */
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 250px; /* Трохи ширші елементи */
+            flex: 1;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #5D4037;
+            margin-bottom: 8px;
+        }
+
+        .filter-select {
+            padding: 12px 15px; /* Більший padding для кращого вигляду */
+            border-radius: 6px; /* Більший радіус */
+            border: 1px solid #BDB9B7;
+            background-color: white;
+            color: #5D4037;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px; /* Трохи більший шрифт */
+            transition: all 0.2s ease; /* Плавна анімація для ховеру */
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #5D4037;
+            box-shadow: 0 0 0 3px rgba(93, 64, 55, 0.2);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: flex-end;
+        }
+
+        .filter-btn {
+            padding: 10px 20px; /* Більший padding для кнопок */
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-apply {
+            background-color: #5D4037;
+            color: white;
+            border: none;
+            box-shadow: 0 3px 8px rgba(93, 64, 55, 0.3); /* Додали тінь для глибини */
+        }
+
+        .filter-apply:hover {
+            background-color: #4E342E;
+            transform: translateY(-2px); /* Невеликий ефект підняття при ховері */
+        }
+
+        .filter-reset {
+            background-color: transparent;
+            color: #5D4037;
+            border: 1px solid #5D4037;
+        }
+
+        .filter-reset:hover {
+            background-color: #EFEBE9;
         }
         
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* Змінено на 3 карточки в ряд */
             gap: 40px;
-            padding: 50px;
+            padding: 30px 80px; /* Змінено padding-top */
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -207,35 +321,49 @@
         .fundraising-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 15px; /* Зменшено відстань до шкали */
         }
         
-        .fundraising-amount, .fundraising-target {
+        .fundraising-amount {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start; /* Вирівняно по лівому краю */
+        }
+        
+        .fundraising-target {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Вирівняно по правому краю */
         }
         
         .fundraising-label {
             font-size: 12px;
             color: #8D6E63;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 3px; /* Зменшено відступ */
         }
         
         .fundraising-value {
-            font-size: 20px;
+            font-size: 18px; /* Зменшено розмір */
             color: #4E342E;
             font-weight: 700;
         }
         
-        .progress-bar {
+        .progress-container {
+            display: flex;
+            align-items: center;
             width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
             height: 8px;
             background-color: #EFEBE9;
             border-radius: 4px;
             margin-bottom: 10px;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         
         .progress {
@@ -245,6 +373,13 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
+        .progress-percentage {
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #5D4037;
+        }
+        
         .card-date {
             font-size: 14px;
             color: #6D4C41;
@@ -252,6 +387,7 @@
             align-items: center;
             margin-bottom: 20px;
             font-weight: 700;
+            margin-top: 5px; /* Зменшено відстань від шкали */
         }
         
         .card-date img {
@@ -264,6 +400,8 @@
             display: flex;
             gap: 10px;
             margin-top: auto;
+            margin-bottom: 5px; /* Зменшено відступ від нижнього краю вдвічі */
+            padding-bottom: 5px; /* Зменшено відступ від нижнього краю вдвічі */
         }
         
         .btn {
@@ -392,32 +530,75 @@
         /* Адаптивний дизайн */
         @media (max-width: 1200px) {
             .cards-container {
-                grid-template-columns: repeat(3, 1fr);
-                padding: 40px;
+                grid-template-columns: repeat(2, 1fr);
+                padding: 40px 60px;
             }
             
             .banner-title {
-                font-size: 72px;
+                font-size: 80px;
+            }
+            
+            .filter-container {
+                margin: 30px 60px 10px 60px;
+            }
+            .navbar {
+                padding: 0 40px;
+            }
+            
+            .logo-img {
+                height: 48px;
+            }
+            
+            .logo-text {
+                font-size: 22px;
             }
         }
         
         @media (max-width: 992px) {
             .cards-container {
                 grid-template-columns: repeat(2, 1fr);
-                padding: 30px;
+                padding: 30px 50px;
                 gap: 30px;
             }
             
             .banner-title {
-                font-size: 60px;
+                font-size: 70px;
+            }
+            
+            .filter-container {
+                margin: 30px 50px 10px 50px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+            }
+            .navbar {
+                padding: 0 30px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .logo-img {
+                height: 45px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
             }
         }
         
         @media (max-width: 768px) {
             .navbar {
+                height: auto;
                 padding: 15px 20px;
                 flex-direction: column;
                 gap: 15px;
+            }
+            
+            .logo {
+                height: auto;
             }
             
             .nav-links {
@@ -426,7 +607,7 @@
             }
             
             .banner-title {
-                font-size: 48px;
+                font-size: 50px;
             }
             
             .banner-text {
@@ -437,12 +618,22 @@
                 flex-direction: column;
                 gap: 30px;
             }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 30px 40px;
+            }
+            
+            .filter-container {
+                margin: 30px 40px 10px 40px;
+                padding: 15px;
+            }
         }
         
         @media (max-width: 576px) {
             .cards-container {
                 grid-template-columns: 1fr;
-                padding: 20px;
+                padding: 20px 30px;
                 gap: 25px;
             }
             
@@ -472,18 +663,27 @@
             .card-actions {
                 flex-direction: column;
             }
+            
+            .filter-container {
+                margin: 20px 30px 10px 30px;
+                padding: 15px;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <div class="logo">
-            <img class="logo-img" src="/api/placeholder/40/40" alt="Dovir Logo">
+            <img class="logo-img" src="pictures/fundraisings/logo_brown.png" alt="Dovir Logo">
             <span class="logo-text">DOVIR</span>
         </div>
         <div class="nav-links">
             <a href="#">СТВОРИТИ ЗБІР</a>
-            <a href="#">ЗАДОНАТИТИ</a>
+            <a href="fundraisings.html">ЗАДОНАТИТИ</a>
             <a href="#">ЗВІТИ</a>
             <a href="#">ПРО НАС</a>
         </div>
@@ -492,9 +692,11 @@
                 <div class="lang-btn active">UA</div>
                 <div class="lang-btn inactive">EN</div>
             </div>
-            <div class="profile-pic">
-                <img src="/api/placeholder/40/40" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
-            </div>
+            <a href="profile_page.html">
+                <div class="profile-pic">
+                    <img src="pictures/fundraisings/profile_picture.png" alt="Profile">
+                </div>
+            </a>
         </div>
     </div>
     
@@ -505,13 +707,42 @@
             <p class="banner-text">Ці збори потребують вашої підтримки просто зараз. Навіть невеликий внесок може зробити велику різницю для наших захисників на передовій. Разом ми зможемо забезпечити їх усім необхідним.</p>
         </div>
     </div>
+
+    <div class="filter-container">
+        <div class="filter-title">Фільтрувати збори</div>
+        <div class="filter-row">
+            <div class="filter-group">
+                <label class="filter-label">Сортувати за</label>
+                <select class="filter-select">
+                    <option value="newest">Найновіші</option>
+                    <option value="ending-soon">Термін завершення</option>
+                    <option value="completion">Завершеність</option>
+                    <option value="popular">Популярні</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Категорія</label>
+                <select class="filter-select">
+                    <option value="all">Всі категорії</option>
+                    <option value="equipment">Техніка та обладнання</option>
+                    <option value="medical">Медична допомога</option>
+                    <option value="gear">Екіпірування</option>
+                    <option value="transport">Транспорт та логістика</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn filter-reset">Скинути</button>
+            <button class="filter-btn filter-apply">Застосувати</button>
+        </div>
+    </div>
     
     <div class="cards-container">
         <!-- Card 1 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg');"></div>
             <div class="card-content">
-                <h3 class="card-title">На додаткові білі з основи програмування</h3>
+                <h3 class="card-title">На додаткові бали з основ програмування</h3>
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
@@ -522,20 +753,23 @@
                         <span class="fundraising-value">10 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <span class="progress-percentage">60%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 01.04.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -544,9 +778,9 @@
         
         <!-- Card 2 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg');"></div>
             <div class="card-content">
-                <h3 class="card-title">На новий мікрофон Єремії Михасюку</h3>
+                <h3 class="card-title">На новий мікрофон Яремі Михасяку</h3>
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
@@ -557,20 +791,23 @@
                         <span class="fundraising-value">20 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <span class="progress-percentage">60%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 30.04.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -579,9 +816,9 @@
         
         <!-- Card 3 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card3.jpg');"></div>
             <div class="card-content">
-                <h3 class="card-title">На ремонт уніфаза в 322 кімнаті</h3>
+                <h3 class="card-title">На ремонт унітаза в 322 кімнаті</h3>
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
@@ -592,20 +829,23 @@
                         <span class="fundraising-value">10 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <span class="progress-percentage">60%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 30.03.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -614,9 +854,9 @@
         
         <!-- Card 4 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card4.jpg');"></div>
             <div class="card-content">
-                <h3 class="card-title">На песика з брюлік старс</h3>
+                <h3 class="card-title">На леона з бравл старс</h3>
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
@@ -627,20 +867,23 @@
                         <span class="fundraising-value">30 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <span class="progress-percentage">60%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 01.04.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -649,7 +892,7 @@
         
         <!-- Card 5 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card5.jpg');"></div>
             <div class="card-content">
                 <h3 class="card-title">На відсутність черг в Трапезній</h3>
                 <div class="fundraising-info">
@@ -662,20 +905,23 @@
                         <span class="fundraising-value">100 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <span class="progress-percentage">60%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 23.04.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -684,7 +930,7 @@
         
         <!-- Card 6 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card6.jpg');"></div>
             <div class="card-content">
                 <h3 class="card-title">На Jack Daniel's для кімнати 372</h3>
                 <div class="fundraising-info">
@@ -697,20 +943,23 @@
                         <span class="fundraising-value">10 000 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <span class="progress-percentage">60%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 30.03.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -719,9 +968,9 @@
         
         <!-- Card 7 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card7.png');"></div>
             <div class="card-content">
-                <h3 class="card-title">На нові столи в 5 корпусі</h3>
+                <h3 class="card-title">На курилки для студентів УКУ</h3>
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
@@ -732,20 +981,23 @@
                         <span class="fundraising-value">50 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 50%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 50%;"></div>
+                    </div>
+                    <span class="progress-percentage">50%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 15.04.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
@@ -754,9 +1006,9 @@
         
         <!-- Card 8 -->
         <div class="card">
-            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-image" style="background-image: url('pictures/fundraisings/card8.jpg');"></div>
             <div class="card-content">
-                <h3 class="card-title">На нові книги в бібліотеку</h3>
+                <h3 class="card-title">На нового президента США</h3>
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
@@ -767,20 +1019,23 @@
                         <span class="fundraising-value">35 000</span>
                     </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 43%;"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 43%;"></div>
+                    </div>
+                    <span class="progress-percentage">43%</span>
                 </div>
                 <p class="card-date">
-                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    <img src="pictures/fundraisings/сalendar.png" alt="Calendar">
                     Термін завершення: 10.05.2025
                 </p>
                 <div class="card-actions">
                     <button class="btn btn-primary">
-                        <img src="/api/placeholder/16/16" alt="Support">
+                        <img src="pictures/fundraisings/heart.png" alt="Support">
                         Підтримати
                     </button>
                     <button class="btn btn-secondary">
-                        <img src="/api/placeholder/16/16" alt="Details">
+                        <img src="pictures/fundraisings/arrow.png" alt="Details">
                         Детальніше
                     </button>
                 </div>
