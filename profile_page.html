@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOVIR - Профіль користувача</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #5d4037;
+            color: white;
+            padding: 10px 30px;
+            height: 80px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 90px;
+            margin-right: 20px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .language-selector {
+            display: flex;
+            border: 1px solid white;
+        }
+        
+        .language-selector button {
+            background: none;
+            border: none;
+            padding: 5px 10px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .language-selector button.active {
+            background-color: white;
+            color: #5d4037;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .user-avatar img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .container {
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 30px;
+            min-height: calc(100vh - 80px);
+            border-right: 1px solid #e0e0e0;
+        }
+        
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .profile-role {
+            color: #e65100;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        .section {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 30px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background-color: #7b6b68;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd54f;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+        }
+        
+        .section-link {
+            display: block;
+            text-align: right;
+            color: #e65100;
+            text-decoration: none;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .achievements {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .achievement {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .achievement-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ffd54f;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .achievement-icon img {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .achievement-value {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-date {
+            margin-bottom: 5px;
+        }
+        
+        .donation-history-item, .collection-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .donation-info {
+            font-weight: bold;
+        }
+        
+        .donation-date {
+            color: #757575;
+            font-size: 14px;
+        }
+        
+        .donation-amount {
+            font-weight: bold;
+            color: #4caf50;
+        }
+        
+        .collection-progress {
+            flex: 1;
+            margin: 0 20px;
+        }
+        
+        .progress-container {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a, #cddc39, #ffeb3b, #ffc107, #ff9800, #ff5722);
+            border-radius: 10px;
+        }
+        
+        .collection-status {
+            font-size: 14px;
+            color: #757575;
+        }
+        
+        .collection-goal {
+            text-align: right;
+        }
+        
+        .collection-percent {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="pictures/logo_white.png" alt="Довір лого"/>
+            <span class="logo-text">DOVIR</span>
+        </div>
+        <nav class="nav">
+            <a href="#">СТВОРИТИ ЗБІР</a>
+            <a href="#">ЗАДОНАТИТИ</a>
+            <a href="#">ЗВІТИ</a>
+            <a href="#">ПРО НАС</a>
+        </nav>
+        <div class="user-controls">
+            <div class="language-selector">
+                <button class="active">UA</button>
+                <button>EN</button>
+            </div>
+            <div class="user-avatar">
+                <img src="pictures/logo_white.png" alt="User icon"/>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile-icon">
+                <img src="pictures/profile_picture_deffault.png" alt="Profile icon"/>
+            </div>
+            <div class="profile-name">Петро</div>
+            <div class="profile-role">Генерал донатних військ</div>
+        </aside>
+        
+        <main class="main-content">
+            <section class="section">
+                <h2 class="section-title">Статистика</h2>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-value">25 000₴</div>
+                        <div class="stat-label">Загальна сума донатів</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Кількість створених зборів</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">10</div>
+                        <div class="stat-label">Кількість закритих зборів</div>
+                    </div>
+                </div>
+                <a href="#" class="section-link">Уся статистика</a>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Досягнення</h2>
+                <div class="achievements">
+                    <div class="achievement">
+                        <div class="achievement-icon">
+                            <img src="/api/placeholder/60/60" alt="Розмінувач"/>
+                        </div>
+                        <div class="achievement-title">Розмінувач</div>
+                        <div class="achievement-value">1000 гривень на розмінування</div>
+                        <div class="achievement-date">05.02.2023</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">
+                            <img src="/api/placeholder/60/60" alt="Розвідник"/>
+                        </div>
+                        <div class="achievement-title">Розвідник</div>
+                        <div class="achievement-value">3000 гривень на БПЛА</div>
+                        <div class="achievement-date">03.01.2025</div>
+                    </div>
+                </div>
+                <a href="#" class="section-link">Усі досягнення</a>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Історія донатів</h2>
+                <div class="donation-history">
+                    <div class="donation-history-item">
+                        <div class="donation-info">
+                            <div>Тепловізори для 72 бригади</div>
+                            <div class="donation-date">05.03.2025</div>
+                        </div>
+                        <div class="donation-amount">200₴</div>
+                    </div>
+                    <div class="donation-history-item">
+                        <div class="donation-info">
+                            <div>Бронежилети для захисників</div>
+                            <div class="donation-date">18.02.2025</div>
+                        </div>
+                        <div class="donation-amount">300₴</div>
+                    </div>
+                </div>
+                <a href="#" class="section-link">Усі донати</a>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Історія зборів</h2>
+                <div class="collections">
+                    <div class="collection-item">
+                        <div class="collection-info">
+                            <div class="collection-title">Дрони для розвідки</div>
+                            <div class="collection-status">Активний • Створено 01.02.2025</div>
+                        </div>
+                        <div class="collection-progress">
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="collection-goal">
+                            <div>150 000/ 200 000</div>
+                            <div class="collection-percent">75%</div>
+                        </div>
+                    </div>
+                    <div class="collection-item">
+                        <div class="collection-info">
+                            <div class="collection-title">Ремонт Автомобіля</div>
+                            <div class="collection-status">Завершено • 20.12.2024</div>
+                        </div>
+                        <div class="collection-progress">
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="collection-goal">
+                            <div>120 000/ 120 000</div>
+                            <div class="collection-percent">100%</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="section-link">Усі збори</a>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
