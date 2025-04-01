@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOVIR - Платформа збору коштів</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F2EFEF;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(93, 64, 55, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            color: #5D4037;
+            font-size: 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #5D4037;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #8D6E63;
+        }
+        
+        .right-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .lang-selector {
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn {
+            padding: 5px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .lang-btn.active {
+            background-color: #5D4037;
+            color: white;
+        }
+        
+        .lang-btn.inactive {
+            background-color: #E0E0E0;
+            color: #5D4037;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #5D4037;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .banner {
+            background-image: url('/api/placeholder/800/300');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            position: relative;
+            text-align: center;
+        }
+        
+        .banner:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        .banner-title {
+            font-size: 96px;
+            margin-bottom: 30px;
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .banner-text {
+            max-width: 100%;
+            font-size: 18px;
+            line-height: 1.5;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        
+        .divider {
+            width: 50%;
+            height: 2px;
+            background-color: white;
+            margin: 20px auto;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(93, 64, 55, 0.2);
+            margin-bottom: 20px;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(93, 64, 55, 0.3);
+        }
+        
+        .card-image {
+            height: 180px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        
+        .card-content {
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 25px;
+            margin-top: 0;
+            color: #5D4037;
+        }
+        
+        .fundraising-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .fundraising-amount, .fundraising-target {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .fundraising-label {
+            font-size: 12px;
+            color: #8D6E63;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .fundraising-value {
+            font-size: 20px;
+            color: #4E342E;
+            font-weight: 700;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #EFEBE9;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #5D4037;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-date {
+            font-size: 14px;
+            color: #6D4C41;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .card-date img {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .btn {
+            padding: 10px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            flex: 1;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn img {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .btn-primary {
+            background-color: #5D4037;
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #4E342E;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: #5D4037;
+            border: 1px solid #5D4037;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #EFEBE9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+            color: #5D4037;
+            transition: all 0.3s;
+        }
+        
+        .pagination-btn:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pagination-btn.active {
+            background-color: #5D4037;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer {
+            background-color: #5D4037;
+            color: white;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-column {
+            flex: 1;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #D7CCC8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 15px;
+            background-color: #4E342E;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Адаптивний дизайн */
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 40px;
+            }
+            
+            .banner-title {
+                font-size: 72px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 30px;
+                gap: 30px;
+            }
+            
+            .banner-title {
+                font-size: 60px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .banner-title {
+                font-size: 48px;
+            }
+            
+            .banner-text {
+                font-size: 16px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 25px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                font-size: 12px;
+            }
+            
+            .banner-title {
+                font-size: 36px;
+            }
+            
+            .banner-text {
+                font-size: 14px;
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img class="logo-img" src="/api/placeholder/40/40" alt="Dovir Logo">
+            <span class="logo-text">DOVIR</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">СТВОРИТИ ЗБІР</a>
+            <a href="#">ЗАДОНАТИТИ</a>
+            <a href="#">ЗВІТИ</a>
+            <a href="#">ПРО НАС</a>
+        </div>
+        <div class="right-nav">
+            <div class="lang-selector">
+                <div class="lang-btn active">UA</div>
+                <div class="lang-btn inactive">EN</div>
+            </div>
+            <div class="profile-pic">
+                <img src="/api/placeholder/40/40" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+            </div>
+        </div>
+    </div>
+    
+    <div class="banner">
+        <div class="banner-content">
+            <h1 class="banner-title">АКТУАЛЬНІ ЗБОРИ</h1>
+            <div class="divider"></div>
+            <p class="banner-text">Ці збори потребують вашої підтримки просто зараз. Навіть невеликий внесок може зробити велику різницю для наших захисників на передовій. Разом ми зможемо забезпечити їх усім необхідним.</p>
+        </div>
+    </div>
+    
+    <div class="cards-container">
+        <!-- Card 1 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На додаткові білі з основи програмування</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">6 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">10 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 01.04.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На новий мікрофон Єремії Михасюку</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">12 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">20 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 30.04.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 3 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На ремонт уніфаза в 322 кімнаті</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">6 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">10 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 30.03.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 4 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На песика з брюлік старс</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">18 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">30 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 01.04.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 5 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На відсутність черг в Трапезній</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">60 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">100 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 23.04.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 6 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На Jack Daniel's для кімнати 372</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">6 000 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">10 000 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 30.03.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 7 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На нові столи в 5 корпусі</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">25 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">50 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 15.04.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 8 -->
+        <div class="card">
+            <div class="card-image" style="background-image: url('/api/placeholder/400/200');"></div>
+            <div class="card-content">
+                <h3 class="card-title">На нові книги в бібліотеку</h3>
+                <div class="fundraising-info">
+                    <div class="fundraising-amount">
+                        <span class="fundraising-label">Зібрано:</span>
+                        <span class="fundraising-value">15 000</span>
+                    </div>
+                    <div class="fundraising-target">
+                        <span class="fundraising-label">Ціль:</span>
+                        <span class="fundraising-value">35 000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 43%;"></div>
+                </div>
+                <p class="card-date">
+                    <img src="/api/placeholder/16/16" alt="Calendar">
+                    Термін завершення: 10.05.2025
+                </p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">
+                        <img src="/api/placeholder/16/16" alt="Support">
+                        Підтримати
+                    </button>
+                    <button class="btn btn-secondary">
+                        <img src="/api/placeholder/16/16" alt="Details">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pagination">
+        <div class="pagination-btn">&lt;</div>
+        <div class="pagination-btn active">1</div>
+        <div class="pagination-btn">2</div>
+        <div class="pagination-btn">3</div>
+        <div class="pagination-btn">4</div>
+        <div class="pagination-btn">5</div>
+        <div class="pagination-btn">6</div>
+        <div class="pagination-btn">&gt;</div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-column">
+            <h3 class="footer-title">Про Dovir</h3>
+            <p class="footer-text">Ми допомагаємо збирати кошти для підтримки Збройних Сил України, забезпечуючи їх необхідним обладнанням та амуніцією.</p>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Навігація</h3>
+            <a href="#" class="footer-link">Створити збір</a>
+            <a href="#" class="footer-link">Актуальні збори</a>
+            <a href="#" class="footer-link">Звіти</a>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Контакти</h3>
+            <p class="footer-text">Електронна пошта: info@dovir.ua</p>
+            <p class="footer-text">Телефон: +380 12 345 6789</p>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        © 2025 Dovir. Усі права захищені.
+    </div>
+</body>
+</html>
