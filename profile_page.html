@@ -20,10 +20,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 50px; /* Зменшуємо вертикальний padding для контролю висоти */
-            height: 70px; /* Фіксована висота навбару */
+            padding: 0 50px;
+            height: 70px;
             background-color: white;
             box-shadow: 0 2px 10px rgba(93, 64, 55, 0.1);
+            width: 100%;
         }
 
         .logo {
@@ -33,16 +34,16 @@
         }
 
         .logo-img {
-            height: 69px; /* Збільшуємо розмір логотипу */
+            height: 69px;
             margin-right: 10px;
-            object-fit: contain; /* Для кращого масштабування */
+            object-fit: contain;
         }
 
         .logo-text {
             font-family: 'Open Sans', sans-serif;
-            font-weight: 700; /* Трохи жирніший шрифт */
+            font-weight: 700;
             color: #5D4037;
-            font-size: 24px; /* Збільшуємо розмір тексту */
+            font-size: 24px;
         }
         
         .nav-links {
@@ -94,9 +95,8 @@
             color: #5D4037;
         }
         
-        /* Збільшення іконки профілю */
         .profile-pic {
-            width: 50px; /* Збільшуємо розмір */
+            width: 50px;
             height: 50px;
             border-radius: 50%;
             background-color: #5D4037;
@@ -104,31 +104,44 @@
             align-items: center;
             justify-content: center;
             color: white;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2); /* Трохи більше тіні для кращого вигляду */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            overflow: hidden; /* Для кращого контролю зображення */
+            overflow: hidden;
         }
 
         .profile-pic img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Для кращого масштабування */
+            object-fit: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
         }
 
         /* New Profile Header Styling */
         .profile-hero {
             position: relative;
-            width: 100%;
-            height: 300px;
+            width: 100vw;
+            height: 250px;
             background-image: url('pictures/profile_page/roshen.png');
             background-size: cover;
             background-position: center;
-            margin-bottom: 100px;
+            margin-left: calc(-50vw + 50%);
+            margin-bottom: 80px;
         }
         
         .profile-main-content {
             position: relative;
-            padding: 0 30px;
+            max-width: 1140px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px 30px;
+            margin-top: -110px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
         .profile-avatar-large {
@@ -154,7 +167,7 @@
             display: flex;
             justify-content: space-between;
             margin-left: 250px;
-            padding-top: 20px;
+            padding-top: 10px;
         }
         
         .profile-info-primary {
@@ -223,41 +236,17 @@
             gap: 10px;
         }
         
-        .bio-section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px 30px;
-            margin: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .bio-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #3e2723;
-            position: relative;
-            padding-left: 18px;
-        }
-        
-        .bio-title:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            background-color: #e65100;
-            border-radius: 50%;
-        }
-        
         .bio-content {
             line-height: 1.6;
             color: #5d4037;
+            margin-top: 25px;
+            margin-left: 250px;
+            padding-bottom: 15px;
+            border-top: 1px solid #efebe9;
+            padding-top: 15px;
         }
         
-        .edit-profile-btn, .contact-btn {
+        .edit-profile-btn {
             background-color: #5d4037;
             color: white;
             border: none;
@@ -274,18 +263,8 @@
             text-decoration: none;
         }
         
-        .edit-profile-btn:hover, .contact-btn:hover {
+        .edit-profile-btn:hover {
             background-color: #4e342e;
-        }
-        
-        .contact-btn {
-            background-color: white;
-            color: #5d4037;
-            border: 1px solid #5d4037;
-        }
-        
-        .contact-btn:hover {
-            background-color: #f5f5f5;
         }
         
         .contact-info {
@@ -311,7 +290,9 @@
 
         /* Regular Content Sections */
         .content-sections {
-            padding: 0 30px 30px;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 30px;
         }
         
         /* Statistics Section Redesign */
@@ -466,10 +447,10 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            width: 30px;
+            min-width: 30px;
             height: 30px;
             background-color: #e65100;
-            border-radius: 50%;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -477,6 +458,7 @@
             font-weight: bold;
             font-size: 16px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 0 10px;
         }
         
         .achievement-content {
@@ -553,7 +535,7 @@
         .hidden-donations {
             display: none;
         }
-        
+
         /* Collection Cards */
         .collections {
             display: grid;
@@ -738,10 +720,6 @@
 
         /* Responsiveness */
         @media (max-width: 1200px) {
-            .collections {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .achievement {
                 width: calc(33.33% - 20px);
             }
@@ -761,6 +739,10 @@
             }
             
             .profile-info-container {
+                margin-left: 200px;
+            }
+            
+            .bio-content {
                 margin-left: 200px;
             }
             
@@ -790,6 +772,11 @@
                 text-align: center;
             }
             
+            .bio-content {
+                margin-left: 0;
+                text-align: center;
+            }
+            
             .profile-info-secondary {
                 text-align: center;
                 margin-top: 20px;
@@ -804,10 +791,6 @@
                 flex-direction: row;
                 justify-content: center;
                 gap: 15px;
-            }
-            
-            .collections {
-                grid-template-columns: 1fr;
             }
             
             .nav {
@@ -832,21 +815,12 @@
                 min-width: 100%;
             }
             
-            .container {
-                padding: 0 15px;
-            }
-            
-            .bio-section {
-                margin: 15px;
-                padding: 20px;
-            }
-            
-            .profile-cta {
-                flex-direction: column;
+            .profile-main-content {
+                padding: 15px;
             }
             
             .content-sections {
-                padding: 0 15px 15px;
+                padding: 15px;
             }
         }
     </style>
@@ -913,10 +887,6 @@
                             <img src="/api/placeholder/16/16" alt="Edit"/>
                             Редагувати профіль
                         </button>
-                        <a href="#" class="contact-btn">
-                            <img src="/api/placeholder/16/16" alt="Contact"/>
-                            Зв'язатися
-                        </a>
                     </div>
                     <div class="contact-info">
                         <div class="contact-item">
@@ -931,10 +901,7 @@
                 </div>
             </div>
             
-            <div class="bio-section">
-                <h3 class="bio-title">Біографія</h3>
-                <p class="bio-content">Активний волонтер та організатор зборів для допомоги ЗСУ. Підтримує різні напрямки забезпечення військових, від тепловізорів до транспортних засобів. Займається волонтерством з 2022 року.</p>
-            </div>
+            <p class="bio-content">Активний волонтер та організатор зборів для допомоги ЗСУ. Підтримує різні напрямки забезпечення військових, від тепловізорів до транспортних засобів. Займається волонтерством з 2022 року.</p>
         </div>
         
         <div class="content-sections">
