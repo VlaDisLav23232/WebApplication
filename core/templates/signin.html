@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+</head>
+<body class="sign-in">
+    <div class="button">
+        <input type="text" class="input-field" placeholder="Ваше ім'я..." />
+    </div>
+    <div class="input-password">
+        <input type="password" id="password-hidden" class="input-field" placeholder="Ваш пароль..." />
+    </div>
+    <div class="div2">ВХІД</div>
+    <div class="div3">
+        <a href="../register" class="div4">
+            <span>
+                <span class="div-4-span">Немає акаунту? Зареєструйся!</span>
+            </a>
+        </div>
+    </div>
+    <div class="submit-enter">
+        <div class="div5">ПІДТВЕРДИТИ</div>
+    </div>
+</body>
+</html>
