@@ -13,15 +13,20 @@
         }
         
         body {
-            background-color: #F2EFEF;
+            background-color: #F8F8F8;
+        }
+        
+        .container {
+            max-width: 1200px; /* Збільшено максимальну ширину */
+            margin: 0 auto;
         }
         
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 50px; /* Зменшуємо вертикальний padding для контролю висоти */
-            height: 70px; /* Фіксована висота навбару */
+            padding: 0 30px; /* Зменшено відступи по боках */
+            height: 70px;
             background-color: white;
             box-shadow: 0 2px 10px rgba(93, 64, 55, 0.1);
         }
@@ -33,16 +38,16 @@
         }
 
         .logo-img {
-            height: 69px; /* Збільшуємо розмір логотипу */
+            height: 69px;
             margin-right: 10px;
-            object-fit: contain; /* Для кращого масштабування */
+            object-fit: contain;
         }
 
         .logo-text {
             font-family: 'Open Sans', sans-serif;
-            font-weight: 700; /* Трохи жирніший шрифт */
+            font-weight: 700;
             color: #5D4037;
-            font-size: 24px; /* Збільшуємо розмір тексту */
+            font-size: 24px;
         }
         
         .nav-links {
@@ -94,9 +99,8 @@
             color: #5D4037;
         }
         
-        /* Збільшення іконки профілю */
         .profile-pic {
-            width: 50px; /* Збільшуємо розмір */
+            width: 50px;
             height: 50px;
             border-radius: 50%;
             background-color: #5D4037;
@@ -104,44 +108,73 @@
             align-items: center;
             justify-content: center;
             color: white;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2); /* Трохи більше тіні для кращого вигляду */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            overflow: hidden; /* Для кращого контролю зображення */
+            overflow: hidden;
         }
 
         .profile-pic img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Для кращого масштабування */
+            object-fit: cover;
         }
 
-        /* New Profile Header Styling */
+        /* Оновлений дизайн профіля */
+        .profile-section {
+            width: 100%;
+            background-color: white;
+            margin-bottom: 20px; /* Додано відступ після секції профілю */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
         .profile-hero {
             position: relative;
             width: 100%;
-            height: 300px;
-            background-image: url('pictures/profile_page/roshen.png');
+            height: 280px; /* Зменшено висоту баннера */
+            background-image: url('pictures/profile_page/forest.jpg');
             background-size: cover;
             background-position: center;
-            margin-bottom: 100px;
+            margin-bottom: 0;
+            position: relative;
+        }
+        
+        .profile-hero:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+        }
+        
+        .profile-content-wrapper {
+            max-width: 1200px; /* Збільшено максимальну ширину */
+            margin: 0 auto;
+            position: relative;
+            padding: 0 20px; /* Додано бокові відступи */
         }
         
         .profile-main-content {
             position: relative;
-            padding: 0 30px;
+            padding: 0 20px;
+            padding-top: 30px; /* Зменшено верхній відступ */
+            padding-bottom: 30px; /* Додано нижній відступ */
+            display: flex;
+            align-items: flex-start;
         }
         
         .profile-avatar-large {
-            position: absolute;
-            width: 180px;
-            height: 180px;
+            width: 160px; /* Зменшено розмір аватарки */
+            height: 160px; /* Зменшено розмір аватарки */
             border-radius: 50%;
             background-color: white;
             border: 5px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             overflow: hidden;
-            top: -90px;
-            left: 50px;
+            margin-top: -80px; /* Розміщення посередині відносно баннера */
+            z-index: 2;
+            position: relative;
         }
         
         .profile-avatar-large img {
@@ -150,20 +183,10 @@
             object-fit: cover;
         }
         
-        .profile-info-container {
-            display: flex;
-            justify-content: space-between;
-            margin-left: 250px;
-            padding-top: 20px;
-        }
-        
         .profile-info-primary {
-            flex: 2;
-        }
-        
-        .profile-info-secondary {
             flex: 1;
-            text-align: right;
+            padding-left: 30px;
+            margin-top: 0; /* Видалено відступ зверху */
         }
         
         .profile-name {
@@ -175,7 +198,7 @@
         
         .profile-role {
             font-size: 18px;
-            color: #e65100;
+            color: #4A6FA5;
             font-weight: 600;
             margin-bottom: 15px;
         }
@@ -185,7 +208,7 @@
             align-items: center;
             color: #5d4037;
             font-size: 16px;
-            margin-bottom: 8px;
+            margin-bottom: 20px;
         }
         
         .profile-location img {
@@ -195,69 +218,13 @@
             opacity: 0.7;
         }
         
-        .profile-social {
+        .profile-info-secondary {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 15px;
+            justify-content: flex-end;
+            align-items: flex-start;
         }
         
-        .profile-social a {
-            color: #8d6e63;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-        
-        .profile-social a img {
-            width: 16px;
-            height: 16px;
-            margin-right: 5px;
-            opacity: 0.8;
-        }
-        
-        .profile-cta {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .bio-section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px 30px;
-            margin: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .bio-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #3e2723;
-            position: relative;
-            padding-left: 18px;
-        }
-        
-        .bio-title:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            background-color: #e65100;
-            border-radius: 50%;
-        }
-        
-        .bio-content {
-            line-height: 1.6;
-            color: #5d4037;
-        }
-        
-        .edit-profile-btn, .contact-btn {
+        .edit-profile-btn {
             background-color: #5d4037;
             color: white;
             border: none;
@@ -274,47 +241,27 @@
             text-decoration: none;
         }
         
-        .edit-profile-btn:hover, .contact-btn:hover {
+        .edit-profile-btn:hover {
             background-color: #4e342e;
         }
         
-        .contact-btn {
-            background-color: white;
+        .bio-content {
+            line-height: 1.6;
             color: #5d4037;
-            border: 1px solid #5d4037;
-        }
-        
-        .contact-btn:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .contact-info {
             margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            margin-bottom: 0;
+            max-width: 800px;
+            font-size: 15px;
         }
         
-        .contact-item {
-            display: flex;
-            align-items: center;
-            color: #5d4037;
-            font-size: 14px;
-        }
-        
-        .contact-item img {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-            opacity: 0.7;
-        }
-
-        /* Regular Content Sections */
+        /* Content Sections */
         .content-sections {
-            padding: 0 30px 30px;
+            padding: 20px;
+            max-width: 1200px; /* Збільшено максимальну ширину */
+            margin: 0 auto;
         }
         
-        /* Statistics Section Redesign */
+        /* Statistics Section */
         .stats-cards {
             display: flex;
             flex-wrap: wrap;
@@ -360,7 +307,7 @@
         .stat-value {
             font-size: 24px;
             font-weight: bold;
-            color: #e65100;
+            color: #4A6FA5;
             margin-bottom: 10px;
         }
         
@@ -393,7 +340,7 @@
             transform: translateY(-50%);
             width: 8px;
             height: 24px;
-            background-color: #e65100;
+            background-color: #4A6FA5;
             border-radius: 4px;
         }
         
@@ -411,7 +358,7 @@
             color: #5d4037;
         }
         
-        /* Achievements Section Redesign */
+        /* Achievements Section */
         .achievements {
             display: flex;
             flex-wrap: wrap;
@@ -466,10 +413,10 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            width: 30px;
+            padding: 0 10px;
             height: 30px;
-            background-color: #e65100;
-            border-radius: 50%;
+            background-color: #4A6FA5;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -736,6 +683,54 @@
             display: none;
         }
 
+        .footer {
+            background-color: #5D4037;
+            color: white;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-column {
+            flex: 1;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #D7CCC8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 15px;
+            background-color: #4E342E;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
         /* Responsiveness */
         @media (max-width: 1200px) {
             .collections {
@@ -749,19 +744,33 @@
         
         @media (max-width: 992px) {
             .profile-hero {
-                height: 250px;
-                margin-bottom: 80px;
+                height: 220px;
+            }
+            
+            .profile-main-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
             
             .profile-avatar-large {
-                width: 150px;
-                height: 150px;
-                top: -75px;
-                left: 30px;
+                margin-bottom: 20px;
             }
             
-            .profile-info-container {
-                margin-left: 200px;
+            .profile-info-primary {
+                padding-left: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile-location {
+                justify-content: center;
+            }
+            
+            .profile-info-secondary {
+                margin-top: 20px;
+                justify-content: center;
             }
             
             .achievement {
@@ -771,59 +780,29 @@
         
         @media (max-width: 768px) {
             .profile-hero {
-                height: 200px;
-                margin-bottom: 140px;
+                height: 180px;
+            }
+            
+            .profile-main-content {
+                padding-top: 20px;
             }
             
             .profile-avatar-large {
                 width: 120px;
                 height: 120px;
-                top: -60px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .profile-info-container {
-                flex-direction: column;
-                margin-left: 0;
-                margin-top: 70px;
-                text-align: center;
-            }
-            
-            .profile-info-secondary {
-                text-align: center;
-                margin-top: 20px;
-            }
-            
-            .profile-social {
-                justify-content: center;
-            }
-            
-            .profile-cta {
-                align-items: center;
-                flex-direction: row;
-                justify-content: center;
-                gap: 15px;
+                margin-top: -60px;
             }
             
             .collections {
                 grid-template-columns: 1fr;
             }
             
-            .nav {
+            .nav-links {
                 display: none;
-            }
-            
-            .header {
-                justify-content: space-between;
             }
             
             .achievement {
                 width: 100%;
-            }
-            
-            .contact-info {
-                align-items: center;
             }
         }
         
@@ -832,21 +811,12 @@
                 min-width: 100%;
             }
             
-            .container {
-                padding: 0 15px;
-            }
-            
-            .bio-section {
-                margin: 15px;
-                padding: 20px;
-            }
-            
-            .profile-cta {
-                flex-direction: column;
+            .profile-main-content {
+                padding: 20px 10px 0;
             }
             
             .content-sections {
-                padding: 0 15px 15px;
+                padding: 20px 10px;
             }
         }
     </style>
@@ -876,319 +846,440 @@
         </div>
     </div>
     
-    <div class="container">
-        <!-- New Profile Hero Section -->
+    <!-- Перероблена секція профілю -->
+    <div class="profile-section">
         <div class="profile-hero">
             <!-- Hero background image automatically applied via CSS -->
         </div>
         
-        <div class="profile-main-content">
-            <div class="profile-avatar-large">
-                <img src="pictures/fundraisings/card4.jpg" alt="Profile picture"/>
-            </div>
-            
-            <div class="profile-info-container">
+        <div class="profile-content-wrapper">
+            <div class="profile-main-content">
+                <div class="profile-avatar-large">
+                    <img src="pictures/profile_page/porosh.jpg" alt="Profile picture"/>
+                </div>
+                
                 <div class="profile-info-primary">
                     <h1 class="profile-name">Петро Порошенко</h1>
                     <div class="profile-role">Генерал донатних військ</div>
                     <div class="profile-location">
-                        <img src="/api/placeholder/16/16" alt="Location"/>
+                        <img src="pictures/profile_page/ukraine.png" alt="Location"/>
                         Україна
                     </div>
-                    <div class="profile-social">
-                        <a href="#">
-                            <img src="/api/placeholder/16/16" alt="Email"/>
-                            petro@example.com
-                        </a>
-                        <a href="#">
-                            <img src="/api/placeholder/16/16" alt="Website"/>
-                            poroshenko.ua
-                        </a>
+                    
+                    <div class="bio-content">
+                        Активний волонтер та організатор зборів для допомоги ЗСУ. Підтримує різні напрямки забезпечення військових, від тепловізорів до транспортних засобів. Займається волонтерством з 2022 року.
                     </div>
                 </div>
                 
                 <div class="profile-info-secondary">
-                    <div class="profile-cta">
-                        <button class="edit-profile-btn">
-                            <img src="/api/placeholder/16/16" alt="Edit"/>
-                            Редагувати профіль
-                        </button>
-                        <a href="#" class="contact-btn">
-                            <img src="/api/placeholder/16/16" alt="Contact"/>
-                            Зв'язатися
-                        </a>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <img src="/api/placeholder/16/16" alt="Phone"/>
-                            +380 99 123 45 67
-                        </div>
-                        <div class="contact-item">
-                            <img src="/api/placeholder/16/16" alt="Member since"/>
-                            На платформі з 2022 року
-                        </div>
-                    </div>
+                    <button class="edit-profile-btn">
+                        Редагувати профіль
+                    </button>
                 </div>
             </div>
-            
-            <div class="bio-section">
-                <h3 class="bio-title">Біографія</h3>
-                <p class="bio-content">Активний волонтер та організатор зборів для допомоги ЗСУ. Підтримує різні напрямки забезпечення військових, від тепловізорів до транспортних засобів. Займається волонтерством з 2022 року.</p>
+        </div>
+    </div>
+    
+    <div class="content-sections">
+        <!-- Statistics Section -->
+        <div class="section-title">
+            <h2>Статистика</h2>
+            <button class="show-more-btn" onclick="toggleStats()">Показати більше</button>
+        </div>
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="pictures/profile_page/porosh.jpg" alt="Donations"/>
+                </div>
+                <div class="stat-value">25 000₴</div>
+                <div class="stat-label">Загальна сума донатів</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="pictures/fundraisings/arrow.png" alt="Collections"/>
+                </div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Кількість створених зборів</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="/api/placeholder/30/30" alt="Closed"/>
+                </div>
+                <div class="stat-value">10</div>
+                <div class="stat-label">Кількість закритих зборів</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="/api/placeholder/30/30" alt="Contributors"/>
+                </div>
+                <div class="stat-value">43</div>
+                <div class="stat-label">Людей підтримали</div>
             </div>
         </div>
         
-        <div class="content-sections">
-            <!-- Statistics Section -->
-            <div class="section-title">
-                <h2>Статистика</h2>
-                <button class="show-more-btn" onclick="toggleStats()">Показати більше</button>
-            </div>
+        <div class="hidden-stats" id="moreStats">
             <div class="stats-cards">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="pictures/fundraisings/calendar.png" alt="Donations"/>
+                        <img src="/api/placeholder/30/30" alt="Active"/>
                     </div>
-                    <div class="stat-value">25 000₴</div>
-                    <div class="stat-label">Загальна сума донатів</div>
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Активні збори</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Collections"/>
+                        <img src="/api/placeholder/30/30" alt="Average"/>
                     </div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">Кількість створених зборів</div>
+                    <div class="stat-value">83%</div>
+                    <div class="stat-label">Середній відсоток виконання</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Closed"/>
+                        <img src="/api/placeholder/30/30" alt="Max"/>
                     </div>
-                    <div class="stat-value">10</div>
-                    <div class="stat-label">Кількість закритих зборів</div>
+                    <div class="stat-value">5 000₴</div>
+                    <div class="stat-label">Найбільший донат</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Contributors"/>
+                        <img src="/api/placeholder/30/30" alt="Duration"/>
                     </div>
-                    <div class="stat-value">43</div>
-                    <div class="stat-label">Людей підтримали</div>
+                    <div class="stat-value">14</div>
+                    <div class="stat-label">Днів до закриття збору (сер.)</div>
                 </div>
             </div>
-            
-            <div class="hidden-stats" id="moreStats">
-                <div class="stats-cards">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <img src="/api/placeholder/30/30" alt="Active"/>
-                        </div>
-                        <div class="stat-value">2</div>
-                        <div class="stat-label">Активні збори</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <img src="/api/placeholder/30/30" alt="Average"/>
-                        </div>
-                        <div class="stat-value">83%</div>
-                        <div class="stat-label">Середній відсоток виконання</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <img src="/api/placeholder/30/30" alt="Max"/>
-                        </div>
-                        <div class="stat-value">5 000₴</div>
-                        <div class="stat-label">Найбільший донат</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <img src="/api/placeholder/30/30" alt="Duration"/>
-                        </div>
-                        <div class="stat-value">14</div>
-                        <div class="stat-label">Днів до закриття збору (сер.)</div>
-                    </div>
+        </div>
+        
+        <!-- Achievements Section -->
+        <div class="section-title">
+            <h2>Досягнення</h2>
+            <button class="show-more-btn" onclick="toggleAchievements()">Показати більше</button>
+        </div>
+        <div class="achievements">
+            <div class="achievement">
+                <div class="achievement-icon">
+                    <img src="pictures/fundraisings/card2.jpg" alt="Розмінувач"/>
+                    <div class="achievement-overlay"></div>
+                    <div class="achievement-badge">★</div>
+                </div>
+                <div class="achievement-content">
+                    <div class="achievement-title">Розмінувач</div>
+                    <div class="achievement-value">1000₴ на розмінування</div>
+                    <div class="achievement-date">05.02.2023</div>
                 </div>
             </div>
-            
-            <!-- Achievements Section - Redesigned -->
-            <div class="section-title">
-                <h2>Досягнення</h2>
-                <button class="show-more-btn" onclick="toggleAchievements()">Показати більше</button>
+            <div class="achievement">
+                <div class="achievement-icon">
+                    <img src="pictures/fundraisings/card3.jpg" alt="Розвідник"/>
+                    <div class="achievement-overlay"></div>
+                    <div class="achievement-badge">★</div>
+                </div>
+                <div class="achievement-content">
+                    <div class="achievement-title">Розвідник</div>
+                    <div class="achievement-value">Допоміг з дроном для розвідки</div>
+                    <div class="achievement-date">12.03.2023</div>
+                </div>
             </div>
+            <div class="achievement">
+                <div class="achievement-icon">
+                    <img src="pictures/fundraisings/card1.jpg" alt="Медик"/>
+                    <div class="achievement-overlay"></div>
+                    <div class="achievement-badge">★</div>
+                </div>
+                <div class="achievement-content">
+                    <div class="achievement-title">Медик</div>
+                    <div class="achievement-value">Зібрав на 5 аптечок</div>
+                    <div class="achievement-date">23.04.2023</div>
+                </div>
+            </div>
+            <div class="achievement">
+                <div class="achievement-icon">
+                    <img src="pictures/fundraisings/card4.jpg" alt="Захисник"/>
+                    <div class="achievement-overlay"></div>
+                    <div class="achievement-badge">★★★</div>
+                </div>
+                <div class="achievement-content">
+                    <div class="achievement-title">Захисник</div>
+                    <div class="achievement-value">Придбав 10 бронежилетів</div>
+                    <div class="achievement-date">10.05.2023</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hidden-achievements" id="moreAchievements">
             <div class="achievements">
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card2.jpg" alt="Розмінувач"/>
+                        <img src="pictures/fundraisings/card3.jpg" alt="Тепловізор"/>
                         <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★</div>
+                        <div class="achievement-badge">★★</div>
                     </div>
                     <div class="achievement-content">
-                        <div class="achievement-title">Розмінувач</div>
-                        <div class="achievement-value">1000₴ на розмінування</div>
-                        <div class="achievement-date">05.02.2023</div>
+                        <div class="achievement-title">Нічний мисливець</div>
+                        <div class="achievement-value">Зібрав на 3 тепловізори</div>
+                        <div class="achievement-date">18.06.2023</div>
                     </div>
                 </div>
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card3.jpg" alt="Розвідник"/>
+                        <img src="pictures/fundraisings/card2.jpg" alt="Транспортер"/>
                         <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★</div>
+                        <div class="achievement-badge">★★</div>
                     </div>
                     <div class="achievement-content">
-                        <div class="achievement-title">Розвідник</div>
-                        <div class="achievement-value">Допоміг з дроном для розвідки</div>
-                        <div class="achievement-date">12.03.2023</div>
+                        <div class="achievement-title">Колісний привід</div>
+                        <div class="achievement-value">Профінансував джип для ЗСУ</div>
+                        <div class="achievement-date">07.07.2023</div>
                     </div>
                 </div>
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card1.jpg" alt="Медик"/>
+                        <img src="pictures/fundraisings/card1.jpg" alt="Постачальник"/>
                         <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★</div>
+                        <div class="achievement-badge">★★</div>
                     </div>
                     <div class="achievement-content">
-                        <div class="achievement-title">Медик</div>
-                        <div class="achievement-value">Зібрав на 5 аптечок</div>
-                        <div class="achievement-date">23.04.2023</div>
+                        <div class="achievement-title">Логіст</div>
+                        <div class="achievement-value">Організував доставку 50 посилок</div>
+                        <div class="achievement-date">22.08.2023</div>
                     </div>
                 </div>
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card4.jpg" alt="Захисник"/>
+                        <img src="pictures/fundraisings/card4.jpg" alt="Зв'язківець"/>
                         <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★</div>
+                        <div class="achievement-badge">★★★</div>
                     </div>
                     <div class="achievement-content">
-                        <div class="achievement-title">Захисник</div>
-                        <div class="achievement-value">Придбав 10 бронежилетів</div>
-                        <div class="achievement-date">10.05.2023</div>
+                        <div class="achievement-title">Стратег</div>
+                        <div class="achievement-value">Закрив збір на Starlink за 48 годин</div>
+                        <div class="achievement-date">14.09.2023</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="hidden-achievements" id="moreAchievements">
-                <div class="achievements">
-                    <div class="achievement">
-                        <div class="achievement-icon">
-                            <img src="pictures/fundraisings/card3.jpg" alt="Тепловізор"/>
-                            <div class="achievement-overlay"></div>
-                            <div class="achievement-badge">★★</div>
-                        </div>
-                        <div class="achievement-content">
-                            <div class="achievement-title">Нічний мисливець</div>
-                            <div class="achievement-value">Зібрав на 3 тепловізори</div>
-                            <div class="achievement-date">18.06.2023</div>
-                        </div>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">
-                            <img src="pictures/fundraisings/card2.jpg" alt="Транспортер"/>
-                            <div class="achievement-overlay"></div>
-                            <div class="achievement-badge">★★</div>
-                        </div>
-                        <div class="achievement-content">
-                            <div class="achievement-title">Колісний привід</div>
-                            <div class="achievement-value">Профінансував джип для ЗСУ</div>
-                            <div class="achievement-date">07.07.2023</div>
-                        </div>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">
-                            <img src="pictures/fundraisings/card1.jpg" alt="Постачальник"/>
-                            <div class="achievement-overlay"></div>
-                            <div class="achievement-badge">★★</div>
-                        </div>
-                        <div class="achievement-content">
-                            <div class="achievement-title">Логіст</div>
-                            <div class="achievement-value">Організував доставку 50 посилок</div>
-                            <div class="achievement-date">22.08.2023</div>
-                        </div>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">
-                            <img src="pictures/fundraisings/card4.jpg" alt="Зв'язківець"/>
-                            <div class="achievement-overlay"></div>
-                            <div class="achievement-badge">★★★</div>
-                        </div>
-                        <div class="achievement-content">
-                            <div class="achievement-title">Стратег</div>
-                            <div class="achievement-value">Закрив збір на Starlink за 48 годин</div>
-                            <div class="achievement-date">14.09.2023</div>
-                        </div>
-                    </div>
+        </div>
+        
+        <!-- Donation History Section -->
+        <div class="section-title">
+            <h2>Історія донатів</h2>
+            <button class="show-more-btn" onclick="toggleDonations()">Показати більше</button>
+        </div>
+        <div class="donation-history">
+            <div class="donation-history-item">
+                <div>
+                    <div class="donation-info">Тепловізори для 72 ОМБр</div>
+                    <div class="donation-date">12.01.2023</div>
                 </div>
+                <div class="donation-amount">2 500₴</div>
             </div>
-            
-            <!-- Donation History Section -->
-            <div class="section-title">
-                <h2>Історія донатів</h2>
-                <button class="show-more-btn" onclick="toggleDonations()">Показати більше</button>
+            <div class="donation-history-item">
+                <div>
+                    <div class="donation-info">Дрон для 93 ОМБр</div>
+                    <div class="donation-date">25.02.2023</div>
+                </div>
+                <div class="donation-amount">3 000₴</div>
             </div>
+            <div class="donation-history-item">
+                <div>
+                    <div class="donation-info">Аптечки для 81 десантної бригади</div>
+                    <div class="donation-date">03.03.2023</div>
+                </div>
+                <div class="donation-amount">1 500₴</div>
+            </div>
+        </div>
+        
+        <div class="hidden-donations" id="moreDonations">
             <div class="donation-history">
                 <div class="donation-history-item">
                     <div>
-                        <div class="donation-info">Тепловізори для 72 ОМБр</div>
-                        <div class="donation-date">12.01.2023</div>
+                        <div class="donation-info">Транспорт для 28 ОМБр</div>
+                        <div class="donation-date">17.04.2023</div>
                     </div>
-                    <div class="donation-amount">2 500₴</div>
+                    <div class="donation-amount">5 000₴</div>
                 </div>
                 <div class="donation-history-item">
                     <div>
-                        <div class="donation-info">Дрон для 93 ОМБр</div>
-                        <div class="donation-date">25.02.2023</div>
+                        <div class="donation-info">Рації для розвідки</div>
+                        <div class="donation-date">29.05.2023</div>
                     </div>
-                    <div class="donation-amount">3 000₴</div>
+                    <div class="donation-amount">2 800₴</div>
                 </div>
                 <div class="donation-history-item">
                     <div>
-                        <div class="donation-info">Аптечки для 81 десантної бригади</div>
-                        <div class="donation-date">03.03.2023</div>
+                        <div class="donation-info">Ремонт бронетехніки</div>
+                        <div class="donation-date">14.06.2023</div>
                     </div>
-                    <div class="donation-amount">1 500₴</div>
+                    <div class="donation-amount">4 200₴</div>
                 </div>
             </div>
-            
-            <div class="hidden-donations" id="moreDonations">
-                <div class="donation-history">
-                    <div class="donation-history-item">
-                        <div>
-                            <div class="donation-info">Транспорт для 28 ОМБр</div>
-                            <div class="donation-date">17.04.2023</div>
+        </div>
+        
+        <!-- Collection Cards Section -->
+        <div class="section-title">
+            <h2>Активні збори</h2>
+            <button class="show-more-btn" onclick="toggleCollections()">Показати більше</button>
+        </div>
+        <div class="collections">
+            <div class="card">
+                <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg')"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Тепловізори для 72 ОМБр ім. Чорних Запорожців</h3>
+                    <div class="fundraising-info">
+                        <div class="fundraising-amount">
+                            <span class="fundraising-label">ЗІБРАНО</span>
+                            <span class="fundraising-value">210,000 ₴</span>
                         </div>
-                        <div class="donation-amount">5 000₴</div>
+                        <div class="fundraising-target">
+                            <span class="fundraising-label">ЦІЛЬ</span>
+                            <span class="fundraising-value">300,000 ₴</span>
+                        </div>
                     </div>
-                    <div class="donation-history-item">
-                        <div>
-                            <div class="donation-info">Рації для розвідки</div>
-                            <div class="donation-date">29.05.2023</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 70%"></div>
                         </div>
-                        <div class="donation-amount">2 800₴</div>
+                        <span class="progress-percentage">70%</span>
                     </div>
-                    <div class="donation-history-item">
-                        <div>
-                            <div class="donation-info">Ремонт бронетехніки</div>
-                            <div class="donation-date">14.06.2023</div>
-                        </div>
-                        <div class="donation-amount">4 200₴</div>
+                    <div class="card-date">
+                        <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                        Термін завершення: 30.03.2025
+                    </div>
+                    <div class="card-actions">
+                        <a href="#" class="btn btn-primary">
+                            <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                            Підтримати
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                            Детальніше
+                        </a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Collection Cards Section -->
-            <div class="section-title">
-                <h2>Активні збори</h2>
-                <button class="show-more-btn" onclick="toggleCollections()">Показати більше</button>
+            <div class="card">
+                <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg')"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Автомобілі для евакуації поранених 95 ОДШБр</h3>
+                    <div class="fundraising-info">
+                        <div class="fundraising-amount">
+                            <span class="fundraising-label">ЗІБРАНО</span>
+                            <span class="fundraising-value">520,000 ₴</span>
+                        </div>
+                        <div class="fundraising-target">
+                            <span class="fundraising-label">ЦІЛЬ</span>
+                            <span class="fundraising-value">800,000 ₴</span>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 65%"></div>
+                        </div>
+                        <span class="progress-percentage">65%</span>
+                    </div>
+                    <div class="card-date">
+                        <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                        Термін завершення: 30.03.2025
+                    </div>
+                    <div class="card-actions">
+                        <a href="#" class="btn btn-primary">
+                            <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                            Підтримати
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                            Детальніше
+                        </a>
+                    </div>
+                </div>
             </div>
+            <div class="card">
+                <div class="card-image" style="background-image: url('pictures/fundraisings/card3.jpg')"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Дрони-розвідники для 24 ОМБр ім. короля Данила</h3>
+                    <div class="fundraising-info">
+                        <div class="fundraising-amount">
+                            <span class="fundraising-label">ЗІБРАНО</span>
+                            <span class="fundraising-value">180,000 ₴</span>
+                        </div>
+                        <div class="fundraising-target">
+                            <span class="fundraising-label">ЦІЛЬ</span>
+                            <span class="fundraising-value">250,000 ₴</span>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 72%"></div>
+                        </div>
+                        <span class="progress-percentage">72%</span>
+                    </div>
+                    <div class="card-date">
+                        <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                        Термін завершення: 30.03.2025
+                    </div>
+                    <div class="card-actions">
+                        <a href="#" class="btn btn-primary">
+                            <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                            Підтримати
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                            Детальніше
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hidden-collections" id="moreCollections">
             <div class="collections">
                 <div class="card">
-                    <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg')"></div>
+                    <div class="card-image" style="background-image: url('pictures/fundraisings/card4.jpg')"></div>
                     <div class="card-content">
-                        <h3 class="card-title">Тепловізори для 72 ОМБр ім. Чорних Запорожців</h3>
+                        <h3 class="card-title">Рації та обладнання зв'язку для розвідників</h3>
                         <div class="fundraising-info">
                             <div class="fundraising-amount">
                                 <span class="fundraising-label">ЗІБРАНО</span>
-                                <span class="fundraising-value">210,000 ₴</span>
+                                <span class="fundraising-value">120,000 ₴</span>
                             </div>
                             <div class="fundraising-target">
                                 <span class="fundraising-label">ЦІЛЬ</span>
-                                <span class="fundraising-value">300,000 ₴</span>
+                                <span class="fundraising-value">150,000 ₴</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 80%"></div>
+                            </div>
+                            <span class="progress-percentage">80%</span>
+                        </div>
+                        <div class="card-date">
+                            <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                            Термін завершення: 30.03.2025
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">
+                                <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                                Підтримати
+                            </a>
+                            <a href="#" class="btn btn-secondary">
+                                <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                                Детальніше
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Бронежилети та шоломи для 128 ОГШБ</h3>
+                        <div class="fundraising-info">
+                            <div class="fundraising-amount">
+                                <span class="fundraising-label">ЗІБРАНО</span>
+                                <span class="fundraising-value">350,000 ₴</span>
+                            </div>
+                            <div class="fundraising-target">
+                                <span class="fundraising-label">ЦІЛЬ</span>
+                                <span class="fundraising-value">500,000 ₴</span>
                             </div>
                         </div>
                         <div class="progress-container">
@@ -1199,16 +1290,16 @@
                         </div>
                         <div class="card-date">
                             <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
-                            Залишилось 7 днів
+                            Термін завершення: 30.03.2025
                         </div>
                         <div class="card-actions">
                             <a href="#" class="btn btn-primary">
                                 <img src="pictures/fundraisings/heart.png" alt="Donate"/>
-                                Донатнути
+                                Підтримати
                             </a>
                             <a href="#" class="btn btn-secondary">
-                                <img src="pictures/fundraisings/share.png" alt="Share"/>
-                                Поширити
+                                <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                                Детальніше
                             </a>
                         </div>
                     </div>
@@ -1216,244 +1307,118 @@
                 <div class="card">
                     <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg')"></div>
                     <div class="card-content">
-                        <h3 class="card-title">Автомобілі для евакуації поранених 95 ОДШБр</h3>
+                        <h3 class="card-title">Starlink для підрозділів ППО</h3>
                         <div class="fundraising-info">
                             <div class="fundraising-amount">
                                 <span class="fundraising-label">ЗІБРАНО</span>
-                                <span class="fundraising-value">520,000 ₴</span>
+                                <span class="fundraising-value">85,000 ₴</span>
                             </div>
                             <div class="fundraising-target">
                                 <span class="fundraising-label">ЦІЛЬ</span>
-                                <span class="fundraising-value">800,000 ₴</span>
+                                <span class="fundraising-value">100,000 ₴</span>
                             </div>
                         </div>
                         <div class="progress-container">
                             <div class="progress-bar">
-                                <div class="progress" style="width: 65%"></div>
+                                <div class="progress" style="width: 85%"></div>
                             </div>
-                            <span class="progress-percentage">65%</span>
+                            <span class="progress-percentage">85%</span>
                         </div>
                         <div class="card-date">
                             <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
-                            Залишилось 12 днів
+                            Термін завершення: 30.03.2025
                         </div>
                         <div class="card-actions">
                             <a href="#" class="btn btn-primary">
                                 <img src="pictures/fundraisings/heart.png" alt="Donate"/>
-                                Донатнути
+                                Підтримати
                             </a>
                             <a href="#" class="btn btn-secondary">
-                                <img src="pictures/fundraisings/share.png" alt="Share"/>
-                                Поширити
+                                <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                                Детальніше
                             </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image" style="background-image: url('pictures/fundraisings/card3.jpg')"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Дрони-розвідники для 24 ОМБр ім. короля Данила</h3>
-                        <div class="fundraising-info">
-                            <div class="fundraising-amount">
-                                <span class="fundraising-label">ЗІБРАНО</span>
-                                <span class="fundraising-value">180,000 ₴</span>
-                            </div>
-                            <div class="fundraising-target">
-                                <span class="fundraising-label">ЦІЛЬ</span>
-                                <span class="fundraising-value">250,000 ₴</span>
-                            </div>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 72%"></div>
-                            </div>
-                            <span class="progress-percentage">72%</span>
-                        </div>
-                        <div class="card-date">
-                            <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
-                            Залишилось 5 днів
-                        </div>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">
-                                <img src="pictures/fundraisings/heart.png" alt="Donate"/>
-                                Донатнути
-                            </a>
-                            <a href="#" class="btn btn-secondary">
-                                <img src="pictures/fundraisings/share.png" alt="Share"/>
-                                Поширити
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="hidden-collections" id="moreCollections">
-                <div class="collections">
-                    <div class="card">
-                        <div class="card-image" style="background-image: url('pictures/fundraisings/card4.jpg')"></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Рації та обладнання зв'язку для розвідників</h3>
-                            <div class="fundraising-info">
-                                <div class="fundraising-amount">
-                                    <span class="fundraising-label">ЗІБРАНО</span>
-                                    <span class="fundraising-value">120,000 ₴</span>
-                                </div>
-                                <div class="fundraising-target">
-                                    <span class="fundraising-label">ЦІЛЬ</span>
-                                    <span class="fundraising-value">150,000 ₴</span>
-                                </div>
-                            </div>
-                            <div class="progress-container">
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 80%"></div>
-                                </div>
-                                <span class="progress-percentage">80%</span>
-                            </div>
-                            <div class="card-date">
-                                <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
-                                Залишилось 3 дні
-                            </div>
-                            <div class="card-actions">
-                                <a href="#" class="btn btn-primary">
-                                    <img src="pictures/fundraisings/heart.png" alt="Donate"/>
-                                    Донатнути
-                                </a>
-                                <a href="#" class="btn btn-secondary">
-                                    <img src="pictures/fundraisings/share.png" alt="Share"/>
-                                    Поширити
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg')"></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Бронежилети та шоломи для 128 ОГШБ</h3>
-                            <div class="fundraising-info">
-                                <div class="fundraising-amount">
-                                    <span class="fundraising-label">ЗІБРАНО</span>
-                                    <span class="fundraising-value">350,000 ₴</span>
-                                </div>
-                                <div class="fundraising-target">
-                                    <span class="fundraising-label">ЦІЛЬ</span>
-                                    <span class="fundraising-value">500,000 ₴</span>
-                                </div>
-                            </div>
-                            <div class="progress-container">
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 70%"></div>
-                                </div>
-                                <span class="progress-percentage">70%</span>
-                            </div>
-                            <div class="card-date">
-                                <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
-                                Залишилось 8 днів
-                            </div>
-                            <div class="card-actions">
-                                <a href="#" class="btn btn-primary">
-                                    <img src="pictures/fundraisings/heart.png" alt="Donate"/>
-                                    Донатнути
-                                </a>
-                                <a href="#" class="btn btn-secondary">
-                                    <img src="pictures/fundraisings/share.png" alt="Share"/>
-                                    Поширити
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg')"></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Starlink для підрозділів ППО</h3>
-                            <div class="fundraising-info">
-                                <div class="fundraising-amount">
-                                    <span class="fundraising-label">ЗІБРАНО</span>
-                                    <span class="fundraising-value">85,000 ₴</span>
-                                </div>
-                                <div class="fundraising-target">
-                                    <span class="fundraising-label">ЦІЛЬ</span>
-                                    <span class="fundraising-value">100,000 ₴</span>
-                                </div>
-                            </div>
-                            <div class="progress-container">
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 85%"></div>
-                                </div>
-                                <span class="progress-percentage">85%</span>
-                            </div>
-                            <div class="card-date">
-                                <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
-                                Залишилось 2 дні
-                            </div>
-                            <div class="card-actions">
-                                <a href="#" class="btn btn-primary">
-                                    <img src="pictures/fundraisings/heart.png" alt="Donate"/>
-                                    Донатнути
-                                </a>
-                                <a href="#" class="btn btn-secondary">
-                                    <img src="pictures/fundraisings/share.png" alt="Share"/>
-                                    Поширити
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="footer">
+        <div class="footer-column">
+            <h3 class="footer-title">Про Dovir</h3>
+            <p class="footer-text">Ми допомагаємо збирати кошти для підтримки Збройних Сил України, забезпечуючи їх необхідним обладнанням та амуніцією.</p>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Навігація</h3>
+            <a href="#" class="footer-link">Створити збір</a>
+            <a href="#" class="footer-link">Актуальні збори</a>
+            <a href="#" class="footer-link">Звіти</a>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Контакти</h3>
+            <p class="footer-text">Електронна пошта: info@dovir.ua</p>
+            <p class="footer-text">Телефон: +380 12 345 6789</p>
+        </div>
+    </div>
     
-    <script>
-        function toggleStats() {
-            const moreStats = document.getElementById('moreStats');
-            const button = document.querySelector('.stats-cards + button');
-            
-            if (moreStats.style.display === 'block') {
-                moreStats.style.display = 'none';
-                button.textContent = 'Показати більше';
-            } else {
-                moreStats.style.display = 'block';
-                button.textContent = 'Показати менше';
-            }
-        }
+    <div class="copyright">
+        © 2025 Dovir. Усі права захищені.
+    </div>
+</div>
+
+<script>
+    function toggleStats() {
+        const moreStats = document.getElementById('moreStats');
+        const button = document.querySelector('.stats-cards + button');
         
-        function toggleAchievements() {
-            const moreAchievements = document.getElementById('moreAchievements');
-            const button = document.querySelector('.achievements + button');
-            
-            if (moreAchievements.style.display === 'block') {
-                moreAchievements.style.display = 'none';
-                button.textContent = 'Показати більше';
-            } else {
-                moreAchievements.style.display = 'block';
-                button.textContent = 'Показати менше';
-            }
+        if (moreStats.style.display === 'block') {
+            moreStats.style.display = 'none';
+            button.textContent = 'Показати більше';
+        } else {
+            moreStats.style.display = 'block';
+            button.textContent = 'Показати менше';
         }
+    }
+    
+    function toggleAchievements() {
+        const moreAchievements = document.getElementById('moreAchievements');
+        const button = document.querySelector('.achievements + button');
         
-        function toggleDonations() {
-            const moreDonations = document.getElementById('moreDonations');
-            const button = document.querySelector('.donation-history + button');
-            
-            if (moreDonations.style.display === 'block') {
-                moreDonations.style.display = 'none';
-                button.textContent = 'Показати більше';
-            } else {
-                moreDonations.style.display = 'block';
-                button.textContent = 'Показати менше';
-            }
+        if (moreAchievements.style.display === 'block') {
+            moreAchievements.style.display = 'none';
+            button.textContent = 'Показати більше';
+        } else {
+            moreAchievements.style.display = 'block';
+            button.textContent = 'Показати менше';
         }
+    }
+    
+    function toggleDonations() {
+        const moreDonations = document.getElementById('moreDonations');
+        const button = document.querySelector('.donation-history + button');
         
-        function toggleCollections() {
-            const moreCollections = document.getElementById('moreCollections');
-            const button = document.querySelector('.collections + button');
-            
-            if (moreCollections.style.display === 'block') {
-                moreCollections.style.display = 'none';
-                button.textContent = 'Показати більше';
-            } else {
-                moreCollections.style.display = 'block';
-                button.textContent = 'Показати менше';
-            }
+        if (moreDonations.style.display === 'block') {
+            moreDonations.style.display = 'none';
+            button.textContent = 'Показати більше';
+        } else {
+            moreDonations.style.display = 'block';
+            button.textContent = 'Показати менше';
         }
-    </script>
+    }
+    
+    function toggleCollections() {
+        const moreCollections = document.getElementById('moreCollections');
+        const button = document.querySelector('.collections + button');
+        
+        if (moreCollections.style.display === 'block') {
+            moreCollections.style.display = 'none';
+            button.textContent = 'Показати більше';
+        } else {
+            moreCollections.style.display = 'block';
+            button.textContent = 'Показати менше';
+        }
+    }
+</script>
 </body>
 </html>
