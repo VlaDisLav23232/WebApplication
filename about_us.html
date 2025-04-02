@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOVIR - Про нас</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .bg-blurred {
+            background-image: url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="bg-[#5D4037] text-white flex justify-between items-center p-4">
+        <div class="flex items-center">
+            <img src="Лого.png" alt="DOVIR Logo" class="mr-4 h-10 w-auto">
+            <span class="text-xl font-bold">DOVIR</span>
+            <div class="absolute left-0 right-0 flex justify-center space-x-8">
+                <a href="#" class="hover:text-gray-300">СТВОРИТИ ЗБІР</a>
+                <a href="#" class="hover:text-gray-300">ЗАДОНАТИТИ</a>
+                <a href="#" class="hover:text-gray-300">ЗВІТИ</a>
+                <a href="#" class="hover:text-gray-300">ПРО НАС</a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-1 bg-[#5D4037] px-1 py-0.5 rounded border border-white">
+                <a href="#" class="px-1.5 py-0.5 bg-white text-[#5D4037] rounded text-sm">UA</a>
+                <a href="#" class="px-1.5 py-0.5 text-white hover:bg-white/20 rounded text-sm">EN</a>
+            </div>
+            <div class="bg-white/20 rounded-full p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <div class="relative">
+        <!-- Blurred Background -->
+        <div class="absolute inset-0 bg-blurred z-0"></div>
+
+        <!-- Content Container -->
+        <div class="relative z-10 bg-white/90 mx-auto max-w-4xl my-8 p-8 shadow-lg">
+            <div class="text-[#6B5D4D]">
+                <h2 class="text-center text-3xl font-bold mb-8">ДІЗНАЙСЯ БІЛЬШЕ ПРО НАС</h2>
+
+                <div class="bg-[#6B5D4D] text-white p-6 mb-8">
+                    <p>Ми - команда ініціативних студентів, які хочемо зробити процес зборів простішим. Мета Dovir - зібрати всі збори в одному місці, щоб кожен міг легко та швидко задонатити на будь-який збір. Ми хочемо зробити донати щоденною звичкою, і тому наш застосунок є таким офігенним.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-gray-100 p-4">
+                        <h3 class="font-bold mb-2">Наші цінності</h3>
+                        <p>Прозорість та довіра - наш основний принцип</p>
+                    </div>
+                    <div class="bg-gray-100 p-4">
+                        <h3 class="font-bold mb-2">Наша місія</h3>
+                        <p>Зробити благодійність простою та доступною</p>
+                    </div>
+                    <div class="bg-gray-100 p-4">
+                        <h3 class="font-bold mb-2">Наша команда</h3>
+                        <p>Ініціативні студенти, які вірять у зміни</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="relative z-10 bg-white/90 mx-auto max-w-4xl my-2 p-8 shadow-lg">
+        <div class="text-[#6B5D4D]">
+            <h2 class="text-center text-3xl font-bold mb-8">НАШІ ПАРТНЕРИ</h2>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- Partner 1 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-4 flex items-center justify-center hover:bg-gray-200 transition-colors mb-2">
+                        <img src="/api/placeholder/150/100" alt="Партнер 1" class="max-h-20 max-w-full object-contain">
+                    </div>
+                    <a href="#" class="text-[#5D4037] font-semibold hover:underline">Назва Партнера 1</a>
+                </div>
+                
+                <!-- Partner 2 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-4 flex items-center justify-center hover:bg-gray-200 transition-colors mb-2">
+                        <img src="/api/placeholder/150/100" alt="Партнер 2" class="max-h-20 max-w-full object-contain">
+                    </div>
+                    <a href="#" class="text-[#5D4037] font-semibold hover:underline">Назва Партнера 2</a>
+                </div>
+                
+                <!-- Partner 3 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-4 flex items-center justify-center hover:bg-gray-200 transition-colors mb-2">
+                        <img src="/api/placeholder/150/100" alt="Партнер 3" class="max-h-20 max-w-full object-contain">
+                    </div>
+                    <a href="#" class="text-[#5D4037] font-semibold hover:underline">Назва Партнера 3</a>
+                </div>
+                
+                <!-- Partner 4 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-4 flex items-center justify-center hover:bg-gray-200 transition-colors mb-2">
+                        <img src="/api/placeholder/150/100" alt="Партнер 4" class="max-h-20 max-w-full object-contain">
+                    </div>
+                    <a href="#" class="text-[#5D4037] font-semibold hover:underline">Назва Партнера 4</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
