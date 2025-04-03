@@ -8,7 +8,7 @@ from .models import *
 
 # Define a view function for the home page
 def home(request):
-    return render(request, 'fundraisings.html')
+    return render(request, 'index.html')
 
 # Define a view function for the login page
 def login_page(request):
@@ -87,3 +87,6 @@ def fundraisings(request):
 
 def categories(request):
     return render(request, 'cats.html')
+
+def about_us(request):
+    return render(request, 'about_us.html')

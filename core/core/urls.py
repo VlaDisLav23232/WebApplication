@@ -25,13 +25,14 @@ from django.conf.urls.static import static
 # Define URL patterns
 urlpatterns = [
     path("", home, name="home"),
-    path('profile/', profile_page, name='profile_page'),
     path('home/', home, name="recipes"),      # Home page
     path('fundraisings/', fundraisings, name='fundraisings'), #fundraising page
+    path('profile/', profile_page, name='profile_page'),
     path("admin/", admin.site.urls),          # Admin interface
     path('login/', login_page, name='login_page'),    # Login page
     path('register/', register_page, name='register'),  # Registration page
-    path('register/categories/', categories, name='categories') #Choose categories
+    path('register/categories/', categories, name='categories'), #Choose categories
+    path('about_us/', about_us, name='about_us')
 ]
 
 # Serve media files if DEBUG is True (development mode)
