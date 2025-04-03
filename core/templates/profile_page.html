@@ -133,7 +133,7 @@
             position: relative;
             width: 100%;
             height: 280px; /* Зменшено висоту баннера */
-            background-image: url('pictures/profile_page/forest.jpg');
+            background-image: url('../static/pictures/profile_page/forest.jpg');
             background-size: cover;
             background-position: center;
             margin-bottom: 0;
@@ -459,7 +459,7 @@
             display: inline-block;
             width: 12px;
             height: 12px;
-            background-image: url('pictures/fundraisings/calendar.png');
+            background-image: url('../static/pictures/fundraisings/calendar.png');
             background-size: contain;
             margin-right: 5px;
             opacity: 0.7;
@@ -826,12 +826,12 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <img class="logo-img" src="pictures/fundraisings/logo_brown.png" alt="Dovir Logo">
+            <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
             <span class="logo-text">DOVIR</span>
         </div>
         <div class="nav-links">
             <a href="#">СТВОРИТИ ЗБІР</a>
-            <a href="fundraisings.html">ЗАДОНАТИТИ</a>
+            <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
             <a href="#">ЗВІТИ</a>
             <a href="#">ПРО НАС</a>
         </div>
@@ -842,7 +842,7 @@
             </div>
             <a href="profile_page.html">
                 <div class="profile-pic">
-                    <img src="pictures/fundraisings/profile_picture.png" alt="Profile">
+                    <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
                 </div>
             </a>
         </div>
@@ -857,14 +857,14 @@
         <div class="profile-content-wrapper">
             <div class="profile-main-content">
                 <div class="profile-avatar-large">
-                    <img src="pictures/profile_page/porosh.jpg" alt="Profile picture"/>
+                    <img src="{% static 'pictures/profile_page/porosh.jpg' %}" alt="Profile picture"/>
                 </div>
                 
                 <div class="profile-info-primary">
                     <h1 class="profile-name">Петро Порошенко</h1>
                     <div class="profile-role">Генерал донатних військ</div>
                     <div class="profile-location">
-                        <img src="pictures/profile_page/ukraine.png" alt="Location"/>
+                        <img src="{% static 'pictures/profile_page/ukraine.png' %}" alt="Location"/>
                         Україна
                     </div>
                     
@@ -891,14 +891,14 @@
         <div class="stats-cards">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="pictures/profile_page/porosh.jpg" alt="Donations"/>
+                    <img src="{% static 'pictures/profile_page/porosh.jpg' %}" alt="Donations"/>
                 </div>
                 <div class="stat-value">25 000₴</div>
                 <div class="stat-label">Загальна сума донатів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="pictures/fundraisings/arrow.png" alt="Collections"/>
+                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Collections"/>
                 </div>
                 <div class="stat-value">12</div>
                 <div class="stat-label">Кількість створених зборів</div>
@@ -960,7 +960,7 @@
         <div class="achievements">
             <div class="achievement">
                 <div class="achievement-icon">
-                    <img src="pictures/fundraisings/card2.jpg" alt="Розмінувач"/>
+                    <img src="{% static 'pictures/fundraisings/card2.jpg' %}" alt="Розмінувач"/>
                     <div class="achievement-overlay"></div>
                     <div class="achievement-badge">★</div>
                 </div>
@@ -972,7 +972,7 @@
             </div>
             <div class="achievement">
                 <div class="achievement-icon">
-                    <img src="pictures/fundraisings/card3.jpg" alt="Розвідник"/>
+                    <img src="{% static 'pictures/fundraisings/card3.jpg' %}" alt="Розвідник"/>
                     <div class="achievement-overlay"></div>
                     <div class="achievement-badge">★</div>
                 </div>
@@ -984,7 +984,7 @@
             </div>
             <div class="achievement">
                 <div class="achievement-icon">
-                    <img src="pictures/fundraisings/card1.jpg" alt="Медик"/>
+                    <img src="{% static 'pictures/fundraisings/card1.jpg' %}" alt="Медик"/>
                     <div class="achievement-overlay"></div>
                     <div class="achievement-badge">★</div>
                 </div>
@@ -996,7 +996,7 @@
             </div>
             <div class="achievement">
                 <div class="achievement-icon">
-                    <img src="pictures/fundraisings/card4.jpg" alt="Захисник"/>
+                    <img src="{% static 'pictures/fundraisings/card4.jpg' %}" alt="Захисник"/>
                     <div class="achievement-overlay"></div>
                     <div class="achievement-badge">★★★</div>
                 </div>
@@ -1012,7 +1012,7 @@
             <div class="achievements">
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card3.jpg" alt="Тепловізор"/>
+                        <img src="{% static 'pictures/fundraisings/card3.jpg' %}" alt="Тепловізор"/>
                         <div class="achievement-overlay"></div>
                         <div class="achievement-badge">★★</div>
                     </div>
@@ -1024,7 +1024,7 @@
                 </div>
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card2.jpg" alt="Транспортер"/>
+                        <img src="{% static 'pictures/fundraisings/card2.jpg' %}" alt="Транспортер"/>
                         <div class="achievement-overlay"></div>
                         <div class="achievement-badge">★★</div>
                     </div>
@@ -1036,7 +1036,7 @@
                 </div>
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card1.jpg" alt="Постачальник"/>
+                        <img src="{% static 'pictures/fundraisings/card1.jpg' %}" alt="Постачальник"/>
                         <div class="achievement-overlay"></div>
                         <div class="achievement-badge">★★</div>
                     </div>
@@ -1048,7 +1048,7 @@
                 </div>
                 <div class="achievement">
                     <div class="achievement-icon">
-                        <img src="pictures/fundraisings/card4.jpg" alt="Зв'язківець"/>
+                        <img src="{% static 'pictures/fundraisings/card4.jpg' %}" alt="Зв'язківець"/>
                         <div class="achievement-overlay"></div>
                         <div class="achievement-badge">★★★</div>
                     </div>
@@ -1123,7 +1123,7 @@
         </div>
         <div class="collections">
             <div class="card">
-                <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg')"></div>
+                <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card1.jpg')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Тепловізори для 72 ОМБр ім. Чорних Запорожців</h3>
                     <div class="fundraising-info">
@@ -1143,23 +1143,23 @@
                         <span class="progress-percentage">70%</span>
                     </div>
                     <div class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                         Термін завершення: 30.03.2025
                     </div>
                     <div class="card-actions">
                         <a href="#" class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                             Підтримати
                         </a>
                         <a href="#" class="btn btn-secondary">
-                            <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
                             Детальніше
                         </a>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg')"></div>
+                <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card2.jpg')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Автомобілі для евакуації поранених 95 ОДШБр</h3>
                     <div class="fundraising-info">
@@ -1179,23 +1179,23 @@
                         <span class="progress-percentage">65%</span>
                     </div>
                     <div class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                         Термін завершення: 30.03.2025
                     </div>
                     <div class="card-actions">
                         <a href="#" class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                             Підтримати
                         </a>
                         <a href="#" class="btn btn-secondary">
-                            <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
                             Детальніше
                         </a>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-image" style="background-image: url('pictures/fundraisings/card3.jpg')"></div>
+                <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card3.jpg')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Дрони-розвідники для 24 ОМБр ім. короля Данила</h3>
                     <div class="fundraising-info">
@@ -1215,16 +1215,16 @@
                         <span class="progress-percentage">72%</span>
                     </div>
                     <div class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                         Термін завершення: 30.03.2025
                     </div>
                     <div class="card-actions">
                         <a href="#" class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                             Підтримати
                         </a>
                         <a href="#" class="btn btn-secondary">
-                            <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
                             Детальніше
                         </a>
                     </div>
@@ -1235,7 +1235,7 @@
         <div class="hidden-collections" id="moreCollections">
             <div class="collections">
                 <div class="card">
-                    <div class="card-image" style="background-image: url('pictures/fundraisings/card4.jpg')"></div>
+                    <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card4.jpg')"></div>
                     <div class="card-content">
                         <h3 class="card-title">Рації та обладнання зв'язку для розвідників</h3>
                         <div class="fundraising-info">
@@ -1255,23 +1255,23 @@
                             <span class="progress-percentage">80%</span>
                         </div>
                         <div class="card-date">
-                            <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                             Термін завершення: 30.03.2025
                         </div>
                         <div class="card-actions">
                             <a href="#" class="btn btn-primary">
-                                <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                                 Підтримати
                             </a>
                             <a href="#" class="btn btn-secondary">
-                                <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
                                 Детальніше
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg')"></div>
+                    <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card1.jpg')"></div>
                     <div class="card-content">
                         <h3 class="card-title">Бронежилети та шоломи для 128 ОГШБ</h3>
                         <div class="fundraising-info">
@@ -1291,23 +1291,23 @@
                             <span class="progress-percentage">70%</span>
                         </div>
                         <div class="card-date">
-                            <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                             Термін завершення: 30.03.2025
                         </div>
                         <div class="card-actions">
                             <a href="#" class="btn btn-primary">
-                                <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                                 Підтримати
                             </a>
                             <a href="#" class="btn btn-secondary">
-                                <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
                                 Детальніше
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg')"></div>
+                    <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card2.jpg')"></div>
                     <div class="card-content">
                         <h3 class="card-title">Starlink для підрозділів ППО</h3>
                         <div class="fundraising-info">
@@ -1327,16 +1327,16 @@
                             <span class="progress-percentage">85%</span>
                         </div>
                         <div class="card-date">
-                            <img src="pictures/fundraisings/calendar.png" alt="Calendar"/>
+                            <img src="{% static 'ppictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                             Термін завершення: 30.03.2025
                         </div>
                         <div class="card-actions">
                             <a href="#" class="btn btn-primary">
-                                <img src="pictures/fundraisings/heart.png" alt="Donate"/>
+                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                                 Підтримати
                             </a>
                             <a href="#" class="btn btn-secondary">
-                                <img src="pictures/fundraisings/arrow.png" alt="Share"/>
+                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
                                 Детальніше
                             </a>
                         </div>

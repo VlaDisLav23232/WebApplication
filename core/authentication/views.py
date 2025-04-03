@@ -40,35 +40,50 @@ def login_page(request):
 
 # Define a view function for the registration page
 def register_page(request):
-    # Check if the HTTP request method is POST (form submission)
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
         username = request.POST.get('username')
+        email = request.POST.get('email')  # Отримуємо email
+        phone = request.POST.get('phone')  # Отримуємо телефон
         password = request.POST.get('password')
-        
-        # Check if a user with the provided username already exists
-        user = User.objects.filter(username=username)
-        
-        if user.exists():
-            # Display an information message if the username is taken
+
+        # Перевірка наявності користувача з таким же username, email або телефоном
+        if User.objects.filter(username=username).exists():
             messages.info(request, "Username already taken!")
             return redirect('/register/')
-        
-        # Create a new User object with the provided information
+
+        if User.objects.filter(email=email).exists():
+            messages.info(request, "Email already in use!")
+            return redirect('/register/')
+
+        # Перевіряємо телефон (якщо він є в моделі користувача)
+        if User.objects.filter(userprofile__phone=phone).exists():
+            messages.info(request, "Phone number already in use!")
+            return redirect('/register/')
+
+        # Створення користувача
         user = User.objects.create_user(
-            first_name=first_name,
-            last_name=last_name,
-            username=username
+            username=username,
+            email=email
         )
-        
-        # Set the user's password and save the user object
         user.set_password(password)
         user.save()
+
+        # Збереження телефону, якщо у моделі є `UserProfile`
+        user.userprofile.phone = phone
+        user.userprofile.save()
         
-        # Display an information message indicating successful account creation
-        messages.info(request, "Account created Successfully!")
+        print("Account created successfully!")
+        messages.info(request, "Account created successfully!")
         return redirect('/register/')
-    
-    # Render the registration page template (GET request)
+
     return render(request, 'signup.html')
+
+
+def profile_page(request):
+    return render(request, 'profile_page.html')
+
+def fundraisings(request):
+    return render(request, 'fundraisings.html')
+
+def categories(request):
+    return render(request, 'cats.html')
