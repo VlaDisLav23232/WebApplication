@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body class="sign-up">
+    <div class="button">
+        <input type="text" class="input-field" placeholder="Ваше ім'я..." />
+    </div>
+    <div class="button2">
+        <input type="text" class="input-field" placeholder="Ваш Email..." />
+    </div>
+    <div class="button3">
+        <input type="text" class="input-field" placeholder="Ваш номер телефону..." />
+    </div>
+    <div class="button-password">
+        <input type="password" id="password-hidden" class="input-field" placeholder="Підтвердіть пароль..." />
+    </div>
+    <div class="button-password2">
+        <input type="password" id="password-hidden" class="input-field" placeholder="Придумайте пароль..." />
+    </div>
+    <div class="div2">РЕЄСТРАЦІЯ</div>
+    <a href="/login" class="div3">
+        <span>
+            <span class="div-3-span">Уже є акаунт? Увійди!</span>
+        </span>
+    </a>
+    <a href="categories/" class="submit-reg">
+        <div class="div4">ПІДТВЕРДИТИ</div>
+    </a>
+</body>
+</html>
+
+  
