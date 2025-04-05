@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід</title>
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="sign-in">
+    <!-- 25+ CSS decorative background elements -->
+    <div class="bg-pattern"></div>
+    <div class="decorative-element elem-1"></div>
+    <div class="decorative-element elem-2"></div>
+    <div class="decorative-element elem-3"></div>
+    <div class="decorative-element elem-4"></div>
+    <div class="decorative-element elem-5"></div>
+    <div class="decorative-element elem-6"></div>
+    <div class="decorative-element elem-7"></div>
+    <div class="decorative-element elem-8"></div>
+    <div class="decorative-element elem-9"></div>
+    <div class="decorative-element elem-10"></div>
+    <div class="decorative-element elem-11"></div>
+    <div class="decorative-element elem-12"></div>
+    <div class="decorative-element elem-13"></div>
+    <div class="decorative-element elem-14"></div>
+    <div class="decorative-element elem-15"></div>
+    
+    <!-- Navbar -->
+    <div class="nav-bar-white">
+        <div class="nav-content">
+            <div class="nav-left">
+                <img class="logo-img" src="{% static 'pictures/registration/Лого.png' %}" alt="DOVIR Logo">
+                <div class="dovir">DOVIR</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-center">
+                <div class="nav-links">
+                    <a href="#" class="nav-link">СТВОРИТИ ЗБІР</a>
+                    <a href="#" class="nav-link">ЗАДОНАТИТИ</a>
+                    <a href="#" class="nav-link">ЗВІТИ</a>
+                    <a href="#" class="nav-link">ПРО НАС</a>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <div class="rectangle-2">
+                        <div class="rectangle-3"></div>
+                        <div class="ua">UA</div>
+                        <div class="en">EN</div>
+                    </div>
+                </div>
+                
+                <div class="_3-d-avatars-14">
+                    <img class="avatars-3-d-avatar-14" src="{% static 'pictures/registration/profile.png' %}" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="body">
+        <div class="title">РЕЄСТРАЦІЯ</div>
+        
+        <div class="input-container">
+            <input type="text" class="input-field" placeholder="Ваше ім'я...">
+        </div>
+
+        <div class="input-container">
+            <input type="text" class="input-field" placeholder="Ваше Email...">
+        </div>
+
+        <div class="input-container">
+            <input type="text" class="input-field" placeholder="Ваш номер телефону...">
+        </div>
+        
+        <div class="input-container">
+            <input type="password" class="input-field" placeholder="Придумайте пароль...">
+            <i class="fas fa-eye password-toggle"></i>
+        </div>
+
+        <div class="input-container">
+            <input type="password" class="input-field" placeholder="Підтвердіть пароль...">
+            <i class="fas fa-eye password-toggle"></i>
+        </div>
+        
+        <a href="{% static 'css/cats.html' %}" class="submit-button" style="text-decoration: none; display: block; text-align: center; line-height: clamp(60px, 8vw, 10px);">
+            ПІДТВЕРДИТИ
+        </a>
+        
+        <a href="{% static 'css/signin.html' %}" class="register-link">
+            Уже є акаунт? Увійди!
+        </a>
+    </div>
+</body>
+</html>
