@@ -1,3 +1,5 @@
+<!--Changed by claude-->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -69,22 +71,50 @@
     <div class="body">
         <div class="title">ВХІД</div>
         
-        <div class="input-container">
-            <input type="text" class="input-field" placeholder="Ваше ім'я...">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p style="color: red; text-align: center;">{{ message }}</p>
+            {% endfor %}
         </div>
+        {% endif %}
         
-        <div class="input-container">
-            <input type="password" class="input-field" placeholder="Ваш пароль...">
-            <i class="fas fa-eye password-toggle"></i>
-        </div>
-        
-        <button class="submit-button">
-            ПІДТВЕРДИТИ
-        </button>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-container">
+                <input type="text" name="username" class="input-field" placeholder="Ваше ім'я..." required>
+            </div>
+            
+            <div class="input-container">
+                <input type="password" name="password" class="input-field" placeholder="Ваш пароль..." required>
+                <i class="fas fa-eye password-toggle"></i>
+            </div>
+            
+            <button type="submit" class="submit-button">
+                ПІДТВЕРДИТИ
+            </button>
+        </form>
         
         <a href="{% url 'register' %}" class="register-link">
             Немає акаунту? Зареєструйся!
         </a>
     </div>
+    
+    <script>
+        document.querySelectorAll('.password-toggle').forEach(function(toggle) {
+            toggle.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -14,6 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+#Changed by claude
+
+
 # Import necessary modules
 from django.contrib import admin  # Django admin module
 from django.urls import path       # URL routing
@@ -31,6 +34,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),          # Admin interface
     path('login/', login_page, name='login_page'),    # Login page
     path('register/', register_page, name='register'),  # Registration page
+    path('logout/', logout_view, name='logout'),  # Logout page
     path('register/categories/', categories, name='categories'), #Choose categories
     path('about_us/', about_us, name='about_us')
 ]
