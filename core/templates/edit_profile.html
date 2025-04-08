@@ -1,0 +1,484 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редагування профілю</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Сюди буде вставлений увесь CSS із signin.css */
+
+        /* Вставлений CSS із signin.css */
+        body.sign-in {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+        }
+
+        .nav-bar-white {
+            background-color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .dovir {
+            font-weight: bold;
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+        }
+
+        .nav-center .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .language-switcher {
+            position: relative;
+        }
+
+        .rectangle-2 {
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ua, .en {
+            margin: 0 5px;
+            font-size: 14px;
+        }
+
+        .avatars-3-d-avatar-14 {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .edit-profile-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 30px auto 50px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 20px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-grid-full {
+            grid-column: 1 / -1;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group-prepend {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-right: none;
+            padding: 10px 15px;
+            border-radius: 6px 0 0 6px;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 6px 6px 0;
+        }
+
+        .btn-save {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .btn-save:hover {
+            background-color: #0069d9;
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 15px;
+            border: 3px solid #eee;
+        }
+
+        .helptext {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .errorlist {
+            color: #dc3545;
+            padding-left: 0;
+            list-style-type: none;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url("...") repeat;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .decorative-element {
+            position: absolute;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="sign-in">
+    <!-- CSS decorative background elements -->
+    <div class="bg-pattern"></div>
+    {% for i in "123456789101112131415"|make_list %}
+    <div class="decorative-element elem-{{ i }}"></div>
+    {% endfor %}
+
+    <!-- Navbar -->
+    <div class="nav-bar-white">
+        <div class="nav-content">
+            <div class="nav-left">
+                <img class="logo-img" src="{% static 'pictures/registration/Лого.png' %}" alt="DOVIR Logo">
+                <div class="dovir">DOVIR</div>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-center">
+                <div class="nav-links">
+                    <a href="#" class="nav-link">СТВОРИТИ ЗБІР</a>
+                    <a href="#" class="nav-link">ЗАДОНАТИТИ</a>
+                    <a href="#" class="nav-link">ЗВІТИ</a>
+                    <a href="{% url 'about_us' %}" class="nav-link">ПРО НАС</a>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <div class="rectangle-2">
+                        <div class="rectangle-3"></div>
+                        <div class="ua">UA</div>
+                        <div class="en">EN</div>
+                    </div>
+                </div>
+                
+                <div class="_3-d-avatars-14">
+                    <a href="{% url 'profile_page' %}">
+                        {% if user.avatar %}
+                            <img class="avatars-3-d-avatar-14" src="{{ user.avatar.url }}" alt="{{ user.username }}'s Avatar">
+                        {% else %}
+                            <img class="avatars-3-d-avatar-14" src="{% static 'pictures/registration/profile.png' %}" alt="Default Avatar">
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="edit-profile-container">
+        <a href="{% url 'profile_page' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Назад до профілю
+        </a>
+        
+        <h1 style="text-align: center; margin-bottom: 30px;">Редагування профілю</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="section-title">Основна інформація</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.first_name.id_for_label }}">Ім'я</label>
+                    {{ form.first_name.errors }}
+                    <input type="text" name="{{ form.first_name.name }}" id="{{ form.first_name.id_for_label }}" 
+                           class="form-control" value="{{ form.first_name.value|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.last_name.id_for_label }}">Прізвище</label>
+                    {{ form.last_name.errors }}
+                    <input type="text" name="{{ form.last_name.name }}" id="{{ form.last_name.id_for_label }}" 
+                           class="form-control" value="{{ form.last_name.value|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email.errors }}
+                    <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" 
+                           class="form-control" value="{{ form.email.value|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.phone.id_for_label }}">Номер телефону</label>
+                    {{ form.phone.errors }}
+                    <input type="tel" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" 
+                           class="form-control" value="{{ form.phone.value|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.birth_date.id_for_label }}">Дата народження</label>
+                    {{ form.birth_date.errors }}
+                    <input type="date" name="{{ form.birth_date.name }}" id="{{ form.birth_date.id_for_label }}" 
+                           class="form-control" value="{{ form.birth_date.value|date:'Y-m-d'|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.avatar.id_for_label }}">Фото профілю</label>
+                    {{ form.avatar.errors }}
+                    
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview">
+                    {% else %}
+                        <img src="{% static 'pictures/registration/profile.png' %}" alt="Default Avatar" class="avatar-preview">
+                    {% endif %}
+                    
+                    <input type="file" name="{{ form.avatar.name }}" id="{{ form.avatar.id_for_label }}" 
+                           class="form-control" accept="image/*">
+                    <small class="helptext">Рекомендований розмір: 500x500 пікселів</small>
+                </div>
+            </div>
+            
+            <div class="form-group form-grid-full">
+                <label class="form-label" for="{{ form.bio.id_for_label }}">Про мене</label>
+                {{ form.bio.errors }}
+                <textarea name="{{ form.bio.name }}" id="{{ form.bio.id_for_label }}" 
+                          class="form-control">{{ form.bio.value|default:'' }}</textarea>
+            </div>
+            
+            <div class="section-title">Контактна інформація</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.city.id_for_label }}">Місто</label>
+                    {{ form.city.errors }}
+                    <input type="text" name="{{ form.city.name }}" id="{{ form.city.id_for_label }}" 
+                           class="form-control" value="{{ form.city.value|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.postal_code.id_for_label }}">Поштовий індекс</label>
+                    {{ form.postal_code.errors }}
+                    <input type="text" name="{{ form.postal_code.name }}" id="{{ form.postal_code.id_for_label }}" 
+                           class="form-control" value="{{ form.postal_code.value|default:'' }}">
+                </div>
+                
+                <div class="form-group form-grid-full">
+                    <label class="form-label" for="{{ form.address.id_for_label }}">Адреса</label>
+                    {{ form.address.errors }}
+                    <input type="text" name="{{ form.address.name }}" id="{{ form.address.id_for_label }}" 
+                           class="form-control" value="{{ form.address.value|default:'' }}">
+                </div>
+            </div>
+            
+            <div class="section-title">Соціальні мережі</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.instagram.id_for_label }}">Instagram</label>
+                    {{ form.instagram.errors }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <input type="text" name="{{ form.instagram.name }}" id="{{ form.instagram.id_for_label }}" 
+                               class="form-control" value="{{ form.instagram.value|default:'' }}" placeholder="username">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.facebook.id_for_label }}">Facebook</label>
+                    {{ form.facebook.errors }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <input type="text" name="{{ form.facebook.name }}" id="{{ form.facebook.id_for_label }}" 
+                               class="form-control" value="{{ form.facebook.value|default:'' }}" placeholder="username">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.telegram.id_for_label }}">Telegram</label>
+                    {{ form.telegram.errors }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fab fa-telegram-plane"></i>
+                        </div>
+                        <input type="text" name="{{ form.telegram.name }}" id="{{ form.telegram.id_for_label }}" 
+                               class="form-control" value="{{ form.telegram.value|default:'' }}" placeholder="@username">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-save">ЗБЕРЕГТИ ЗМІНИ</button>
+        </form>
+    </div>
+    
+    <script>
+        // Попередній перегляд аватара
+        document.getElementById('{{ form.avatar.id_for_label }}').onchange = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.avatar-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        };
+    </script>
+</body>
+</html>
