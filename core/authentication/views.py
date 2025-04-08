@@ -1,10 +1,14 @@
+#Changed by claude
+
+
+
 # Import necessary modules and models
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .models import *
+from .models import CustomUser
+from .forms import RegisterForm
 
 # Define a view function for the home page
 def home(request):
@@ -12,15 +16,19 @@ def home(request):
 
 # Define a view function for the login page
 def login_page(request):
+    # Якщо користувач вже авторизований, перенаправляємо на головну
+    if request.user.is_authenticated:
+        return redirect('/home/')
+        
     # Check if the HTTP request method is POST (form submission)
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         
         # Check if a user with the provided username exists
-        if not User.objects.filter(username=username).exists():
+        if not CustomUser.objects.filter(username=username).exists():
             # Display an error message if the username does not exist
-            messages.error(request, 'Invalid Username')
+            messages.error(request, 'Неправильне ім\'я користувача')
             return redirect('/login/')
         
         # Authenticate the user with the provided username and password
@@ -28,7 +36,7 @@ def login_page(request):
         
         if user is None:
             # Display an error message if authentication fails (invalid password)
-            messages.error(request, "Invalid Password")
+            messages.error(request, "Неправильний пароль")
             return redirect('/login/')
         else:
             # Log in the user and redirect to the home page upon successful login
@@ -40,45 +48,31 @@ def login_page(request):
 
 # Define a view function for the registration page
 def register_page(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')  # Отримуємо email
-        phone = request.POST.get('phone')  # Отримуємо телефон
-        password = request.POST.get('password')
-
-        # Перевірка наявності користувача з таким же username, email або телефоном
-        if User.objects.filter(username=username).exists():
-            messages.info(request, "Username already taken!")
-            return redirect('/register/')
-
-        if User.objects.filter(email=email).exists():
-            messages.info(request, "Email already in use!")
-            return redirect('/register/')
-
-        # Перевіряємо телефон (якщо він є в моделі користувача)
-        if User.objects.filter(userprofile__phone=phone).exists():
-            messages.info(request, "Phone number already in use!")
-            return redirect('/register/')
-
-        # Створення користувача
-        user = User.objects.create_user(
-            username=username,
-            email=email
-        )
-        user.set_password(password)
-        user.save()
-
-        # Збереження телефону, якщо у моделі є `UserProfile`
-        user.userprofile.phone = phone
-        user.userprofile.save()
+    # Якщо користувач вже авторизований, перенаправляємо на головну
+    if request.user.is_authenticated:
+        return redirect('/home/')
         
-        print("Account created successfully!")
-        messages.info(request, "Account created successfully!")
-        return redirect('/register/')
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            # Автоматично авторизуємо користувача
+            login(request, user)
+            return redirect('/home/')  # Перенаправляємо на головну сторінку
+    else:
+        form = RegisterForm()
+    
+    return render(request, 'signup.html', {'form': form})
 
-    return render(request, 'signup.html')
+# Функція для виходу з облікового запису
+def logout_view(request):
+    logout(request)
+    return redirect('/login/')
 
-
+# Додаємо декоратор для перевірки автентифікації
+@login_required(login_url='/login/')
 def profile_page(request):
     return render(request, 'profile_page.html')
 
