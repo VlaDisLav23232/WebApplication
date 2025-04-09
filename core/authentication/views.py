@@ -3,12 +3,14 @@
 
 
 # Import necessary modules and models
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from .forms import RegisterForm
+from django.urls import reverse
+from django import forms
 
 # Define a view function for the home page
 def home(request):
@@ -71,10 +73,40 @@ def logout_view(request):
     logout(request)
     return redirect('/login/')
 
-# Додаємо декоратор для перевірки автентифікації
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'phone', 'avatar', 
+                  'bio', 'birth_date', 'city', 'address', 'postal_code', 
+                  'instagram', 'facebook', 'telegram']
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type': 'date'}),
+            'bio': forms.Textarea(attrs={'rows': 4}),
+        }
+
+# Оновлена функція profile_page
 @login_required(login_url='/login/')
 def profile_page(request):
-    return render(request, 'profile_page.html')
+    user = request.user
+    context = {
+        'user': user
+    }
+    return render(request, 'profile_page.html', context)
+
+# Функція для редагування профілю
+@login_required(login_url='/login/')
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Профіль успішно оновлено!')
+            return redirect('profile_page')
+    else:
+        form = ProfileUpdateForm(instance=request.user)
+    
+    return render(request, 'edit_profile.html', {'form': form, 'user': request.user})
 
 def fundraisings(request):
     return render(request, 'fundraisings.html')

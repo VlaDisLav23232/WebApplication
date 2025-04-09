@@ -31,16 +31,22 @@ urlpatterns = [
     path('home/', home, name="recipes"),      # Home page
     path('fundraisings/', fundraisings, name='fundraisings'), #fundraising page
     path('profile/', profile_page, name='profile_page'),
+    path('profile/edit/', edit_profile, name='edit_profile'),
     path("admin/", admin.site.urls),          # Admin interface
     path('login/', login_page, name='login_page'),    # Login page
     path('register/', register_page, name='register'),  # Registration page
     path('logout/', logout_view, name='logout'),  # Logout page
     path('register/categories/', categories, name='categories'), #Choose categories
-    path('about_us/', about_us, name='about_us')
+    path('about_us/', about_us, name='about_us'),
+    path('create_fundraising/', home, name='create_collection'), #create fundraising
+    path('change_password/', home, name='change_password'), #change password 
+    path('delete_account/', home, name='deactivate_account'),
+    path('update_settings/', home, name="update_settings")
 ]
 
 # Serve media files if DEBUG is True (development mode)
 if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
 # Serve static files using staticfiles_urlpatterns
