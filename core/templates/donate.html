@@ -529,23 +529,24 @@
     <!-- Навігаційна панель -->
     <div class="navbar">
         <div class="logo">
-            <img class="logo-img" src="pictures/fundraisings/logo_brown.png" alt="Dovir Logo">
+            <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
             <span class="logo-text">DOVIR</span>
         </div>
         <div class="nav-links">
+            <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
             <a href="#">СТВОРИТИ ЗБІР</a>
-            <a href="fundraisings.html">ЗАДОНАТИТИ</a>
+            <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
             <a href="#">ЗВІТИ</a>
-            <a href="about_us.html">ПРО НАС</a>
+            <a href="{% url 'about_us' %}">ПРО НАС</a>
         </div>
         <div class="right-nav">
             <div class="lang-selector">
                 <div class="lang-btn active">UA</div>
                 <div class="lang-btn inactive">EN</div>
             </div>
-            <a href="profile_page.html">
+            <a href="{% url 'profile_page' %}">
                 <div class="profile-pic">
-                    <img src="pictures/fundraisings/profile_picture.png" alt="Profile">
+                    <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
                 </div>
             </a>
         </div>

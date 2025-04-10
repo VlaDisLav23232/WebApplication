@@ -13,9 +13,11 @@ class CustomUser(AbstractUser):
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата народження")
     
     # Адреса
-    city = models.CharField(max_length=100, blank=True, null=True, verbose_name="Місто")
+    country = models.CharField(max_length=100, blank=True, null=True, verbose_name="Країна")
+    region = models.CharField(max_length=100, blank=True, null=True, verbose_name="Область/Регіон")
+    city = models.CharField(max_length=100, blank=True, null=True, verbose_name="Населений пункт")
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name="Адреса")
-    postal_code = models.CharField(max_length=10, blank=True, null=True, verbose_name="Поштовий індекс")
+    # Видалено postal_code
     
     # Налаштування
     notifications_enabled = models.BooleanField(default=True, verbose_name="Сповіщення увімкнені")

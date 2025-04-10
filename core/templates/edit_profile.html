@@ -8,150 +8,205 @@
     <title>Редагування профілю</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Сюди буде вставлений увесь CSS із signin.css */
-
-        /* Вставлений CSS із signin.css */
+        /* Основні стилі */
         body.sign-in {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f8f5f2;
             min-height: 100vh;
+            color: #333;
         }
 
-        .nav-bar-white {
-            background-color: white;
-            padding: 15px 30px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .nav-content {
+        .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 50px;
+            height: 70px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(93, 64, 55, 0.1);
         }
 
-        .nav-left {
+        .logo {
             display: flex;
             align-items: center;
+            height: 100%;
         }
 
         .logo-img {
-            height: 40px;
+            height: 69px;
             margin-right: 10px;
+            object-fit: contain;
         }
 
-        .dovir {
-            font-weight: bold;
-            font-size: 24px;
-            color: #007bff;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
+        .logo-text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            color: #5D4037;
             font-size: 24px;
         }
-
-        .nav-center .nav-links {
+        
+        .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 30px;
         }
-
-        .nav-link {
+        
+        .nav-links a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .nav-link:hover {
-            color: #007bff;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .language-switcher {
-            position: relative;
-        }
-
-        .rectangle-2 {
-            background-color: #f5f5f5;
-            border-radius: 20px;
-            padding: 5px 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .ua, .en {
-            margin: 0 5px;
+            color: #5D4037;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
             font-size: 14px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #8D6E63;
+        }
+        
+        .right-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .lang-selector {
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn {
+            padding: 5px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .lang-btn.active {
+            background-color: #5D4037;
+            color: white;
+        }
+        
+        .lang-btn.inactive {
+            background-color: #E0E0E0;
+            color: #5D4037;
+        }
+        
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #5D4037;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            overflow: hidden;
         }
 
-        .avatars-3-d-avatar-14 {
-            height: 40px;
-            width: 40px;
-            border-radius: 50%;
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
+        /* Покращені стилі для контейнера редагування профілю */
         .edit-profile-container {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 40px;
             max-width: 800px;
-            margin: 30px auto 50px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(93, 64, 55, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .profile-header h1 {
+            color: #5D4037;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .profile-header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #8D6E63;
+            margin: 15px auto 0;
         }
 
         .section-title {
             font-size: 22px;
             font-weight: 600;
-            margin: 20px 0 15px;
+            margin: 30px 0 20px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #EFEBE9;
+            color: #5D4037;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: #5D4037;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-label {
             display: block;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            color: #5D4037;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 12px 15px;
+            border: 2px solid #D7CCC8;
+            border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            color: #5D4037;
+            background-color: #FAFAFA;
         }
 
         .form-control:focus {
-            border-color: #007bff;
+            border-color: #8D6E63;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.2);
+            background-color: white;
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 100px;
+            min-height: 120px;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
 
         .form-grid-full {
@@ -160,174 +215,278 @@
 
         .input-group {
             display: flex;
-            align-items: center;
+            align-items: stretch;
         }
 
         .input-group-prepend {
-            background-color: #f5f5f5;
-            border: 1px solid #ddd;
+            background-color: #5D4037;
+            color: white;
+            border: 2px solid #5D4037;
             border-right: none;
-            padding: 10px 15px;
-            border-radius: 6px 0 0 6px;
+            padding: 0 15px;
+            border-radius: 8px 0 0 8px;
+            display: flex;
+            align-items: center;
         }
 
         .input-group .form-control {
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 8px 8px 0;
         }
 
         .btn-save {
-            background-color: #007bff;
+            background-color: #5D4037;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
+            padding: 14px 25px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             display: block;
             width: 100%;
-            margin-top: 30px;
+            margin-top: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
         }
 
         .btn-save:hover {
-            background-color: #0069d9;
+            background-color: #4E342E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(93, 64, 55, 0.4);
+        }
+
+        .btn-save:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 6px rgba(93, 64, 55, 0.3);
+        }
+
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #EFEBE9;
+            border-radius: 12px;
+            position: relative;
         }
 
         .avatar-preview {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
             display: block;
-            margin-bottom: 15px;
-            border: 3px solid #eee;
+            margin-bottom: 20px;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(93, 64, 55, 0.2);
+        }
+
+        .avatar-upload-btn {
+            background-color: white;
+            border: 2px solid #D7CCC8;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #5D4037;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar-upload-btn:hover {
+            background-color: #EFEBE9;
+            border-color: #8D6E63;
+        }
+
+        .avatar-input {
+            display: none;
         }
 
         .helptext {
             font-size: 12px;
-            color: #6c757d;
-            margin-top: 5px;
+            color: #8D6E63;
+            margin-top: 8px;
             display: block;
+            text-align: center;
+            font-style: italic;
         }
 
         .errorlist {
-            color: #dc3545;
+            color: #d32f2f;
             padding-left: 0;
             list-style-type: none;
             font-size: 14px;
             margin-top: 5px;
+            background-color: #FFEBEE;
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
         .back-link {
-            display: inline-block;
-            margin-bottom: 15px;
-            color: #007bff;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #5D4037;
             text-decoration: none;
             font-weight: 500;
-        }
-
-        .back-link i {
-            margin-right: 5px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .alert {
-            padding: 12px 15px;
-            margin-bottom: 20px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            background-color: #EFEBE9;
             border-radius: 6px;
         }
 
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .back-link:hover {
+            background-color: #D7CCC8;
+            color: #3E2723;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 45px;
+        }
+
+        .alert::before {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
         .alert-success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
+            background-color: #E8F5E9;
+            border-left: 4px solid #4CAF50;
+            color: #2E7D32;
+        }
+
+        .alert-success::before {
+            content: '\f058';
+            color: #4CAF50;
         }
 
         .alert-danger {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
+            background-color: #FFEBEE;
+            border-left: 4px solid #F44336;
+            color: #C62828;
         }
 
+        .alert-danger::before {
+            content: '\f06a';
+            color: #F44336;
+        }
+
+        /* Декоративні елементи */
         .bg-pattern {
             position: fixed;
             width: 100%;
             height: 100%;
-            background: url("...") repeat;
+            background: linear-gradient(45deg, rgba(93, 64, 55, 0.03) 25%, transparent 25%, transparent 75%, rgba(93, 64, 55, 0.03) 75%, rgba(93, 64, 55, 0.03)),
+                        linear-gradient(45deg, rgba(93, 64, 55, 0.03) 25%, transparent 25%, transparent 75%, rgba(93, 64, 55, 0.03) 75%, rgba(93, 64, 55, 0.03));
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
             top: 0;
             left: 0;
             z-index: -1;
             pointer-events: none;
         }
 
-        .decorative-element {
-            position: absolute;
-            z-index: -1;
+        .decoration-circle {
+            position: fixed;
+            border-radius: 50%;
+            background-color: rgba(93, 64, 55, 0.05);
             pointer-events: none;
+            z-index: -1;
+        }
+
+        .decoration-circle-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+        }
+
+        .decoration-circle-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+        }
+
+        .select-styled {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235D4037'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Анімація при наведенні на соціальні іконки */
+        .social-icon-container:hover .input-group-prepend {
+            background-color: #3E2723;
         }
     </style>
 </head>
 <body class="sign-in">
-    <!-- CSS decorative background elements -->
+    <!-- Декоративні елементи -->
     <div class="bg-pattern"></div>
-    {% for i in "123456789101112131415"|make_list %}
-    <div class="decorative-element elem-{{ i }}"></div>
-    {% endfor %}
+    <div class="decoration-circle decoration-circle-1"></div>
+    <div class="decoration-circle decoration-circle-2"></div>
 
-    <!-- Navbar -->
-    <div class="nav-bar-white">
-        <div class="nav-content">
-            <div class="nav-left">
-                <img class="logo-img" src="{% static 'pictures/registration/Лого.png' %}" alt="DOVIR Logo">
-                <div class="dovir">DOVIR</div>
+    <!-- Navbar - залишається без змін -->
+    <div class="navbar">
+        <div class="logo">
+            <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
+            <span class="logo-text">DOVIR</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
+            <a href="#">СТВОРИТИ ЗБІР</a>
+            <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
+            <a href="#">ЗВІТИ</a>
+            <a href="{% url 'about_us' %}">ПРО НАС</a>
+        </div>
+        <div class="right-nav">
+            <div class="lang-selector">
+                <div class="lang-btn active">UA</div>
+                <div class="lang-btn inactive">EN</div>
             </div>
-            
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <div class="nav-center">
-                <div class="nav-links">
-                    <a href="#" class="nav-link">СТВОРИТИ ЗБІР</a>
-                    <a href="#" class="nav-link">ЗАДОНАТИТИ</a>
-                    <a href="#" class="nav-link">ЗВІТИ</a>
-                    <a href="{% url 'about_us' %}" class="nav-link">ПРО НАС</a>
+            <a href="{% url 'profile_page' %}">
+                <div class="profile-pic">
+                    <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
                 </div>
-            </div>
-            
-            <div class="nav-right">
-                <div class="language-switcher">
-                    <div class="rectangle-2">
-                        <div class="rectangle-3"></div>
-                        <div class="ua">UA</div>
-                        <div class="en">EN</div>
-                    </div>
-                </div>
-                
-                <div class="_3-d-avatars-14">
-                    <a href="{% url 'profile_page' %}">
-                        {% if user.avatar %}
-                            <img class="avatars-3-d-avatar-14" src="{{ user.avatar.url }}" alt="{{ user.username }}'s Avatar">
-                        {% else %}
-                            <img class="avatars-3-d-avatar-14" src="{% static 'pictures/registration/profile.png' %}" alt="Default Avatar">
-                        {% endif %}
-                    </a>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
     
-    <!-- Main content -->
+    <!-- Основний контент -->
     <div class="edit-profile-container">
         <a href="{% url 'profile_page' %}" class="back-link">
             <i class="fas fa-arrow-left"></i> Назад до профілю
         </a>
         
-        <h1 style="text-align: center; margin-bottom: 30px;">Редагування профілю</h1>
+        <div class="profile-header">
+            <h1>Редагування профілю</h1>
+        </div>
         
         {% if messages %}
             {% for message in messages %}
@@ -341,92 +500,101 @@
             {% csrf_token %}
             
             <div class="section-title">Основна інформація</div>
+            
             <div class="form-grid">
+                <!-- Фото профілю -->
+                <div class="form-group">
+                    <div class="avatar-section">
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview" id="avatarPreview">
+                        {% else %}
+                            <img src="{% static 'pictures/profile_page/default.png' %}" alt="Default Avatar" class="avatar-preview" id="avatarPreview">
+                        {% endif %}
+                        
+                        <label for="{{ form.avatar.id_for_label }}" class="avatar-upload-btn">
+                            <i class="fas fa-camera"></i> Змінити фото
+                        </label>
+                        <input type="file" name="{{ form.avatar.name }}" id="{{ form.avatar.id_for_label }}" 
+                            class="avatar-input" accept="image/*">
+                        <small class="helptext">Рекомендований розмір: 500x500 пікселів</small>
+                        {{ form.avatar.errors }}
+                    </div>
+                </div>
+                
+                <!-- Біографія -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.bio.id_for_label }}">Про мене</label>
+                    {{ form.bio.errors }}
+                    <textarea name="{{ form.bio.name }}" id="{{ form.bio.id_for_label }}" 
+                            class="form-control">{{ form.bio.value|default:'' }}</textarea>
+                </div>
+                
+                <!-- Особисті дані -->
                 <div class="form-group">
                     <label class="form-label" for="{{ form.first_name.id_for_label }}">Ім'я</label>
                     {{ form.first_name.errors }}
                     <input type="text" name="{{ form.first_name.name }}" id="{{ form.first_name.id_for_label }}" 
-                           class="form-control" value="{{ form.first_name.value|default:'' }}">
+                        class="form-control" value="{{ form.first_name.value|default:'' }}">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="{{ form.last_name.id_for_label }}">Прізвище</label>
                     {{ form.last_name.errors }}
                     <input type="text" name="{{ form.last_name.name }}" id="{{ form.last_name.id_for_label }}" 
-                           class="form-control" value="{{ form.last_name.value|default:'' }}">
+                        class="form-control" value="{{ form.last_name.value|default:'' }}">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
                     {{ form.email.errors }}
                     <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" 
-                           class="form-control" value="{{ form.email.value|default:'' }}">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="{{ form.phone.id_for_label }}">Номер телефону</label>
-                    {{ form.phone.errors }}
-                    <input type="tel" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" 
-                           class="form-control" value="{{ form.phone.value|default:'' }}">
+                        class="form-control" value="{{ form.email.value|default:'' }}">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label" for="{{ form.birth_date.id_for_label }}">Дата народження</label>
                     {{ form.birth_date.errors }}
                     <input type="date" name="{{ form.birth_date.name }}" id="{{ form.birth_date.id_for_label }}" 
-                           class="form-control" value="{{ form.birth_date.value|date:'Y-m-d'|default:'' }}">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="{{ form.avatar.id_for_label }}">Фото профілю</label>
-                    {{ form.avatar.errors }}
-                    
-                    {% if user.avatar %}
-                        <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview">
-                    {% else %}
-                        <img src="{% static 'pictures/registration/profile.png' %}" alt="Default Avatar" class="avatar-preview">
-                    {% endif %}
-                    
-                    <input type="file" name="{{ form.avatar.name }}" id="{{ form.avatar.id_for_label }}" 
-                           class="form-control" accept="image/*">
-                    <small class="helptext">Рекомендований розмір: 500x500 пікселів</small>
+                        class="form-control" value="{{ form.birth_date.value|date:'Y-m-d'|default:'' }}">
                 </div>
             </div>
-            
-            <div class="form-group form-grid-full">
-                <label class="form-label" for="{{ form.bio.id_for_label }}">Про мене</label>
-                {{ form.bio.errors }}
-                <textarea name="{{ form.bio.name }}" id="{{ form.bio.id_for_label }}" 
-                          class="form-control">{{ form.bio.value|default:'' }}</textarea>
-            </div>
-            
+
             <div class="section-title">Контактна інформація</div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label class="form-label" for="{{ form.city.id_for_label }}">Місто</label>
+                    <label class="form-label" for="{{ form.phone.id_for_label }}">Номер телефону</label>
+                    {{ form.phone.errors }}
+                    <input type="tel" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" 
+                        class="form-control" value="{{ form.phone.value|default:'' }}" placeholder="+380XXXXXXXXX">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.country.id_for_label }}">Країна</label>
+                    {{ form.country.errors }}
+                    <select name="{{ form.country.name }}" id="{{ form.country.id_for_label }}" class="form-control country-select select-styled">
+                        <option value="">Оберіть країну</option>
+                        <!-- Буде заповнено JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.region.id_for_label }}">Область/Регіон</label>
+                    {{ form.region.errors }}
+                    <input type="text" name="{{ form.region.name }}" id="{{ form.region.id_for_label }}" 
+                        class="form-control" value="{{ form.region.value|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.city.id_for_label }}">Населений пункт</label>
                     {{ form.city.errors }}
                     <input type="text" name="{{ form.city.name }}" id="{{ form.city.id_for_label }}" 
-                           class="form-control" value="{{ form.city.value|default:'' }}">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="{{ form.postal_code.id_for_label }}">Поштовий індекс</label>
-                    {{ form.postal_code.errors }}
-                    <input type="text" name="{{ form.postal_code.name }}" id="{{ form.postal_code.id_for_label }}" 
-                           class="form-control" value="{{ form.postal_code.value|default:'' }}">
-                </div>
-                
-                <div class="form-group form-grid-full">
-                    <label class="form-label" for="{{ form.address.id_for_label }}">Адреса</label>
-                    {{ form.address.errors }}
-                    <input type="text" name="{{ form.address.name }}" id="{{ form.address.id_for_label }}" 
-                           class="form-control" value="{{ form.address.value|default:'' }}">
+                        class="form-control" value="{{ form.city.value|default:'' }}">
                 </div>
             </div>
-            
+
             <div class="section-title">Соціальні мережі</div>
             <div class="form-grid">
-                <div class="form-group">
+                <div class="form-group social-icon-container">
                     <label class="form-label" for="{{ form.instagram.id_for_label }}">Instagram</label>
                     {{ form.instagram.errors }}
                     <div class="input-group">
@@ -434,11 +602,11 @@
                             <i class="fab fa-instagram"></i>
                         </div>
                         <input type="text" name="{{ form.instagram.name }}" id="{{ form.instagram.id_for_label }}" 
-                               class="form-control" value="{{ form.instagram.value|default:'' }}" placeholder="username">
+                            class="form-control" value="{{ form.instagram.value|default:'' }}" placeholder="username">
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group social-icon-container">
                     <label class="form-label" for="{{ form.facebook.id_for_label }}">Facebook</label>
                     {{ form.facebook.errors }}
                     <div class="input-group">
@@ -446,11 +614,11 @@
                             <i class="fab fa-facebook-f"></i>
                         </div>
                         <input type="text" name="{{ form.facebook.name }}" id="{{ form.facebook.id_for_label }}" 
-                               class="form-control" value="{{ form.facebook.value|default:'' }}" placeholder="username">
+                            class="form-control" value="{{ form.facebook.value|default:'' }}" placeholder="username">
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group social-icon-container">
                     <label class="form-label" for="{{ form.telegram.id_for_label }}">Telegram</label>
                     {{ form.telegram.errors }}
                     <div class="input-group">
@@ -458,11 +626,11 @@
                             <i class="fab fa-telegram-plane"></i>
                         </div>
                         <input type="text" name="{{ form.telegram.name }}" id="{{ form.telegram.id_for_label }}" 
-                               class="form-control" value="{{ form.telegram.value|default:'' }}" placeholder="@username">
+                            class="form-control" value="{{ form.telegram.value|default:'' }}" placeholder="@username">
                     </div>
                 </div>
             </div>
-            
+
             <button type="submit" class="btn-save">ЗБЕРЕГТИ ЗМІНИ</button>
         </form>
     </div>
@@ -474,11 +642,46 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.querySelector('.avatar-preview').src = e.target.result;
+                    document.getElementById('avatarPreview').src = e.target.result;
                 }
                 reader.readAsDataURL(file);
             }
         };
+        
+        // Список країн
+        const countries = [
+            "Австралія", "Австрія", "Азербайджан", "Албанія", "Алжир", "Ангола", "Аргентина", "Афганістан", 
+            "Бангладеш", "Бельгія", "Білорусь", "Болгарія", "Бразилія", "Велика Британія", "Вірменія", 
+            "Греція", "Грузія", "Данія", "Естонія", "Єгипет", "Ізраїль", "Індія", "Ірландія", "Іспанія", 
+            "Італія", "Казахстан", "Канада", "Китай", "Кіпр", "Латвія", "Литва", "Ліхтенштейн", "Люксембург", 
+            "Македонія", "Малайзія", "Мальта", "Марокко", "Мексика", "Молдова", "Монако", "Нідерланди", 
+            "Німеччина", "Норвегія", "Об'єднані Арабські Емірати", "Польща", "Португалія", "Росія", "Румунія", 
+            "Сербія", "Сінгапур", "Словаччина", "Словенія", "США", "Туреччина", "Угорщина", "Україна", 
+            "Фінляндія", "Франція", "Хорватія", "Чехія", "Швейцарія", "Швеція", "Японія"
+        ];
+        
+        // Заповнення випадаючого списку країн
+        const countrySelect = document.querySelector('.country-select');
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            
+            // Вибрати поточну країну користувача, якщо вона є
+            if (country === "{{ form.country.value|default:'' }}") {
+                option.selected = true;
+            }
+            
+            countrySelect.appendChild(option);
+        });
+        
+        // Якщо країна не вибрана, але користувач з України, вибрати Україну за замовчуванням
+        if (!("{{ form.country.value|default:'' }}") && countrySelect.value === "") {
+            const ukraineOption = Array.from(countrySelect.options).find(option => option.value === "Україна");
+            if (ukraineOption) {
+                ukraineOption.selected = true;
+            }
+        }
     </script>
 </body>
 </html>
