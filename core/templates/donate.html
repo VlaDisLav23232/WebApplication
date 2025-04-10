@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Довір - Детальна сторінка збору</title>
+    <title>{{ fundraising.title }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -523,29 +523,89 @@
             font-size: 12px;
             font-weight: 600;
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn i {
+            margin-right: 8px;
+        }
+        
+        .edit-btn {
+            background-color: #4a6fdc;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .edit-btn:hover {
+            background-color: #3a5dc0;
+            box-shadow: 0 4px 8px rgba(74, 111, 220, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .delete-btn {
+            background-color: #dc4a4a;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c03a3a;
+            box-shadow: 0 4px 8px rgba(220, 74, 74, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Адаптивний дизайн для мобільних пристроїв */
+        @media (max-width: 576px) {
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .action-btn {
+                width: 100%;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Навігаційна панель -->
     <div class="navbar">
         <div class="logo">
-            <img class="logo-img" src="pictures/fundraisings/logo_brown.png" alt="Dovir Logo">
+            <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
             <span class="logo-text">DOVIR</span>
         </div>
         <div class="nav-links">
-            <a href="#">СТВОРИТИ ЗБІР</a>
-            <a href="fundraisings.html">ЗАДОНАТИТИ</a>
+            <a href="{% url 'create_fundraising' %}">СТВОРИТИ ЗБІР</a>
+            <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
             <a href="#">ЗВІТИ</a>
-            <a href="about_us.html">ПРО НАС</a>
+            <a href="{% url 'about_us' %}">ПРО НАС</a>
         </div>
         <div class="right-nav">
             <div class="lang-selector">
                 <div class="lang-btn active">UA</div>
                 <div class="lang-btn inactive">EN</div>
             </div>
-            <a href="profile_page.html">
+            <a href="{% url 'profile_page' %}">
                 <div class="profile-pic">
-                    <img src="pictures/fundraisings/profile_picture.png" alt="Profile">
+                    <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
                 </div>
             </a>
         </div>
@@ -556,16 +616,16 @@
         <!-- Ліва частина - інформація про збір -->
         <div class="fundraising-info">
             <div class="fundraising-header">
-                <h1 class="fundraising-title">Збір на дрони для 108 бригади</h1>
+                <h1 class="fundraising-title">{{ fundraising.title }}</h1>
                 <div class="social-share">
                     <div class="social-btn">
-                        <img src="pictures/zbir/facebook.png" alt="Facebook">
+                        <img src="{% static 'pictures/zbir/facebook.png' %}" alt="Facebook">
                     </div>
                     <div class="social-btn">
-                        <img src="pictures/zbir/instagram.png" alt="Instagram">
+                        <img src="{% static 'pictures/zbir/instagram.png' %}" alt="Instagram">
                     </div>
                     <div class="social-btn">
-                        <img src="pictures/zbir/telegram.png" alt="Telegram">
+                        <img src="{% static 'pictures/zbir/telegram.png' %}" alt="Telegram">
                     </div>
                 </div>
             </div>
@@ -578,12 +638,9 @@
 
             <!-- Вміст вкладки "Мета збору" -->
             <div class="tab-content active" id="goal">
-                <img class="fundraising-image" src="pictures/zbir/default.jpg" alt="Головне зображення">
+                <img class="fundraising-image" src="{{ fundraising.main_image.url }}" alt="Головне зображення">
                 <div class="fundraising-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
-                    <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                    <p>{{ fundraising.description }}</p>
                 </div>
             </div>
 
@@ -638,7 +695,7 @@
         <div class="donation-card-container">
             <div class="donation-card">
                 <div class="card-content">
-                    <h3 class="card-title">Збір на дрони для 108 бригади</h3>
+                    <h3 class="card-title">{{ fundraising.title }}</h3>
                     <div class="fundraising-info-card">
                         <div class="fundraising-amount">
                             <span class="fundraising-label">Зібрано:</span>
@@ -646,7 +703,7 @@
                         </div>
                         <div class="fundraising-target">
                             <span class="fundraising-label">Ціль:</span>
-                            <span class="fundraising-value">35 000</span>
+                            <span class="fundraising-value">{{ fundraising.needed_sum }} ₴</span>
                         </div>
                     </div>
                     <div class="progress-container">
@@ -656,8 +713,8 @@
                         <span class="progress-percentage">43%</span>
                     </div>
                     <p class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar">
-                        Термін завершення: 10.05.2025
+                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
+                        {{ fundraising.end_date }}
                     </p>
 
                     <div class="donation-amounts">
@@ -671,9 +728,38 @@
 
                     <div class="card-actions">
                         <button class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Support">
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
                             Підтримати
                         </button>
+                    </div>
+
+                    {% if request.user == fundraising.creator %}
+                        <div class="action-buttons">
+                            <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
+                                <i class="fas fa-edit"></i> Редагувати
+                            </a>
+                    
+                            <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
+                                    <i class="fas fa-trash-alt"></i> Видалити
+                                </button>
+                            </form>
+                    </div>
+                    {% endif %}
+
+                                        <!-- Додано блок категорій під карткою донату -->
+                    <div class="categories-container">
+                        <h3 class="categories-title">Категорії збору</h3>
+                        <div class="categories-list">
+                            {% for category in fundraising.categories.all %}
+                                <div class="category-tag">
+                                    {{ category.name }}
+                                </div>
+                            {% empty %}
+                                <div class="category-tag">Без категорій</div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -684,10 +770,11 @@
     <div class="other-fundraisings">
         <h2 class="section-title">Інші збори</h2>
         <div class="cards-container">
+            {% for fundraising in other_fundraisings %}
             <div class="card">
-                <div class="card-image" style="background-image: url('pictures/fundraisings/card1.jpg');"></div>
+                <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');"></div>
                 <div class="card-content">
-                    <h3 class="card-title">Збір на броньовані машини для ЗСУ</h3>
+                    <h3 class="card-title">{{ fundraising.title }}</h3>
                     <div class="fundraising-info-card">
                         <div class="fundraising-amount">
                             <span class="fundraising-label">Зібрано:</span>
@@ -695,7 +782,7 @@
                         </div>
                         <div class="fundraising-target">
                             <span class="fundraising-label">Ціль:</span>
-                            <span class="fundraising-value">500 000</span>
+                            <span class="fundraising-value">{{ fundraising.needed_sum }}</span>
                         </div>
                     </div>
                     <div class="progress-container">
@@ -705,95 +792,24 @@
                         <span class="progress-percentage">64%</span>
                     </div>
                     <p class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar">
-                        Термін завершення: 15.05.2025
+                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
+                        Термін завершення: {{ fundraising.end_date }}
                     </p>
                     <div class="card-actions">
                         <button class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Support">
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
                             Підтримати
                         </button>
-                        <button class="btn btn-secondary">
-                            <img src="pictures/fundraisings/arrow.png" alt="Details">
+                        <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
+                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Details">
                             Детальніше
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-image" style="background-image: url('pictures/fundraisings/card2.jpg');"></div>
-                <div class="card-content">
-                    <h3 class="card-title">Збір на медичне обладнання</h3>
-                    <div class="fundraising-info-card">
-                        <div class="fundraising-amount">
-                            <span class="fundraising-label">Зібрано:</span>
-                            <span class="fundraising-value">85 000</span>
-                        </div>
-                        <div class="fundraising-target">
-                            <span class="fundraising-label">Ціль:</span>
-                            <span class="fundraising-value">120 000</span>
-                        </div>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 71%;"></div>
-                        </div>
-                        <span class="progress-percentage">71%</span>
-                    </div>
-                    <p class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar">
-                        Термін завершення: 28.04.2025
-                    </p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Support">
-                            Підтримати
-                        </button>
-                        <button class="btn btn-secondary">
-                            <img src="pictures/fundraisings/arrow.png" alt="Details">
-                            Детальніше
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-image" style="background-image: url('pictures/fundraisings/card3.jpg');"></div>
-                <div class="card-content">
-                    <h3 class="card-title">Збір на тепловізори для розвідки</h3>
-                    <div class="fundraising-info-card">
-                        <div class="fundraising-amount">
-                            <span class="fundraising-label">Зібрано:</span>
-                            <span class="fundraising-value">45 000</span>
-                        </div>
-                        <div class="fundraising-target">
-                            <span class="fundraising-label">Ціль:</span>
-                            <span class="fundraising-value">75 000</span>
-                        </div>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 60%;"></div>
-                        </div>
-                        <span class="progress-percentage">60%</span>
-                    </div>
-                    <p class="card-date">
-                        <img src="pictures/fundraisings/calendar.png" alt="Calendar">
-                        Термін завершення: 05.05.2025
-                    </p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">
-                            <img src="pictures/fundraisings/heart.png" alt="Support">
-                            Підтримати
-                        </button>
-                        <button class="btn btn-secondary">
-                            <img src="pictures/fundraisings/arrow.png" alt="Details">
-                            Детальніше
-                        </button>
-                    </div>
-                </div>
-            </div>
+            {% empty %}
+            <p>На жаль, збори наразі відсутні.</p>
+            {% endfor %}
         </div>
     </div>
 

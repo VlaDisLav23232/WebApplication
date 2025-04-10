@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
+from fundraisings.models import Fundraising
 
 # Define a view function for the home page
 def home(request):
@@ -83,7 +84,8 @@ def profile_page(request):
     return render(request, 'profile_page.html')
 
 def fundraisings(request):
-    return render(request, 'fundraisings.html')
+    all_fundraisings = Fundraising.objects.all()
+    return render(request, 'fundraisings.html', {'fundraisings': all_fundraisings})
 
 def categories(request):
     return render(request, 'cats.html')

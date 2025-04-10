@@ -1,0 +1,969 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOVIR - Створення збору</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F2EFEF;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            height: 70px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(93, 64, 55, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo-img {
+            height: 69px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            color: #5D4037;
+            font-size: 24px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #5D4037;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #5D4037;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #8D6E63;
+        }
+        
+        .nav-links a.active {
+            color: #8D6E63;
+            border-bottom: 2px solid #8D6E63;
+        }
+        
+        .right-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .lang-selector {
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn {
+            padding: 5px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .lang-btn.active {
+            background-color: #5D4037;
+            color: white;
+        }
+        
+        .lang-btn.inactive {
+            background-color: #E0E0E0;
+            color: #5D4037;
+        }
+        
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #5D4037;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner {
+            background-image: url('/api/placeholder/1200/300');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px 0;
+            position: relative;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .banner:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .banner-title {
+            font-size: 110px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            font-family: 'Open Sans', sans-serif;
+            font-style: italic;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .divider {
+            width: 75%;
+            height: 1px;
+            background-color: white;
+            margin: 15px auto 25px auto;
+        }
+
+        .banner-text {
+            max-width: 100%;
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 0 auto;
+            font-weight: 300;
+            padding-top: 8px;
+        }
+
+        /* Форма створення збору */
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15);
+            padding: 30px;
+            margin: 30px 80px 60px 80px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #EFEBE9;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #5D4037;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #BDB9B7;
+            color: #5D4037;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #5D4037;
+            box-shadow: 0 0 0 3px rgba(93, 64, 55, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .upload-container {
+            border: 2px dashed #BDB9B7;
+            border-radius: 6px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-container:hover {
+            border-color: #8D6E63;
+            background-color: #EFEBE9;
+        }
+
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            color: #5D4037;
+        }
+
+        .upload-text {
+            font-size: 16px;
+            color: #5D4037;
+            margin-bottom: 5px;
+        }
+
+        .upload-subtext {
+            font-size: 14px;
+            color: #8D6E63;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-column {
+            flex: 1;
+        }
+
+        .date-inputs {
+            display: flex;
+            gap: 15px;
+        }
+
+        .date-input-group {
+            flex: 1;
+        }
+
+        .mini-label {
+            display: block;
+            font-size: 12px;
+            color: #8D6E63;
+            margin-bottom: 5px;
+        }
+
+        .checkbox-group {
+            margin-top: 15px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #5D4037;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: #5D4037;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .form-btn {
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background-color: #5D4037;
+            color: white;
+            border: none;
+            box-shadow: 0 3px 8px rgba(93, 64, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #4E342E;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #5D4037;
+            border: 1px solid #5D4037;
+        }
+
+        .btn-secondary:hover {
+            background-color: #EFEBE9;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #8D6E63;
+            margin-top: 5px;
+        }
+
+        .progress-stepper {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0 30px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #EFEBE9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D6E63;
+            font-weight: 700;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .step.active .step-circle {
+            background-color: #5D4037;
+            color: white;
+            box-shadow: 0 2px 5px rgba(93, 64, 55, 0.3);
+        }
+
+        .step-title {
+            font-size: 14px;
+            color: #8D6E63;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .step.active .step-title {
+            color: #5D4037;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 15px;
+            height: 2px;
+            width: 100%;
+            background-color: #EFEBE9;
+            z-index: 1;
+            left: 50%;
+        }
+
+        .step:first-child .step-line {
+            width: 50%;
+            left: 50%;
+        }
+
+        .step:last-child .step-line {
+            width: 50%;
+            right: 50%;
+        }
+
+        .footer {
+            background-color: #5D4037;
+            color: white;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-column {
+            flex: 1;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #D7CCC8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 15px;
+            background-color: #4E342E;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Адаптивний дизайн */
+        @media (max-width: 1200px) {
+            .banner-title {
+                font-size: 80px;
+            }
+            
+            .form-container {
+                margin: 30px 60px 40px 60px;
+            }
+
+            .navbar {
+                padding: 0 40px;
+            }
+            
+            .logo-img {
+                height: 48px;
+            }
+            
+            .logo-text {
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .banner-title {
+                font-size: 70px;
+            }
+            
+            .form-container {
+                margin: 30px 50px 40px 50px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .navbar {
+                padding: 0 30px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .logo-img {
+                height: 45px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .logo {
+                height: auto;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .banner-title {
+                font-size: 50px;
+            }
+            
+            .banner-text {
+                font-size: 16px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .form-container {
+                margin: 20px 40px 30px 40px;
+                padding: 20px;
+            }
+            
+            .date-inputs {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .progress-stepper {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            
+            .step {
+                width: 45%;
+            }
+            
+            .step-line {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                font-size: 12px;
+            }
+            
+            .banner-title {
+                font-size: 36px;
+            }
+            
+            .banner-text {
+                font-size: 14px;
+            }
+            
+            .form-container {
+                margin: 20px 30px 30px 30px;
+                padding: 15px;
+            }
+            
+            .form-actions {
+                flex-direction: column-reverse;
+                gap: 15px;
+            }
+            
+            .form-btn {
+                width: 100%;
+            }
+        }
+
+        /* New category input styling */
+        #new-category-input {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .categories-list {
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: border 0.2s ease;
+    }
+
+    .categories-list:hover {
+        border-color: #aaa;
+    }
+
+    .categories-list .form-check {
+        padding: 6px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .categories-list .form-check-input {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+
+    .categories-list .form-check-label {
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .new-category-input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .new-category-input-group input {
+        flex: 1;
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.2s ease;
+    }
+
+    .new-category-input-group input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .remove-category {
+        padding: 4px 8px;
+        margin-left: 8px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .remove-category:hover {
+        background-color: #c82333;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
+            <span class="logo-text">DOVIR</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'create_fundraising' %}">СТВОРИТИ ЗБІР</a>
+            <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
+            <a href="#">ЗВІТИ</a>
+            <a href="{% url 'about_us' %}">ПРО НАС</a>
+        </div>
+        <div class="right-nav">
+            <div class="lang-selector">
+                <div class="lang-btn active">UA</div>
+                <div class="lang-btn inactive">EN</div>
+            </div>
+            <a href="{% url 'profile_page' %}">
+                <div class="profile-pic">
+                    <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="banner">
+        <div class="banner-content">
+            <h1 class="banner-title">СТВОРИТИ ЗБІР</h1>
+            <div class="divider"></div>
+            <p class="banner-text">Створіть власний збір коштів для допомоги тим, хто цього потребує. Розкажіть свою історію, встановіть ціль і почніть змінювати світ на краще разом із спільнотою DOVIR.</p>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="progress-stepper">
+            <div class="step active">
+                <div class="step-circle">1</div>
+                <div class="step-line"></div>
+                <div class="step-title">Основна інформація</div>
+            </div>
+            <div class="step">
+                <div class="step-circle">2</div>
+                <div class="step-line"></div>
+                <div class="step-title">Деталі та фото</div>
+            </div>
+            <div class="step">
+                <div class="step-circle">3</div>
+                <div class="step-line"></div>
+                <div class="step-title">Фінансові деталі</div>
+            </div>
+            <div class="step">
+                <div class="step-circle">4</div>
+                <div class="step-line"></div>
+                <div class="step-title">Перевірка</div>
+            </div>
+        </div>
+
+        <h2 class="form-title">Інформація про збір</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-section">
+                <h3 class="section-heading">Основна інформація</h3>
+                
+                <div class="form-group">
+                    <label class="form-label" for="fundraising-title">Назва збору*</label>
+                    <input type="text" id="fundraising-title" name="title" class="form-input" placeholder="Введіть назву вашого збору" required>
+                    <p class="help-text">Коротка та інформативна назва, яка привертає увагу</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Категорії*</label>
+                    
+                    <!-- Чекбокси для існуючих категорій -->
+                    <div class="categories-list">
+                        {% for category in categories %}
+                        <div class="form-check">
+                            <input type="checkbox" name="selected_categories" value="{{ category.id }}" 
+                                   id="category-{{ category.id }}" class="form-check-input">
+                            <label for="category-{{ category.id }}" class="form-check-label">{{ category.name }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Інтерфейс для додавання нових категорій -->
+                    <div class="new-categories-section mt-3">
+                        <p><strong>Додати нові категорії:</strong></p>
+                        <div id="new-categories-container">
+                            <!-- Сюди будуть додаватися нові поля для введення категорій -->
+                            <div class="new-category-input-group mb-2">
+                                <input type="text" name="new_category_names[]" class="form-control" placeholder="Назва нової категорії">
+                            </div>
+                        </div>
+                        <button type="button" id="add-more-categories" class="btn btn-sm btn-outline-primary mt-2">
+                            + Додати ще категорію
+                        </button>
+                    </div>
+                </div>
+
+            <div class="form-section">
+                <h3 class="section-heading">Деталі збору</h3>
+                
+                <div class="form-group">
+                    <label class="form-label" for="fundraising-description">Опис</label>
+                    <textarea id="fundraising-description" name="description" class="form-textarea" placeholder="Опишіть ваш збір, для чого він, кому допоможе, чому це важливо" required></textarea>
+                    <p class="help-text">Опис вашого збору, який буде відображено на сторінці збору</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Головне зображення*</label>
+                    <div class="upload-container" id="main-image-upload">
+                        <div class="upload-icon">📁</div>
+                        <p class="upload-text">Перетягніть файл сюди або натисніть для завантаження</p>
+                        <p class="upload-subtext">JPG, PNG • Макс 5MB • Рекомендований розмір 1200x800px</p>
+                        <input type="file" id="main-image" name="main_image" accept="image/*" style="display: none;" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Додаткові зображення</label>
+                    <div class="upload-container" id="additional-images-upload">
+                        <div class="upload-icon">📁</div>
+                        <p class="upload-text">Завантажте до 5 додаткових зображень</p>
+                        <p class="upload-subtext">JPG, PNG • Макс 5MB кожне</p>
+                        <input type="file" id="additional-images" name="additional_images" accept="image/*" multiple style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-heading">Фінансові деталі</h3>
+                
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label class="form-label" for="needed_suml">Цільова сума (₴)*</label>
+                            <input type="number" id="needed_sum" name="needed_sum" class="form-input" placeholder="Введіть необхідну суму" required min="1000">
+                            <p class="help-text">Мінімальна сума: 1000 ₴</p>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label class="form-label">Термін збору*</label>
+                            <div class="date-inputs">
+                                <div class="date-input-group">
+                                    <span class="mini-label">Дата початку</span>
+                                    <input type="date" id="start-date" name="start_date" class="form-input" required>
+                                </div>
+                                <div class="date-input-group">
+                                    <span class="mini-label">Дата завершення</span>
+                                    <input type="date" id="end-date" name="end_date" class="form-input" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="link-for-money">Реквізити для переказу*</label>
+                    <textarea id="link-for-money" name="link_for_money" class="form-textarea" placeholder="Введіть банківські реквізити для збору коштів" required></textarea>
+                    <p class="help-text">Номер карти, рахунку або інші деталі для переказу коштів</p>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="checkbox-input" id="confirm-link-for-money" name="confirm_link_for_money" required>
+                        Підтверджую правильність введених банківських реквізитів
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="checkbox-input" id="confirm-terms" name="confirm_terms" required>
+                        Я ознайомився та погоджуюсь з правилами та умовами використання платформи DOVIR
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="checkbox-input" id="confirm-reporting" name="confirm_reporting">
+                        Зобов'язуюсь надавати регулярні звіти про використання зібраних коштів
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="form-btn btn-secondary">СКАСУВАТИ</button>
+                <button type="submit" class="form-btn btn-primary">СТВОРИТИ ЗБІР</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-column">
+            <h3 class="footer-title">Про Dovir</h3>
+            <p class="footer-text">Ми допомагаємо збирати кошти для підтримки Збройних Сил України, забезпечуючи їх необхідним обладнанням та амуніцією.</p>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Навігація</h3>
+            <a href="#" class="footer-link">Створити збір</a>
+            <a href="#" class="footer-link">Актуальні збори</a>
+            <a href="#" class="footer-link">Звіти</a>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Контакти</h3>
+            <p class="footer-text">Електронна пошта: info@dovir.ua</p>
+            <p class="footer-text">Телефон: +380 12 345 6789</p>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        © 2025 Dovir. Усі права захищені.
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addMoreBtn = document.getElementById('add-more-categories');
+            const newCategoriesContainer = document.getElementById('new-categories-container');
+            
+            addMoreBtn.addEventListener('click', function() {
+                const newInputGroup = document.createElement('div');
+                newInputGroup.className = 'new-category-input-group mb-2';
+                newInputGroup.innerHTML = `
+                    <div class="input-group">
+                        <input type="text" name="new_category_names[]" class="form-control" placeholder="Назва нової категорії">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger remove-category">×</button>
+                        </div>
+                    </div>
+                `;
+                newCategoriesContainer.appendChild(newInputGroup);
+                
+                // Додаємо обробник для кнопки видалення
+                const removeBtn = newInputGroup.querySelector('.remove-category');
+                removeBtn.addEventListener('click', function() {
+                    newCategoriesContainer.removeChild(newInputGroup);
+                });
+            });
+
+            // Handle file upload click
+            document.getElementById('main-image-upload').addEventListener('click', function() {
+                document.getElementById('main-image').click();
+            });
+
+            document.getElementById('additional-images-upload').addEventListener('click', function() {
+                document.getElementById('additional-images').click();
+            });
+
+            // Show selected file names
+            document.getElementById('main-image').addEventListener('change', function(e) {
+                const fileName = e.target.files[0]?.name || 'Файл не вибрано';
+                document.querySelector('#main-image-upload .upload-text').textContent = fileName;
+            });
+
+            document.getElementById('additional-images').addEventListener('change', function(e) {
+                const fileCount = e.target.files.length;
+                document.querySelector('#additional-images-upload .upload-text').textContent = 
+                    fileCount > 0 ? `Вибрано ${fileCount} файлів` : 'Завантажте до 5 додаткових зображень';
+            });
+        });
+    </script>
+</body>
+</html>

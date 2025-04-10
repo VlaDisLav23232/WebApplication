@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin  # Django admin module
 from django.urls import path       # URL routing
 from authentication.views import *  # Import views from the authentication app
+from fundraisings.views import *
 from django.conf import settings   # Application settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns  # Static files serving
 from django.conf.urls.static import static
@@ -26,6 +27,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", home, name="home"),
     path('home/', home, name="recipes"),      # Home page
+    path('create_fundraising/', create_fundraising, name='create_fundraising'),
+    path('fundraising/<int:pk>/', donate, name='donate'),
+    path('fundraising/<int:pk>/update/', update_fundraising, name='update_fundraising'),
+    path('fundraising/<int:pk>/delete/', delete_fundraising, name='delete_fundraising'),
     path('fundraisings/', fundraisings, name='fundraisings'), #fundraising page
     path('profile/', profile_page, name='profile_page'),
     path("admin/", admin.site.urls),          # Admin interface
@@ -35,8 +40,8 @@ urlpatterns = [
     path('about_us/', about_us, name='about_us')
 ]
 
-# Serve media files if DEBUG is True (development mode)
 if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
 # Serve static files using staticfiles_urlpatterns
