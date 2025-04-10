@@ -255,6 +255,48 @@
             max-width: 800px;
             font-size: 15px;
         }
+
+        /* CSS for social media icons */
+        /* CSS for social media icons with images */
+        .social-media-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background-color: white;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Updated profile location style */
+        .profile-location {
+            display: flex;
+            align-items: center;
+            color: #5d4037;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
         
         /* Content Sections */
         .content-sections {
@@ -830,6 +872,7 @@
             <span class="logo-text">DOVIR</span>
         </div>
         <div class="nav-links">
+            <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
             <a href="{% url 'create_fundraising' %}">СТВОРИТИ ЗБІР</a>
             <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
             <a href="#">ЗВІТИ</a>
@@ -840,7 +883,7 @@
                 <div class="lang-btn active">UA</div>
                 <div class="lang-btn inactive">EN</div>
             </div>
-            <a href="profile_page.html">
+            <a href="{% url 'profile_page' %}">
                 <div class="profile-pic">
                     <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
                 </div>
@@ -849,7 +892,7 @@
     </div>
     
     <!-- Перероблена секція профілю -->
-    <div class="profile-section">
+    <div class="profile-section"> 
         <div class="profile-hero">
             <!-- Hero background image automatically applied via CSS -->
         </div>
@@ -857,31 +900,85 @@
         <div class="profile-content-wrapper">
             <div class="profile-main-content">
                 <div class="profile-avatar-large">
-                    <img src="{% static 'pictures/profile_page/porosh.jpg' %}" alt="Profile picture"/>
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="Фото профілю {{ user.username }}"/>
+                    {% else %}
+                        <img src="{% static 'pictures/profile_page/default.png' %}" alt="Фото профілю"/>
+                    {% endif %}
                 </div>
                 
                 <div class="profile-info-primary">
-                    <h1 class="profile-name">Петро Порошенко</h1>
-                    <div class="profile-role">Генерал донатних військ</div>
-                    <div class="profile-location">
-                        <img src="{% static 'pictures/profile_page/ukraine.png' %}" alt="Location"/>
-                        Україна
-                    </div>
-                    
-                    <div class="bio-content">
-                        Активний волонтер та організатор зборів для допомоги ЗСУ. Підтримує різні напрямки забезпечення військових, від тепловізорів до транспортних засобів. Займається волонтерством з 2022 року.
-                    </div>
+                    {% if user.is_authenticated %}
+                        {% if user.get_full_name %}
+                            <h1 class="profile-name">{{ user.get_full_name }}</h1>
+                        {% else %}
+                            <h1 class="profile-name">{{ user.username }}</h1>
+                        {% endif %}
+                        
+                        <div class="profile-location">
+                            {% if user.country %}
+                                {% if user.city %}{{ user.city }}, {% endif %}
+                                {% if user.region %}{{ user.region }}, {% endif %}
+                                {{ user.country }}
+                            {% elif user.city %}
+                                {{ user.city }}, Україна
+                            {% else %}
+                                Україна
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Social media icons -->
+                        <div class="social-media-links">
+                            {% if user.instagram %}
+                                <a href="{{ user.instagram }}" target="_blank" rel="noopener noreferrer" class="social-icon instagram">
+                                    <img src="{% static 'pictures/profile_page/instagram.png' %}" alt="Instagram">
+                                </a>
+                            {% endif %}
+                            
+                            {% if user.facebook %}
+                                <a href="{{ user.facebook }}" target="_blank" rel="noopener noreferrer" class="social-icon facebook">
+                                    <img src="{% static 'pictures/profile_page/facebook.png' %}" alt="Facebook">
+                                </a>
+                            {% endif %}
+                            
+                            {% if user.telegram %}
+                                <a href="{{ user.telegram }}" target="_blank" rel="noopener noreferrer" class="social-icon telegram">
+                                    <img src="{% static 'pictures/profile_page/telegram.webp' %}" alt="Telegram">
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+                        {% if user.bio %}
+                            <div class="bio-content">{{ user.bio }}</div>
+                        {% else %}
+                            <div class="bio-content">
+                                Інформація про користувача не додана.
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <h1 class="profile-name">Гість</h1>
+                        <div class="bio-content">
+                            Будь ласка, <a href="{% url 'login_page' %}">увійдіть</a> щоб переглянути свій профіль.
+                        </div>
+                    {% endif %}
                 </div>
                 
                 <div class="profile-info-secondary">
-                    <button class="edit-profile-btn">
-                        Редагувати профіль
-                    </button>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'edit_profile' %}" class="edit-profile-btn">
+                            Редагувати профіль
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login_page' %}" class="edit-profile-btn">
+                            Увійти
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
     
+    {% if user.is_authenticated %}
     <div class="content-sections">
         <!-- Statistics Section -->
         <div class="section-title">
@@ -905,46 +1002,46 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="/api/placeholder/30/30" alt="Closed"/>
+                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Closed"/>
                 </div>
                 <div class="stat-value">10</div>
                 <div class="stat-label">Кількість закритих зборів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="/api/placeholder/30/30" alt="Contributors"/>
+                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Contributors"/>
                 </div>
                 <div class="stat-value">43</div>
                 <div class="stat-label">Людей підтримали</div>
             </div>
         </div>
         
-        <div class="hidden-stats" id="moreStats">
+        <div class="hidden-stats" id="moreStats" style="display: none;">
             <div class="stats-cards">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Active"/>
+                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Active"/>
                     </div>
                     <div class="stat-value">2</div>
                     <div class="stat-label">Активні збори</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Average"/>
+                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Average"/>
                     </div>
                     <div class="stat-value">83%</div>
                     <div class="stat-label">Середній відсоток виконання</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Max"/>
+                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Max"/>
                     </div>
                     <div class="stat-value">5 000₴</div>
                     <div class="stat-label">Найбільший донат</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="/api/placeholder/30/30" alt="Duration"/>
+                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Duration"/>
                     </div>
                     <div class="stat-value">14</div>
                     <div class="stat-label">Днів до закриття збору (сер.)</div>
@@ -1008,7 +1105,7 @@
             </div>
         </div>
         
-        <div class="hidden-achievements" id="moreAchievements">
+        <div class="hidden-achievements" id="moreAchievements" style="display: none;">
             <div class="achievements">
                 <div class="achievement">
                     <div class="achievement-icon">
@@ -1090,7 +1187,7 @@
             </div>
         </div>
         
-        <div class="hidden-donations" id="moreDonations">
+        <div class="hidden-donations" id="moreDonations" style="display: none;">
             <div class="donation-history">
                 <div class="donation-history-item">
                     <div>
@@ -1159,7 +1256,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card2.jpg')"></div>
+                <div class="card-image" style="background-image: url('../static/fundraisings/card2.jpg')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Автомобілі для евакуації поранених 95 ОДШБр</h3>
                     <div class="fundraising-info">
@@ -1232,7 +1329,7 @@
             </div>
         </div>
         
-        <div class="hidden-collections" id="moreCollections">
+        <div class="hidden-collections" id="moreCollections" style="display: none;">
             <div class="collections">
                 <div class="card">
                     <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card4.jpg')"></div>
@@ -1327,7 +1424,7 @@
                             <span class="progress-percentage">85%</span>
                         </div>
                         <div class="card-date">
-                            <img src="{% static 'ppictures/fundraisings/calendar.png' %}" alt="Calendar"/>
+                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
                             Термін завершення: 30.03.2025
                         </div>
                         <div class="card-actions">
@@ -1345,6 +1442,12 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="not-authenticated-message">
+        <h2>Увійдіть, щоб переглянути всю інформацію профілю</h2>
+        <p>Для перегляду детальної інформації профілю необхідно <a href="{% url 'login_page' %}">увійти в систему</a> або <a href="{% url 'register' %}">зареєструватися</a>.</p>
+    </div>
+    {% endif %}
 
     <div class="footer">
         <div class="footer-column">
@@ -1354,7 +1457,7 @@
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
             <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Актуальні збори</a>
             <a href="#" class="footer-link">Звіти</a>
         </div>
         <div class="footer-column">
@@ -1367,12 +1470,11 @@
     <div class="copyright">
         © 2025 Dovir. Усі права захищені.
     </div>
-</div>
 
 <script>
     function toggleStats() {
         const moreStats = document.getElementById('moreStats');
-        const button = document.querySelector('.stats-cards + button');
+        const button = document.querySelector('.section-title button');
         
         if (moreStats.style.display === 'block') {
             moreStats.style.display = 'none';
@@ -1385,7 +1487,7 @@
     
     function toggleAchievements() {
         const moreAchievements = document.getElementById('moreAchievements');
-        const button = document.querySelector('.achievements + button');
+        const button = document.querySelector('.section-title:nth-of-type(2) button');
         
         if (moreAchievements.style.display === 'block') {
             moreAchievements.style.display = 'none';

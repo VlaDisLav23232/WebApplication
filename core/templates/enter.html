@@ -6,44 +6,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Page</title>
-    <link rel="stylesheet" href="eneter_style.css">
+    <link rel="stylesheet" href="{% static 'css/enter_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="enter">
+        <div class="bg-pattern"></div>
+        <div class="decorative-element elem-1"></div>
+        <div class="decorative-element elem-2"></div>
+        <div class="decorative-element elem-3"></div>
+        <div class="decorative-element elem-4"></div>
+        <div class="decorative-element elem-5"></div>
+        <div class="decorative-element elem-6"></div>
+        <div class="decorative-element elem-7"></div>
+        <div class="decorative-element elem-8"></div>
+        <div class="decorative-element elem-9"></div>
+        <div class="decorative-element elem-10"></div>
+        <div class="decorative-element elem-11"></div>
+        <div class="decorative-element elem-12"></div>
+        <div class="decorative-element elem-13"></div>
+        <div class="decorative-element elem-14"></div>
+        <div class="decorative-element elem-15"></div>
+        <div class="decorative-element elem-16"></div>
+        <div class="decorative-element elem-17"></div>
+        <div class="decorative-element elem-18"></div>
+        <div class="decorative-element elem-19"></div>
+        <div class="decorative-element elem-20"></div>
+        <div class="decorative-element elem-21"></div>
+        <div class="decorative-element elem-22"></div>
+        <div class="decorative-element elem-23"></div>
+        <div class="decorative-element elem-24"></div>
+        <div class="decorative-element elem-25"></div>
+        <div class="navbar">
+            <div class="logo">
+                <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
+                <span class="logo-text">DOVIR</span>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
+                <a href="#">СТВОРИТИ ЗБІР</a>
+                <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
+                <a href="#">ЗВІТИ</a>
+                <a href="{% url 'about_us' %}">ПРО НАС</a>
+            </div>
+            <div class="right-nav">
+                <div class="lang-selector">
+                    <div class="lang-btn active">UA</div>
+                    <div class="lang-btn inactive">EN</div>
+                </div>
+                <a href="{% url 'profile_page' %}">
+                    <div class="profile-pic">
+                        <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
+                    </div>
+                </a>
+            </div>
+        </div>
         <div class="body">
             <div class="div">ЛАСКАВО ПРОСИМО!</div>
             <div class="div2">ДОВІРЯЙ, АЛЕ ПЕРЕВІРЯЙ!</div>
-            <div class="div3">або</div>
-            <div class="line-1"></div>
-            <div class="line-2"></div>
-            <a href='signup.html' class="register-button">
-                <div class="div4">ЗАРЕЄСТРУВАТИСЯ</div>
-            </a>
-            <a href="signin.html" class="enter-button">
+            
+            <a href="{% static 'css/signin.html' %}" class="enter-button">
                 <div class="div5">УВІЙТИ</div>
             </a>
-        </div>
-        <div class="nav-bar-white">
-            <div class="rectangle-1"></div>
-            <div class="_3-d-avatars-14">
-                <img class="avatars-3-d-avatar-14" src="14.png" />
+            
+            <div class="or-container">
+                <div class="line-1"></div>
+                <div class="div3">або</div>
+                <div class="line-2"></div>
             </div>
-            <img class="navigate-before" src="navigate_before.png" />
-            <div class="div7">СТВОРИТИ ЗБІР</div>
-            <div class="div8">ЗВІТИ</div>
-            <div class="div9">ПРО НАС</div>
-            <div class="div10">ЗАДОНАТИТИ</div>
-            <div class="dovir">DOVIR</div>
-            <div class="rectangle-2"></div>
-            <div class="group-18">
-                <div class="group-8">
-                    <div class="rectangle-3"></div>
-                    <div class="ua">UA</div>
-                </div>
-                <div class="en">EN</div>
-            </div>
-            <img class="white-map" src="white-map0.png" />
-            <img class="white-handshake" src="white-handshake0.png" />
+            
+            <a href="{% static 'css/signup.html' %}" class="register-button">
+                <div class="div4">ЗАРЕЄСТРУВАТИСЯ</div>
+            </a>
         </div>
     </div>
 </body>

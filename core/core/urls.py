@@ -14,6 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+#Changed by claude
+
+
 # Import necessary modules
 from django.contrib import admin  # Django admin module
 from django.urls import path       # URL routing
@@ -33,11 +36,17 @@ urlpatterns = [
     path('fundraising/<int:pk>/delete/', delete_fundraising, name='delete_fundraising'),
     path('fundraisings/', fundraisings, name='fundraisings'), #fundraising page
     path('profile/', profile_page, name='profile_page'),
+    path('profile/edit/', edit_profile, name='edit_profile'),
     path("admin/", admin.site.urls),          # Admin interface
     path('login/', login_page, name='login_page'),    # Login page
     path('register/', register_page, name='register'),  # Registration page
+    path('logout/', logout_view, name='logout'),  # Logout page
     path('register/categories/', categories, name='categories'), #Choose categories
-    path('about_us/', about_us, name='about_us')
+    path('about_us/', about_us, name='about_us'),
+    path('create_fundraising/', home, name='create_collection'), #create fundraising
+    path('change_password/', home, name='change_password'), #change password 
+    path('delete_account/', home, name='deactivate_account'),
+    path('update_settings/', home, name="update_settings")
 ]
 
 if settings.DEBUG:
