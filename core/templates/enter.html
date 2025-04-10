@@ -37,39 +37,28 @@
         <div class="decorative-element elem-23"></div>
         <div class="decorative-element elem-24"></div>
         <div class="decorative-element elem-25"></div>
-        <div class="nav-bar-white">
-            <div class="nav-content">
-                <div class="nav-left">
-                    <img class="logo-img" src="{% static 'pictures/registration/Лого.png' %}" alt="DOVIR Logo">
-                    <div class="dovir">DOVIR</div>
+        <div class="navbar">
+            <div class="logo">
+                <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
+                <span class="logo-text">DOVIR</span>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
+                <a href="#">СТВОРИТИ ЗБІР</a>
+                <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
+                <a href="#">ЗВІТИ</a>
+                <a href="{% url 'about_us' %}">ПРО НАС</a>
+            </div>
+            <div class="right-nav">
+                <div class="lang-selector">
+                    <div class="lang-btn active">UA</div>
+                    <div class="lang-btn inactive">EN</div>
                 </div>
-                
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <div class="nav-center">
-                    <div class="nav-links">
-                        <a href="#" class="nav-link">СТВОРИТИ ЗБІР</a>
-                        <a href="#" class="nav-link">ЗАДОНАТИТИ</a>
-                        <a href="#" class="nav-link">ЗВІТИ</a>
-                        <a href="#" class="nav-link">ПРО НАС</a>
+                <a href="{% url 'profile_page' %}">
+                    <div class="profile-pic">
+                        <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
                     </div>
-                </div>
-                
-                <div class="nav-right">
-                    <div class="language-switcher">
-                        <div class="rectangle-2">
-                            <div class="rectangle-3"></div>
-                            <div class="ua">UA</div>
-                            <div class="en">EN</div>
-                        </div>
-                    </div>
-                    
-                    <div class="_3-d-avatars-14">
-                        <img class="avatars-3-d-avatar-14" src="{% static 'pictures/registration/profile.png' %}" alt="User Avatar">
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="body">

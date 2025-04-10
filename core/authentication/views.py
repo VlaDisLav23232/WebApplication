@@ -77,9 +77,9 @@ def logout_view(request):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'email', 'phone', 'avatar', 
-                  'bio', 'birth_date', 'city', 'address', 'postal_code', 
-                  'instagram', 'facebook', 'telegram']
+        fields = ['first_name', 'last_name', 'email', 'bio', 'birth_date',
+                  'country', 'region', 'city', 'address', 'phone',
+                  'avatar', 'instagram', 'facebook', 'telegram']
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
             'bio': forms.Textarea(attrs={'rows': 4}),
