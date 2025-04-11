@@ -1,5 +1,3 @@
-<!--Changed by claude-->
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -8,102 +6,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід</title>
-    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        body {
+            background-color: #F8F8F8;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Background styling - keeping original decorations */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(93, 64, 55, 0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+        
+        .decorative-element {
+            position: fixed;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D7CCC8 0%, #A1887F 100%);
+            opacity: 0.4;
+            filter: blur(30px);
+            z-index: -1;
+        }
+        
+        /* Existing decoration elements - positions and sizes */
+        .elem-1 { top: 10%; left: 5%; width: 150px; height: 150px; }
+        .elem-2 { top: 20%; right: 10%; width: 200px; height: 200px; }
+        .elem-3 { bottom: 15%; left: 10%; width: 180px; height: 180px; }
+        .elem-4 { bottom: 25%; right: 5%; width: 160px; height: 160px; }
+        .elem-5 { top: 40%; left: 25%; width: 120px; height: 120px; }
+        .elem-6 { top: 60%; right: 25%; width: 140px; height: 140px; }
+        .elem-7 { bottom: 40%; left: 40%; width: 100px; height: 100px; }
+        .elem-8 { top: 70%; right: 55%; width: 130px; height: 130px; }
+        .elem-9 { top: 30%; right: 40%; width: 110px; height: 110px; }
+        .elem-10 { bottom: 60%; left: 60%; width: 90px; height: 90px; }
+        .elem-11 { bottom: 10%; right: 30%; width: 170px; height: 170px; }
+        .elem-12 { top: 5%; left: 35%; width: 130px; height: 130px; }
+        .elem-13 { bottom: 30%; right: 15%; width: 120px; height: 120px; }
+        .elem-14 { top: 50%; left: 10%; width: 160px; height: 160px; }
+        .elem-15 { bottom: 50%; right: 45%; width: 140px; height: 140px; }
+
+        .form-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 30px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .messages p {
+            padding: 10px;
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: 5px;
+            color: #d32f2f;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5D4037;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #D7CCC8;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #5D4037;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #8D6E63;
+            box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.2);
+            outline: none;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon .form-control {
+            padding-right: 40px;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8D6E63;
+            cursor: pointer;
+        }
+        
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: #5D4037;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-button:hover {
+            background-color: #4E342E;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .form-link {
+            color: #5D4037;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .form-link:hover {
+            color: #8D6E63;
+            text-decoration: underline;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .form-container {
+                margin: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .right-nav {
+                display: none;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
-<body class="sign-in">
-    <!-- 25+ CSS decorative background elements -->
+<body>
+    <!-- Background elements -->
     <div class="bg-pattern"></div>
-    <div class="decorative-element elem-1"></div>
-    <div class="decorative-element elem-2"></div>
-    <div class="decorative-element elem-3"></div>
-    <div class="decorative-element elem-4"></div>
-    <div class="decorative-element elem-5"></div>
-    <div class="decorative-element elem-6"></div>
-    <div class="decorative-element elem-7"></div>
-    <div class="decorative-element elem-8"></div>
-    <div class="decorative-element elem-9"></div>
-    <div class="decorative-element elem-10"></div>
-    <div class="decorative-element elem-11"></div>
-    <div class="decorative-element elem-12"></div>
-    <div class="decorative-element elem-13"></div>
-    <div class="decorative-element elem-14"></div>
-    <div class="decorative-element elem-15"></div>
+    {% for i in "123456789101112131415"|make_list %}
+    <div class="decorative-element elem-{{ i }}"></div>
+    {% endfor %}
     
-    <!-- Navbar -->
-    <div class="nav-bar-white">
-        <div class="nav-content">
-            <div class="nav-left">
-                <img class="logo-img" src="{% static 'pictures/registration/Лого.png' %}" alt="DOVIR Logo">
-                <div class="dovir">DOVIR</div>
-            </div>
-            
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <div class="nav-center">
-                <div class="nav-links">
-                    <a href="#" class="nav-link">СТВОРИТИ ЗБІР</a>
-                    <a href="#" class="nav-link">ЗАДОНАТИТИ</a>
-                    <a href="#" class="nav-link">ЗВІТИ</a>
-                    <a href="#" class="nav-link">ПРО НАС</a>
-                </div>
-            </div>
-            
-            <div class="nav-right">
-                <div class="language-switcher">
-                    <div class="rectangle-2">
-                        <div class="rectangle-3"></div>
-                        <div class="ua">UA</div>
-                        <div class="en">EN</div>
-                    </div>
-                </div>
-                
-                <div class="_3-d-avatars-14">
-                    <img class="avatars-3-d-avatar-14" src="{% static 'pictures/registration/profile.png' %}" alt="User Avatar">
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Include navbar -->
+    {% include 'includes/navbar.html' %}
     
-    <!-- Main content -->
-    <div class="body">
-        <div class="title">ВХІД</div>
+    <!-- Improved login form -->
+    <div class="form-container">
+        <h1 class="form-title">ВХІД</h1>
         
         {% if messages %}
         <div class="messages">
             {% for message in messages %}
-                <p style="color: red; text-align: center;">{{ message }}</p>
+                <p>{{ message }}</p>
             {% endfor %}
         </div>
         {% endif %}
         
         <form method="POST">
             {% csrf_token %}
-            <div class="input-container">
-                <input type="text" name="username" class="input-field" placeholder="Ваше ім'я..." required>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Електронна пошта</label>
+                <input type="email" id="email" name="email" class="form-control" required>
             </div>
             
-            <div class="input-container">
-                <input type="password" name="password" class="input-field" placeholder="Ваш пароль..." required>
-                <i class="fas fa-eye password-toggle"></i>
+            <div class="form-group">
+                <label for="password" class="form-label">Пароль</label>
+                <div class="input-with-icon">
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <i class="input-icon fas fa-eye password-toggle"></i>
+                </div>
             </div>
             
             <button type="submit" class="submit-button">
-                ПІДТВЕРДИТИ
+                УВІЙТИ
             </button>
+            
+            <div class="form-footer">
+                <a href="{% url 'register' %}" class="form-link">
+                    Немає акаунту? Зареєструйся!
+                </a>
+            </div>
         </form>
-        
-        <a href="{% url 'register' %}" class="register-link">
-            Немає акаунту? Зареєструйся!
-        </a>
     </div>
     
     <script>
         document.querySelectorAll('.password-toggle').forEach(function(toggle) {
             toggle.addEventListener('click', function() {
-                const input = this.previousElementSibling;
+                const input = this.parentElement.querySelector('input');
                 if (input.type === 'password') {
                     input.type = 'text';
                     this.classList.remove('fa-eye');

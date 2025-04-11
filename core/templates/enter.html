@@ -37,30 +37,9 @@
         <div class="decorative-element elem-23"></div>
         <div class="decorative-element elem-24"></div>
         <div class="decorative-element elem-25"></div>
-        <div class="navbar">
-            <div class="logo">
-                <img class="logo-img" src="{% static 'pictures/fundraisings/logo_brown.png' %}" alt="Dovir Logo">
-                <span class="logo-text">DOVIR</span>
-            </div>
-            <div class="nav-links">
-                <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
-                <a href="#">СТВОРИТИ ЗБІР</a>
-                <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
-                <a href="#">ЗВІТИ</a>
-                <a href="{% url 'about_us' %}">ПРО НАС</a>
-            </div>
-            <div class="right-nav">
-                <div class="lang-selector">
-                    <div class="lang-btn active">UA</div>
-                    <div class="lang-btn inactive">EN</div>
-                </div>
-                <a href="{% url 'profile_page' %}">
-                    <div class="profile-pic">
-                        <img src="{% static 'pictures/fundraisings/profile_picture.png' %}" alt="Profile">
-                    </div>
-                </a>
-            </div>
-        </div>
+        
+        {% include 'includes/navbar.html' %}
+        
         <div class="body">
             <div class="div">ЛАСКАВО ПРОСИМО!</div>
             <div class="div2">ДОВІРЯЙ, АЛЕ ПЕРЕВІРЯЙ!</div>

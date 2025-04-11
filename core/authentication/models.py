@@ -22,10 +22,10 @@ class CustomUser(AbstractUser):
     # Налаштування
     notifications_enabled = models.BooleanField(default=True, verbose_name="Сповіщення увімкнені")
     
-    # Соціальні мережі
-    instagram = models.CharField(max_length=100, blank=True, null=True, verbose_name="Instagram")
-    facebook = models.CharField(max_length=100, blank=True, null=True, verbose_name="Facebook")
-    telegram = models.CharField(max_length=100, blank=True, null=True, verbose_name="Telegram")
+    # Соціальні мережі - видалено обмеження довжини
+    instagram = models.TextField(blank=True, null=True, verbose_name="Instagram")
+    facebook = models.TextField(blank=True, null=True, verbose_name="Facebook")
+    telegram = models.TextField(blank=True, null=True, verbose_name="Telegram")
     
     # Метадані
     created_at = models.DateTimeField(auto_now_add=True,  null=True, verbose_name="Дата створення")

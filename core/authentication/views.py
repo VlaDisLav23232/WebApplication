@@ -11,10 +11,12 @@ from .models import CustomUser
 from .forms import RegisterForm
 from django.urls import reverse
 from django import forms
+import re
 
 # Define a view function for the home page
 def home(request):
-    return render(request, 'index.html')
+    user = request.user if request.user.is_authenticated else None
+    return render(request, 'index.html', {'user': user})
 
 # Define a view function for the login page
 def login_page(request):
@@ -24,17 +26,20 @@ def login_page(request):
         
     # Check if the HTTP request method is POST (form submission)
     if request.method == "POST":
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
         
-        # Check if a user with the provided username exists
-        if not CustomUser.objects.filter(username=username).exists():
-            # Display an error message if the username does not exist
-            messages.error(request, 'Неправильне ім\'я користувача')
+        # Check if a user with the provided email exists
+        user_exists = CustomUser.objects.filter(email=email).exists()
+        if not user_exists:
+            messages.error(request, 'Користувача з такою електронною поштою не існує')
             return redirect('/login/')
         
-        # Authenticate the user with the provided username and password
-        user = authenticate(username=username, password=password)
+        # Get the user with the provided email
+        user = CustomUser.objects.get(email=email)
+        
+        # Authenticate the user with username and password
+        user = authenticate(username=user.username, password=password)
         
         if user is None:
             # Display an error message if authentication fails (invalid password)
@@ -46,7 +51,8 @@ def login_page(request):
             return redirect('/home/')
     
     # Render the login page template (GET request)
-    return render(request, 'signin.html')
+    user = request.user if request.user.is_authenticated else None
+    return render(request, 'signin.html', {'user': user})
 
 # Define a view function for the registration page
 def register_page(request):
@@ -58,6 +64,15 @@ def register_page(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            # Generate username from email (before the @ symbol)
+            user.username = form.cleaned_data['email'].split('@')[0]
+            # Check if username exists and make it unique if needed
+            base_username = user.username
+            counter = 1
+            while CustomUser.objects.filter(username=user.username).exists():
+                user.username = f"{base_username}{counter}"
+                counter += 1
+                
             user.set_password(form.cleaned_data['password'])
             user.save()
             # Автоматично авторизуємо користувача
@@ -66,11 +81,13 @@ def register_page(request):
     else:
         form = RegisterForm()
     
-    return render(request, 'signup.html', {'form': form})
+    user = request.user if request.user.is_authenticated else None
+    return render(request, 'signup.html', {'form': form, 'user': user})
 
 # Функція для виходу з облікового запису
 def logout_view(request):
     logout(request)
+    # Redirect without showing messages from previous pages
     return redirect('/login/')
 
 
@@ -84,6 +101,30 @@ class ProfileUpdateForm(forms.ModelForm):
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
             'bio': forms.Textarea(attrs={'rows': 4}),
         }
+        
+    def clean_instagram(self):
+        instagram = self.cleaned_data.get('instagram')
+        if instagram:
+            if not re.match(r'^https?:\/\/(www\.)?instagram\.com\/.+', instagram, re.I):
+                raise forms.ValidationError("Посилання на Instagram має починатися з 'https://instagram.com/'")
+        return instagram
+        
+    def clean_facebook(self):
+        facebook = self.cleaned_data.get('facebook')
+        if facebook:
+            if not re.match(r'^https?:\/\/(www\.)?facebook\.com\/.+', facebook, re.I):
+                raise forms.ValidationError("Посилання на Facebook має починатися з 'https://facebook.com/'")
+        return facebook
+        
+    def clean_telegram(self):
+        telegram = self.cleaned_data.get('telegram')
+        if telegram:
+            # Видаляємо @ якщо користувач додав його
+            telegram = telegram.strip().lstrip('@')
+            # Додаємо https://t.me/ якщо його немає
+            if not telegram.startswith('https://t.me/') and not telegram.startswith('http://t.me/'):
+                telegram = 'https://t.me/' + telegram
+        return telegram
 
 # Оновлена функція profile_page
 @login_required(login_url='/login/')
@@ -109,10 +150,13 @@ def edit_profile(request):
     return render(request, 'edit_profile.html', {'form': form, 'user': request.user})
 
 def fundraisings(request):
-    return render(request, 'fundraisings.html')
+    user = request.user if request.user.is_authenticated else None
+    return render(request, 'fundraisings.html', {'user': user})
 
 def categories(request):
-    return render(request, 'cats.html')
+    user = request.user if request.user.is_authenticated else None
+    return render(request, 'cats.html', {'user': user})
 
 def about_us(request):
-    return render(request, 'about_us.html')
+    user = request.user if request.user.is_authenticated else None
+    return render(request, 'about_us.html', {'user': user})
