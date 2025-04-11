@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #my apps
     "authentication",
+    "fundraisings",
 
     #django default apps
     'django.contrib.admin',

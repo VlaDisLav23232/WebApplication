@@ -24,6 +24,7 @@ from authentication.views import *  # Import views from the authentication app
 from django.conf import settings   # Application settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns  # Static files serving
 from django.conf.urls.static import static
+from fundraisings.views import *
 
 # Define URL patterns
 urlpatterns = [
@@ -38,7 +39,10 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),  # Logout page
     path('register/categories/', categories, name='categories'), #Choose categories
     path('about_us/', about_us, name='about_us'),
-    path('create_fundraising/', home, name='create_collection'), #create fundraising
+    path('create_fundraising/', create_fundraising, name='create_fundraising'),
+    path('fundraising/<int:pk>/', donate, name='donate'),
+    path('fundraising/<int:pk>/update/', update_fundraising, name='update_fundraising'),
+    path('fundraising/<int:pk>/delete/', delete_fundraising, name='delete_fundraising'),
     path('change_password/', home, name='change_password'), #change password 
     path('delete_account/', home, name='deactivate_account'),
     path('update_settings/', home, name="update_settings")

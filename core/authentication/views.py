@@ -12,6 +12,7 @@ from .forms import RegisterForm
 from django.urls import reverse
 from django import forms
 import re
+from fundraisings.models import Fundraising
 
 # Define a view function for the home page
 def home(request):
@@ -149,10 +150,6 @@ def edit_profile(request):
     
     return render(request, 'edit_profile.html', {'form': form, 'user': request.user})
 
-def fundraisings(request):
-    user = request.user if request.user.is_authenticated else None
-    return render(request, 'fundraisings.html', {'user': user})
-
 def categories(request):
     user = request.user if request.user.is_authenticated else None
     return render(request, 'cats.html', {'user': user})
@@ -160,3 +157,8 @@ def categories(request):
 def about_us(request):
     user = request.user if request.user.is_authenticated else None
     return render(request, 'about_us.html', {'user': user})
+
+def fundraisings(request):
+    user = request.user if request.user.is_authenticated else None
+    all_fundraisings = Fundraising.objects.all()
+    return render(request, 'fundraisings.html', {'fundraisings': all_fundraisings, 'user': user})
