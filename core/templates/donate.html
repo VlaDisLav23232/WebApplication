@@ -335,6 +335,9 @@
             font-size: 14px;
             font-weight: 700;
             color: #5D4037;
+            line-height: 8px; /* Match the height of the progress bar */
+            display: flex;
+            align-items: center;
         }
         
         .card-date {
@@ -699,7 +702,7 @@
                     <div class="fundraising-info-card">
                         <div class="fundraising-amount">
                             <span class="fundraising-label">Зібрано:</span>
-                            <span class="fundraising-value">{{ fundraising.collected_amount|default:"0" }} ₴</span>
+                            <span class="fundraising-value" id="current-sum">{{ fundraising.current_sum }} ₴</span>
                         </div>
                         <div class="fundraising-target">
                             <span class="fundraising-label">Ціль:</span>
@@ -707,33 +710,40 @@
                         </div>
                     </div>
                     <div class="progress-container">
-                        {% with percentage=fundraising.progress_percentage|default:0 %}
                         <div class="progress-bar">
-                            <div class="progress" style="width: {{ percentage }}%;"></div>
+                            <div class="progress" id="progress-bar" style="width: {{ fundraising.progress_percentage }}%;"></div>
                         </div>
-                        <span class="progress-percentage">{{ percentage }}%</span>
-                        {% endwith %}
+                        <span class="progress-percentage" id="progress-percentage">{{ fundraising.progress_percentage }}%</span>
                     </div>
                     <p class="card-date">
                         <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
                         {{ fundraising.end_date }}
                     </p>
 
-                    <div class="donation-amounts">
-                        <button class="donation-amount-btn">50 грн</button>
-                        <button class="donation-amount-btn active">100 грн</button>
-                        <button class="donation-amount-btn">200 грн</button>
-                        <button class="donation-amount-btn">500 грн</button>
-                        <button class="donation-amount-btn">1000 грн</button>
-                        <button class="donation-amount-btn">Інша сума</button>
-                    </div>
+                    <form id="donation-form" method="POST">
+                        {% csrf_token %}
+                        <div class="donation-amounts">
+                            <button type="button" class="donation-amount-btn" data-amount="50">50 грн</button>
+                            <button type="button" class="donation-amount-btn active" data-amount="100">100 грн</button>
+                            <button type="button" class="donation-amount-btn" data-amount="200">200 грн</button>
+                            <button type="button" class="donation-amount-btn" data-amount="500">500 грн</button>
+                            <button type="button" class="donation-amount-btn" data-amount="1000">1000 грн</button>
+                            <button type="button" class="donation-amount-btn" data-amount="custom">Інша сума</button>
+                        </div>
+                        
+                        <div id="custom-amount" style="display: none; margin-bottom: 15px;">
+                            <input type="number" name="custom_donation_amount" class="form-input" placeholder="Введіть суму" min="1">
+                        </div>
 
-                    <div class="card-actions">
-                        <button class="btn btn-primary">
-                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                            Підтримати
-                        </button>
-                    </div>
+                        <input type="hidden" name="donation_amount" id="donation-amount" value="100">
+                        
+                        <div class="card-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
+                                Підтримати
+                            </button>
+                        </div>
+                    </form>
 
                     {% if request.user == fundraising.creator %}
                         <div class="action-buttons">
@@ -867,15 +877,63 @@
             
             // Обробка кнопок з сумами пожертвування
             const donationButtons = document.querySelectorAll('.donation-amount-btn');
+            const donationAmountInput = document.getElementById('donation-amount');
+            const customAmountContainer = document.getElementById('custom-amount');
+            const customAmountInput = document.querySelector('input[name="custom_donation_amount"]');
+            
             donationButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     // Знімаємо активний клас з усіх кнопок
-                    donationButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Додаємо активний клас до натиснутої кнопки
+                    donationButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
+                    
+                    const amount = this.getAttribute('data-amount');
+                    
+                    // Handle custom amount
+                    if (amount === 'custom') {
+                        customAmountContainer.style.display = 'block';
+                        customAmountInput.focus();
+                    } else {
+                        customAmountContainer.style.display = 'none';
+                        donationAmountInput.value = amount;
+                    }
+                });
+            });
+            
+            // Update donation amount when custom amount changes
+            customAmountInput.addEventListener('input', function() {
+                donationAmountInput.value = this.value;
+            });
+            
+            // For quick testing: Add a test button that adds 1000 UAH instantly
+            const testButton = document.createElement('button');
+            testButton.textContent = "Тест: додати 1000 грн";
+            testButton.className = "btn btn-secondary";
+            testButton.style.marginTop = "10px";
+            document.querySelector('.card-actions').appendChild(testButton);
+            
+            testButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                
+                fetch('/fundraisings/{{ fundraising.pk }}/update-donation/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'amount=1000'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update UI with integer percentage
+                        document.getElementById('current-sum').textContent = data.current_sum + ' ₴';
+                        document.getElementById('progress-bar').style.width = data.progress_percentage + '%';
+                        document.getElementById('progress-percentage').textContent = Math.round(data.progress_percentage) + '%';
+                    }
                 });
             });
         });

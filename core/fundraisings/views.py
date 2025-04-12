@@ -3,7 +3,8 @@ from fundraisings.models import Fundraising, Category
 from fundraisings.forms import UpdateFundraisingForm
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
+from decimal import Decimal
 
 
 def create_fundraising(request):
@@ -70,7 +71,40 @@ def delete_fundraising(request, pk):
 
     return render(request, 'confirm_delete.html', {'fundraising': fundraising})
 
+
 def donate(request, pk):
     fundraising = get_object_or_404(Fundraising, pk=pk)
     other_fundraisings = Fundraising.objects.exclude(pk=pk)
+    
+    # Handle donation POST request
+    if request.method == 'POST' and 'donation_amount' in request.POST:
+        try:
+            amount = Decimal(request.POST.get('donation_amount'))
+            if amount > 0:
+                fundraising.add_donation(amount)
+                return redirect('donate', pk=pk)
+        except (ValueError, TypeError):
+            # Handle invalid amount input
+            pass
+        
     return render(request, 'donate.html', {'fundraising': fundraising, 'other_fundraisings': other_fundraisings})
+
+
+# Add a new view for AJAX donation updates
+def update_donation(request, pk):
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        fundraising = get_object_or_404(Fundraising, pk=pk)
+        try:
+            amount = Decimal(request.POST.get('amount', 0))
+            if amount > 0:
+                fundraising.add_donation(amount)
+                return JsonResponse({
+                    'success': True,
+                    'current_sum': float(fundraising.current_sum),
+                    'needed_sum': float(fundraising.needed_sum),
+                    'progress_percentage': int(fundraising.progress_percentage)  # Will be integer now
+                })
+        except (ValueError, TypeError):
+            pass
+            
+    return JsonResponse({'success': False, 'message': 'Invalid request'}, status=400)

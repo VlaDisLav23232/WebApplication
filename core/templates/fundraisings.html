@@ -282,6 +282,9 @@
             font-size: 14px;
             font-weight: 700;
             color: #5D4037;
+            line-height: 8px; /* Match the height of the progress bar */
+            display: flex;
+            align-items: center;
         }
         
         .card-date {
@@ -576,7 +579,7 @@
                 <div class="fundraising-info">
                     <div class="fundraising-amount">
                         <span class="fundraising-label">Зібрано:</span>
-                        <span class="fundraising-value">{{ fundraising.collected_amount|default:"0" }} ₴</span>
+                        <span class="fundraising-value">{{ fundraising.current_sum }} ₴</span>
                     </div>
                     <div class="fundraising-target">
                         <span class="fundraising-label">Ціль:</span>
@@ -584,12 +587,10 @@
                     </div>
                 </div>
                 <div class="progress-container">
-                    {% with percentage=fundraising.progress_percentage|default:0 %}
                     <div class="progress-bar">
-                        <div class="progress" style="width: {{ percentage }}%;"></div>
+                        <div class="progress" style="width: {{ fundraising.progress_percentage }}%;"></div>
                     </div>
-                    <span class="progress-percentage">{{ percentage }}%</span>
-                    {% endwith %}
+                    <span class="progress-percentage">{{ fundraising.progress_percentage }}%</span>
                 </div>
                 <p class="card-date">
                     <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">

@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import CustomUser
 from django.urls import reverse
+from decimal import Decimal
 
 class Fundraising(models.Model):
     title = models.CharField(max_length=255, verbose_name='Title')
@@ -11,6 +12,7 @@ class Fundraising(models.Model):
         verbose_name="Зображення кампанії"
     )
     needed_sum = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Цільова сума (₴)')
+    current_sum = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name='Зібрана сума (₴)')
     start_date = models.DateField(verbose_name='Дата початку')
     end_date = models.DateField(verbose_name='Дата завершення')
     link_for_money = models.TextField(max_length=2000, verbose_name='Реквізити для переказу', default='Реквізити будуть додані пізніше', blank=True)
@@ -27,6 +29,19 @@ class Fundraising(models.Model):
     
     def get_absolute_url(self):
         return reverse('donate', kwargs={'pk': self.pk})
+    
+    @property
+    def progress_percentage(self):
+        if self.needed_sum == 0:
+            return 0
+        percentage = (self.current_sum / self.needed_sum) * 100
+        # Return rounded integer capped at 100%
+        return min(round(percentage), 100)
+    
+    def add_donation(self, amount):
+        """Add donation amount to the current sum"""
+        self.current_sum += Decimal(amount)
+        self.save()
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
