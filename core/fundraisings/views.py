@@ -17,19 +17,14 @@ def create_fundraising(request):
             fundraising.creator = request.user
             fundraising.save()
             
-            selected_categories = request.POST.getlist("selected_categories")
-            for cat_id in selected_categories:
+            # Get single selected category
+            selected_category_id = request.POST.get("selected_categories")
+            if selected_category_id:
                 try:
-                    category = Category.objects.get(id=cat_id)
+                    category = Category.objects.get(id=selected_category_id)
                     fundraising.categories.add(category)
                 except Category.DoesNotExist:
                     pass
-            
-            new_category_names = request.POST.getlist("new_category_names[]")
-            for name in new_category_names:
-                if name.strip():
-                    new_category = Category.objects.create(name=name.strip())
-                    fundraising.categories.add(new_category)
             
             return redirect('donate', pk=fundraising.pk)
         else:
@@ -40,10 +35,10 @@ def create_fundraising(request):
     return render(request, 'create_fundraising.html', {'form': form, 'categories': all_categories})
     
 
-
 def update_fundraising(request, pk):
     fundraising = get_object_or_404(Fundraising, pk=pk)
     all_categories = Category.objects.all()
+    current_category = fundraising.categories.first()  # Get primary category
 
     if request.user != fundraising.creator:
         return redirect('donate', pk=pk)
@@ -51,12 +46,18 @@ def update_fundraising(request, pk):
     if request.method == "POST":
         form = UpdateFundraisingForm(request.POST, request.FILES, instance=fundraising)
         if form.is_valid():
-            form.save()
+            updated_fundraising = form.save()
+            # Don't change category on update - keeping it as is
             return redirect('donate', pk=pk)
     else:
         form = UpdateFundraisingForm(instance=fundraising)
 
-    return render(request, 'update_fundraising.html', {'form': form, 'fundraising': fundraising, 'categories': all_categories})
+    return render(request, 'update_fundraising.html', {
+        'form': form, 
+        'fundraising': fundraising, 
+        'categories': all_categories,
+        'current_category': current_category
+    })
 
 
 def delete_fundraising(request, pk):

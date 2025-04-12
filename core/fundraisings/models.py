@@ -42,10 +42,17 @@ class Fundraising(models.Model):
         """Add donation amount to the current sum"""
         self.current_sum += Decimal(amount)
         self.save()
+    
+    @property
+    def primary_category(self):
+        """Return the first category (primary category) of the fundraising"""
+        category = self.categories.first()
+        return category
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
+    color_code = models.CharField(max_length=7, default="#5D4037")
 
     def __str__(self):
         return self.name

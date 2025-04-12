@@ -190,6 +190,7 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
         
         .card:hover {
@@ -244,12 +245,6 @@
             color: #8D6E63;
             font-weight: 600;
             margin-bottom: 3px; /* Зменшено відступ */
-        }
-        
-        .fundraising-value {
-            font-size: 18px; /* Зменшено розмір */
-            color: #4E342E;
-            font-weight: 700;
         }
         
         .progress-container {
@@ -528,6 +523,32 @@
                 flex-direction: column;
             }
         }
+
+        /* Enhanced category tag styles */
+        .category-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .category-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+        
+        /* Position category at the top right of the card */
+        .card-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -543,37 +564,44 @@
 
     <div class="filter-container">
         <div class="filter-title">Фільтрувати збори</div>
-        <div class="filter-row">
-            <div class="filter-group">
-                <label class="filter-label">Сортувати за</label>
-                <select class="filter-select">
-                    <option value="newest">Найновіші</option>
-                    <option value="ending-soon">Термін завершення</option>
-                    <option value="completion">Завершеність</option>
-                    <option value="popular">Популярні</option>
-                </select>
+        <form method="get" action="{% url 'fundraisings' %}">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">Сортувати за</label>
+                    <select class="filter-select" name="sort">
+                        <option value="newest">Найновіші</option>
+                        <option value="ending-soon">Термін завершення</option>
+                        <option value="completion">Завершеність</option>
+                        <option value="popular">Популярні</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Категорія</label>
+                    <select class="filter-select" name="category">
+                        <option value="">Всі категорії</option>
+                        {% for category in categories %}
+                        <option value="{{ category.name }}" {% if request.GET.category == category.name %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-            <div class="filter-group">
-                <label class="filter-label">Категорія</label>
-                <select class="filter-select">
-                    <option value="all">Всі категорії</option>
-                    <option value="equipment">Техніка та обладнання</option>
-                    <option value="medical">Медична допомога</option>
-                    <option value="gear">Екіпірування</option>
-                    <option value="transport">Транспорт та логістика</option>
-                </select>
+            <div class="filter-buttons">
+                <button type="reset" class="filter-btn filter-reset">Скинути</button>
+                <button type="submit" class="filter-btn filter-apply">Застосувати</button>
             </div>
-        </div>
-        <div class="filter-buttons">
-            <button class="filter-btn filter-reset">Скинути</button>
-            <button class="filter-btn filter-apply">Застосувати</button>
-        </div>
+        </form>
     </div>
     
     <div class="cards-container">
         {% for fundraising in fundraisings %}
         <div class="card">
-            <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');"></div>
+            <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
+                {% if fundraising.primary_category %}
+                <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                    {{ fundraising.primary_category.name }}
+                </div>
+                {% endif %}
+            </div>
             <div class="card-content">
                 <h3 class="card-title">{{ fundraising.title }}</h3>
                 <div class="fundraising-info">

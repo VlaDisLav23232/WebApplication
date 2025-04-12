@@ -159,6 +159,24 @@ def about_us(request):
     return render(request, 'about_us.html', {'user': user})
 
 def fundraisings(request):
-    user = request.user if request.user.is_authenticated else None
-    all_fundraisings = Fundraising.objects.all()
-    return render(request, 'fundraisings.html', {'fundraisings': all_fundraisings, 'user': user})
+    from fundraisings.models import Category  # Import Category model
+    
+    category_filter = request.GET.get('category', None)
+    
+    if category_filter:
+        # Filter fundraisings by category
+        fundraisings_list = Fundraising.objects.filter(categories__name=category_filter)
+    else:
+        # Show all fundraisings
+        fundraisings_list = Fundraising.objects.all()
+        
+    # Add categories to context for the filter dropdown
+    categories = Category.objects.all()
+    
+    context = {
+        'fundraisings': fundraisings_list,
+        'categories': categories,
+        'user': request.user
+    }
+        
+    return render(request, 'fundraisings.html', context)

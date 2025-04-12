@@ -446,6 +446,7 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
         
         .card:hover {
@@ -573,7 +574,49 @@
             box-shadow: 0 4px 8px rgba(220, 74, 74, 0.2);
             transform: translateY(-2px);
         }
+
+        /* Enhanced category styles */
+        .categories-container {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #EFEBE9;
+        }
         
+        .categories-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #5D4037;
+            margin-bottom: 12px;
+        }
+        
+        .categories-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .category-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+        
+        .header-category {
+            display: inline-block;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+
         /* Адаптивний дизайн для мобільних пристроїв */
         @media (max-width: 576px) {
             .action-buttons {
@@ -619,7 +662,14 @@
         <!-- Ліва частина - інформація про збір -->
         <div class="fundraising-info">
             <div class="fundraising-header">
-                <h1 class="fundraising-title">{{ fundraising.title }}</h1>
+                <h1 class="fundraising-title">
+                    {{ fundraising.title }}
+                    {% if fundraising.primary_category %}
+                    <span class="category-tag header-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                        {{ fundraising.primary_category.name }}
+                    </span>
+                    {% endif %}
+                </h1>
                 <div class="social-share">
                     <div class="social-btn">
                         <img src="{% static 'pictures/zbir/facebook.png' %}" alt="Facebook">
@@ -760,17 +810,17 @@
                     </div>
                     {% endif %}
 
-                                        <!-- Додано блок категорій під карткою донату -->
+                    <!-- Categories below the action buttons -->
                     <div class="categories-container">
-                        <h3 class="categories-title">Категорії збору</h3>
+                        <h3 class="categories-title">Категорія збору</h3>
                         <div class="categories-list">
-                            {% for category in fundraising.categories.all %}
-                                <div class="category-tag">
-                                    {{ category.name }}
+                            {% if fundraising.primary_category %}
+                                <div class="category-tag" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                                    {{ fundraising.primary_category.name }}
                                 </div>
-                            {% empty %}
-                                <div class="category-tag">Без категорій</div>
-                            {% endfor %}
+                            {% else %}
+                                <div class="category-tag">Без категорії</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -784,7 +834,13 @@
         <div class="cards-container">
             {% for fundraising in other_fundraisings %}
             <div class="card">
-                <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');"></div>
+                <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
+                    {% if fundraising.primary_category %}
+                    <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                        {{ fundraising.primary_category.name }}
+                    </div>
+                    {% endif %}
+                </div>
                 <div class="card-content">
                     <h3 class="card-title">{{ fundraising.title }}</h3>
                     <div class="fundraising-info-card">
