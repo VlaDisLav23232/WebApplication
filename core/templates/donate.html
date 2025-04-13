@@ -438,40 +438,105 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 8px 16px;
+            padding: 10px 16px;
             border-radius: 6px;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border: 2px solid;
+            box-shadow: 0 2px 6px rgba(93, 64, 55, 0.1);
+            flex: 1;
+            text-decoration: none;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
         }
         
         .action-btn i {
-            margin-right: 8px;
+            position: absolute;
+            left: 16px;
+            font-size: 14px;
         }
         
+        .action-btn span {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-container {
+            display: flex;
+            flex: 1;
+        }
+        
+        .btn-container a.action-btn,
+        .btn-container form {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-container a.action-btn i,
+        .btn-container form button i {
+            margin-right: 8px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .edit-btn {
-            background-color: #4a6fdc;
-            color: white;
-            text-decoration: none;
+            color: #5D4037;
+            border-color: #5D4037;
         }
         
         .edit-btn:hover {
-            background-color: #3a5dc0;
-            box-shadow: 0 4px 8px rgba(74, 111, 220, 0.2);
+            background-color: #f5f0ee;
+            box-shadow: 0 4px 8px rgba(93, 64, 55, 0.2);
             transform: translateY(-2px);
         }
         
         .delete-btn {
-            background-color: #dc4a4a;
-            color: white;
+            color: #D32F2F;
+            border-color: #D32F2F;
         }
         
         .delete-btn:hover {
-            background-color: #c03a3a;
-            box-shadow: 0 4px 8px rgba(220, 74, 74, 0.2);
+            background-color: #ffebee;
+            box-shadow: 0 4px 8px rgba(211, 47, 47, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Container for equal-width buttons */
+        .btn-container {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Support button enhancement */
+        .btn-support {
+            font-size: 16px;
+            padding: 14px 20px;
+            background-color: #5D4037;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
+        }
+        
+        .btn-support:hover {
+            background-color: #4E342E;
+            box-shadow: 0 6px 15px rgba(93, 64, 55, 0.4);
             transform: translateY(-2px);
         }
 
@@ -648,42 +713,33 @@
 
                     <form id="donation-form" method="POST">
                         {% csrf_token %}
-                        <div class="donation-amounts">
-                            <button type="button" class="donation-amount-btn" data-amount="50">50 грн</button>
-                            <button type="button" class="donation-amount-btn active" data-amount="100">100 грн</button>
-                            <button type="button" class="donation-amount-btn" data-amount="200">200 грн</button>
-                            <button type="button" class="donation-amount-btn" data-amount="500">500 грн</button>
-                            <button type="button" class="donation-amount-btn" data-amount="1000">1000 грн</button>
-                            <button type="button" class="donation-amount-btn" data-amount="custom">Інша сума</button>
-                        </div>
+                        <input type="hidden" name="donation_amount" id="donation-amount" value="1000">
                         
-                        <div id="custom-amount" style="display: none; margin-bottom: 15px;">
-                            <input type="number" name="custom_donation_amount" class="form-input" placeholder="Введіть суму" min="1">
-                        </div>
-
-                        <input type="hidden" name="donation_amount" id="donation-amount" value="100">
-                        
-                        <div class="card-actions">
-                            <button type="submit" class="btn btn-primary">
-                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                                Підтримати
-                            </button>
-                        </div>
+                        <button type="submit" class="btn-support">
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
+                            Підтримати (1000 грн)
+                        </button>
                     </form>
 
                     {% if request.user == fundraising.creator %}
                         <div class="action-buttons">
-                            <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
-                                <i class="fas fa-edit"></i> Редагувати
-                            </a>
-                    
-                            <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
-                                    <i class="fas fa-trash-alt"></i> Видалити
-                                </button>
-                            </form>
-                    </div>
+                            <div class="btn-container">
+                                <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                    <span>Редагувати</span>
+                                </a>
+                            </div>
+                            
+                            <div class="btn-container">
+                                <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="width: 100%; display: flex;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <span>Видалити</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     {% endif %}
 
                     <!-- Categories below the action buttons -->

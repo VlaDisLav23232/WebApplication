@@ -74,7 +74,7 @@ def delete_fundraising(request, pk):
 
     if request.method == 'POST':
         fundraising.delete()
-        return redirect('')
+        return redirect('fundraisings')  # Redirect to the fundraisings list page
 
     return render(request, 'confirm_delete.html', {'fundraising': fundraising})
 
