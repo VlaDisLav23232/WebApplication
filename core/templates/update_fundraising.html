@@ -255,7 +255,7 @@
             transition: all 0.3s ease;
         }
 
-        .upload-container:hover {
+        .upload-container:hover, .upload-container.drag-over {
             border-color: #8D6E63;
             background-color: #EFEBE9;
         }
@@ -764,29 +764,7 @@
                         <div class="upload-icon">📁</div>
                         <p class="upload-text">{% if fundraising.main_image %}Замінити зображення{% else %}Перетягніть файл сюди або натисніть для завантаження{% endif %}</p>
                         <p class="upload-subtext">JPG, PNG • Макс 5MB • Рекомендований розмір 1200x800px</p>
-                        <input type="file" id="main-image" name="main_image" accept="image/*" style="display: none;">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Додаткові зображення</label>
-                    {% if fundraising.additional_images.all %}
-                    <div class="current-images">
-                        {% for image in fundraising.additional_images.all %}
-                        <div class="image-item">
-                            <img src="{{ image.image.url }}" alt="Додаткове зображення" class="thumbnail">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="delete_images" value="{{ image.id }}"> Видалити
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <div class="upload-container" id="additional-images-upload">
-                        <div class="upload-icon">📁</div>
-                        <p class="upload-text">Завантажте додаткові зображення</p>
-                        <p class="upload-subtext">JPG, PNG • Макс 5MB кожне</p>
-                        <input type="file" id="additional-images" name="additional_images" accept="image/*" multiple style="display: none;">
+                        <input type="file" id="main-image" name="main_image" accept="image/jpeg,image/png" style="display: none;">
                     </div>
                 </div>
             </div>
@@ -794,27 +772,23 @@
             <div class="form-section">
                 <h3 class="section-heading">Фінансові деталі</h3>
 
-                <div class="form-row">
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label class="form-label" for="needed_sum">Цільова сума (₴)*</label>
-                            <input type="number" id="needed_sum" name="needed_sum" class="form-input" placeholder="Введіть необхідну суму" value="{{ fundraising.needed_sum }}" required min="1000">
-                            <p class="help-text">Мінімальна сума: 1000 ₴</p>
+                <div class="form-group">
+                    <label class="form-label" for="needed_sum">Цільова сума (₴)*</label>
+                    <input type="number" id="needed_sum" name="needed_sum" class="form-input" placeholder="Введіть необхідну суму" value="{{ fundraising.needed_sum }}" required min="1000">
+                    <p class="help-text">Мінімальна сума: 1000 ₴</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Термін збору*</label>
+                    <div class="date-inputs">
+                        <div class="date-input-group">
+                            <span class="mini-label">Дата початку</span>
+                            <input type="date" id="start-date" class="form-input" value="{{ fundraising.start_date|date:'Y-m-d' }}" disabled title="Дата початку не можна змінити після створення збору">
+                            <div class="help-text">Встановлено при створенні збору</div>
                         </div>
-                    </div>
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label class="form-label">Термін збору*</label>
-                            <div class="date-inputs">
-                                <div class="date-input-group">
-                                    <span class="mini-label">Дата початку</span>
-                                    <input type="date" id="start-date" name="start_date" class="form-input" value="{{ fundraising.start_date|date:'Y-m-d' }}" required>
-                                </div>
-                                <div class="date-input-group">
-                                    <span class="mini-label">Дата завершення</span>
-                                    <input type="date" id="end-date" name="end_date" class="form-input" value="{{ fundraising.end_date|date:'Y-m-d' }}" required>
-                                </div>
-                            </div>
+                        <div class="date-input-group">
+                            <span class="mini-label">Дата завершення</span>
+                            <input type="date" id="end-date" name="end_date" class="form-input" value="{{ fundraising.end_date|date:'Y-m-d' }}" required>
                         </div>
                     </div>
                 </div>
@@ -884,40 +858,81 @@
             const addMoreButton = document.getElementById('add-more-categories');
             const newCategoriesContainer = document.getElementById('new-categories-container');
 
-            addMoreButton.addEventListener('click', function() {
-                const newInputGroup = document.createElement('div');
-                newInputGroup.className = 'new-category-input-group mb-2';
-                newInputGroup.innerHTML = `
-                    <div class="d-flex">
-                        <input type="text" name="new_category_names[]" class="form-control" placeholder="Назва нової категорії">
-                        <button type="button" class="btn btn-outline-danger ms-2 remove-category">×</button>
-                    </div>
-                `;
+            if (addMoreButton) {
+                addMoreButton.addEventListener('click', function() {
+                    const newInputGroup = document.createElement('div');
+                    newInputGroup.className = 'new-category-input-group mb-2';
+                    newInputGroup.innerHTML = `
+                        <div class="d-flex">
+                            <input type="text" name="new_category_names[]" class="form-control" placeholder="Назва нової категорії">
+                            <button type="button" class="btn btn-outline-danger ms-2 remove-category">×</button>
+                        </div>
+                    `;
 
-                newCategoriesContainer.appendChild(newInputGroup);
+                    newCategoriesContainer.appendChild(newInputGroup);
 
-                newInputGroup.querySelector('.remove-category').addEventListener('click', function() {
-                    newCategoriesContainer.removeChild(newInputGroup);
+                    newInputGroup.querySelector('.remove-category').addEventListener('click', function() {
+                        newCategoriesContainer.removeChild(newInputGroup);
+                    });
                 });
+            }
+
+            // Handle file upload click and drag-and-drop
+            const mainImageUpload = document.getElementById('main-image-upload');
+            const mainImageInput = document.getElementById('main-image');
+
+            mainImageUpload.addEventListener('click', function() {
+                mainImageInput.click();
             });
 
-            document.getElementById('main-image-upload').addEventListener('click', function() {
-                document.getElementById('main-image').click();
+            mainImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    document.querySelector('#main-image-upload .upload-text').textContent = file.name;
+                } else {
+                    document.querySelector('#main-image-upload .upload-text').textContent = '{% if fundraising.main_image %}Замінити зображення{% else %}Файл не вибрано{% endif %}';
+                }
             });
-
-            document.getElementById('additional-images-upload').addEventListener('click', function() {
-                document.getElementById('additional-images').click();
+            
+            // Drag and drop functionality
+            mainImageUpload.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.add('drag-over');
             });
-
-            document.getElementById('main-image').addEventListener('change', function(e) {
-                const fileName = e.target.files[0]?.name || 'Файл не вибрано';
-                document.querySelector('#main-image-upload .upload-text').textContent = fileName;
+            
+            mainImageUpload.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.remove('drag-over');
             });
-
-            document.getElementById('additional-images').addEventListener('change', function(e) {
-                const fileCount = e.target.files.length;
-                document.querySelector('#additional-images-upload .upload-text').textContent = 
-                    fileCount > 0 ? `Вибрано ${fileCount} файлів` : 'Завантажте додаткові зображення';
+            
+            mainImageUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.remove('drag-over');
+                
+                const dt = e.dataTransfer;
+                if (dt.files && dt.files.length) {
+                    const file = dt.files[0];
+                    
+                    // Check if it's an allowed image type (JPG or PNG)
+                    const allowedTypes = ['image/jpeg', 'image/png'];
+                    if (allowedTypes.includes(file.type)) {
+                        // Update the file input
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        mainImageInput.files = dataTransfer.files;
+                        
+                        // Update the display text
+                        document.querySelector('#main-image-upload .upload-text').textContent = file.name;
+                    } else {
+                        alert('Будь ласка, завантажте тільки файли у форматі JPG або PNG.');
+                        // Reset the text to the default or current state
+                        document.querySelector('#main-image-upload .upload-text').textContent = '{% if fundraising.main_image %}Замінити зображення{% else %}Перетягніть файл сюди або натисніть для завантаження{% endif %}';
+                    }
+                }
             });
         });
     </script>

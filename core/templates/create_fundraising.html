@@ -152,7 +152,7 @@
             transition: all 0.3s ease;
         }
 
-        .upload-container:hover {
+        .upload-container:hover, .upload-container.drag-over {
             border-color: #8D6E63;
             background-color: #EFEBE9;
         }
@@ -497,17 +497,7 @@
                         <div class="upload-icon">📁</div>
                         <p class="upload-text">Перетягніть файл сюди або натисніть для завантаження</p>
                         <p class="upload-subtext">JPG, PNG • Макс 5MB • Рекомендований розмір 1200x800px</p>
-                        <input type="file" id="main-image" name="main_image" accept="image/*" style="display: none;" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Додаткові зображення</label>
-                    <div class="upload-container" id="additional-images-upload">
-                        <div class="upload-icon">📁</div>
-                        <p class="upload-text">Завантажте до 5 додаткових зображень</p>
-                        <p class="upload-subtext">JPG, PNG • Макс 5MB кожне</p>
-                        <input type="file" id="additional-images" name="additional_images" accept="image/*" multiple style="display: none;">
+                        <input type="file" id="main-image" name="main_image" accept="image/jpeg,image/png" style="display: none;" required>
                     </div>
                 </div>
             </div>
@@ -515,27 +505,22 @@
             <div class="form-section" id="section3">
                 <h3 class="section-heading">Фінансові деталі</h3>
                 
-                <div class="form-row">
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label class="form-label" for="needed_sum">Цільова сума (₴)*</label>
-                            <input type="number" id="needed_sum" name="needed_sum" class="form-input" placeholder="Введіть необхідну суму" required min="1000">
-                            <p class="help-text">Мінімальна сума: 1000 ₴</p>
+                <div class="form-group">
+                    <label class="form-label" for="needed_sum">Цільова сума (₴)*</label>
+                    <input type="number" id="needed_sum" name="needed_sum" class="form-input" placeholder="Введіть необхідну суму" required min="1000">
+                    <p class="help-text">Мінімальна сума: 1000 ₴</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Термін збору*</label>
+                    <div class="date-inputs">
+                        <div class="date-input-group">
+                            <span class="mini-label">Дата початку</span>
+                            <input type="date" id="start-date" class="form-input" value="{% now 'Y-m-d' %}" disabled>
                         </div>
-                    </div>
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label class="form-label">Термін збору*</label>
-                            <div class="date-inputs">
-                                <div class="date-input-group">
-                                    <span class="mini-label">Дата початку</span>
-                                    <input type="date" id="start-date" name="start_date" class="form-input" required>
-                                </div>
-                                <div class="date-input-group">
-                                    <span class="mini-label">Дата завершення</span>
-                                    <input type="date" id="end-date" name="end_date" class="form-input" required>
-                                </div>
-                            </div>
+                        <div class="date-input-group">
+                            <span class="mini-label">Дата завершення</span>
+                            <input type="date" id="end-date" name="end_date" class="form-input" required>
                         </div>
                     </div>
                 </div>
@@ -595,24 +580,62 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Handle file upload click
-            document.getElementById('main-image-upload').addEventListener('click', function() {
-                document.getElementById('main-image').click();
+            const mainImageUpload = document.getElementById('main-image-upload');
+            const mainImageInput = document.getElementById('main-image');
+
+            mainImageUpload.addEventListener('click', function() {
+                mainImageInput.click();
             });
 
-            document.getElementById('additional-images-upload').addEventListener('click', function() {
-                document.getElementById('additional-images').click();
+            // Simplified file selection handling
+            mainImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    document.querySelector('#main-image-upload .upload-text').textContent = file.name;
+                } else {
+                    document.querySelector('#main-image-upload .upload-text').textContent = 'Файл не вибрано';
+                }
             });
-
-            // Show selected file names
-            document.getElementById('main-image').addEventListener('change', function(e) {
-                const fileName = e.target.files[0]?.name || 'Файл не вибрано';
-                document.querySelector('#main-image-upload .upload-text').textContent = fileName;
+            
+            // Drag and drop functionality
+            mainImageUpload.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.add('drag-over');
             });
-
-            document.getElementById('additional-images').addEventListener('change', function(e) {
-                const fileCount = e.target.files.length;
-                document.querySelector('#additional-images-upload .upload-text').textContent = 
-                    fileCount > 0 ? `Вибрано ${fileCount} файлів` : 'Завантажте до 5 додаткових зображень';
+            
+            mainImageUpload.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.remove('drag-over');
+            });
+            
+            mainImageUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.remove('drag-over');
+                
+                const dt = e.dataTransfer;
+                if (dt.files && dt.files.length) {
+                    const file = dt.files[0];
+                    
+                    // Check if it's an allowed image type (JPG or PNG)
+                    const allowedTypes = ['image/jpeg', 'image/png'];
+                    if (allowedTypes.includes(file.type)) {
+                        // Update the file input
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        mainImageInput.files = dataTransfer.files;
+                        
+                        // Update the display text
+                        document.querySelector('#main-image-upload .upload-text').textContent = file.name;
+                    } else {
+                        alert('Будь ласка, завантажте тільки файли у форматі JPG або PNG.');
+                        // Reset the text
+                        document.querySelector('#main-image-upload .upload-text').textContent = 'Перетягніть файл сюди або натисніть для завантаження';
+                    }
+                }
             });
             
             // Improved category selection with radio buttons

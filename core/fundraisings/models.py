@@ -2,6 +2,7 @@ from django.db import models
 from authentication.models import CustomUser
 from django.urls import reverse
 from decimal import Decimal
+from django.utils import timezone  # Add this import
 
 class Fundraising(models.Model):
     title = models.CharField(max_length=255, verbose_name='Title')
@@ -13,7 +14,7 @@ class Fundraising(models.Model):
     )
     needed_sum = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Цільова сума (₴)')
     current_sum = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name='Зібрана сума (₴)')
-    start_date = models.DateField(verbose_name='Дата початку')
+    start_date = models.DateField(verbose_name='Дата початку', default=timezone.now)  # Changed to use timezone.now
     end_date = models.DateField(verbose_name='Дата завершення')
     link_for_money = models.TextField(max_length=2000, verbose_name='Реквізити для переказу', default='Реквізити будуть додані пізніше', blank=True)
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="fundraisings")

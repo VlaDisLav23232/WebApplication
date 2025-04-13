@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, JsonResponse
 from decimal import Decimal
+from django.utils import timezone  # Add this import
 
 
 def create_fundraising(request):
@@ -15,6 +16,7 @@ def create_fundraising(request):
         if form.is_valid():
             fundraising = form.save(commit=False)
             fundraising.creator = request.user
+            # Start date is automatically set to today by the model's default value
             fundraising.save()
             
             # Get single selected category
@@ -46,17 +48,21 @@ def update_fundraising(request, pk):
     if request.method == "POST":
         form = UpdateFundraisingForm(request.POST, request.FILES, instance=fundraising)
         if form.is_valid():
+            # The start date will remain unchanged thanks to removing it from the form fields
             updated_fundraising = form.save()
-            # Don't change category on update - keeping it as is
             return redirect('donate', pk=pk)
     else:
         form = UpdateFundraisingForm(instance=fundraising)
 
+    # Pass today's date to the template context to display the current date
+    today = timezone.now().date()
+    
     return render(request, 'update_fundraising.html', {
         'form': form, 
         'fundraising': fundraising, 
         'categories': all_categories,
-        'current_category': current_category
+        'current_category': current_category,
+        'today': today
     })
 
 
