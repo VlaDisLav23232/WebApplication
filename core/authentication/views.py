@@ -129,11 +129,23 @@ class ProfileUpdateForm(forms.ModelForm):
 
 # Оновлена функція profile_page
 @login_required(login_url='/login/')
-def profile_page(request):
-    user = request.user
+def profile_page(request, user_id=None):
+    # If no user_id is provided, show the current user's profile
+    if user_id is None:
+        profile_user = request.user
+    else:
+        # Get the user with the specified ID or return 404 if not found
+        profile_user = get_object_or_404(CustomUser, id=user_id)
+    
+    # Check if the profile being viewed is the current user's profile
+    is_own_profile = (profile_user.id == request.user.id)
+    
     context = {
-        'user': user
+        'profile_user': profile_user,  # The user whose profile is being viewed
+        'user': request.user,          # The currently logged-in user
+        'is_own_profile': is_own_profile
     }
+    
     return render(request, 'profile_page.html', context)
 
 # Функція для редагування профілю

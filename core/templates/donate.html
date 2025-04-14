@@ -582,16 +582,70 @@
             vertical-align: middle;
         }
 
+        /* Creator section styles - updated for whole block clickable */
+        .creator-container {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #EFEBE9;
+        }
+        
+        .creator-info-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .creator-info-link:hover {
+            background-color: #EFEBE9;
+        }
+        
+        .creator-info {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        
+        .creator-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 2px solid #5D4037;
+            box-shadow: 0 2px 4px rgba(93, 64, 55, 0.2);
+        }
+        
+        .creator-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .creator-name {
+            flex: 1;
+            color: #5D4037;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .creator-info-link:hover .creator-name {
+            color: #8D6E63;
+            text-decoration: underline;
+        }
+
         /* Адаптивний дизайн для мобільних пристроїв */
         @media (max-width: 576px) {
             .action-buttons {
                 flex-direction: column;
                 width: 100%;
             }
-            
             .action-btn {
                 width: 100%;
-                padding: 10px;
+                padding: 10px;   
             }
         }
     </style>
@@ -623,13 +677,11 @@
                     </div>
                 </div>
             </div>
-
             <!-- Вкладки -->
             <div class="tabs">
                 <div class="tab active" data-tab="goal">Мета збору</div>
                 <div class="tab" data-tab="donations">Надходження</div>
             </div>
-
             <!-- Вміст вкладки "Мета збору" -->
             <div class="tab-content active" id="goal">
                 <img class="fundraising-image" src="{{ fundraising.main_image.url }}" alt="Головне зображення">
@@ -637,54 +689,19 @@
                     <p>{{ fundraising.description }}</p>
                 </div>
             </div>
-
             <!-- Вміст вкладки "Надходження" -->
             <div class="tab-content" id="donations">
+                {% for donation in donations %}
                 <div class="donation-item">
                     <div class="donation-info">
-                        <span class="donation-date">01.04.2025, 14:32</span>
-                        <span class="donation-name">Олександр К.</span>
+                        <span class="donation-date">{{ donation.date }}</span>
+                        <span class="donation-name">{{ donation.name }}</span>
                     </div>
-                    <div class="donation-amount">500 грн</div>
+                    <div class="donation-amount">{{ donation.amount }} грн</div>
                 </div>
-                <div class="donation-item">
-                    <div class="donation-info">
-                        <span class="donation-date">01.04.2025, 12:18</span>
-                        <span class="donation-name">Марія П.</span>
-                    </div>
-                    <div class="donation-amount">200 грн</div>
-                </div>
-                <div class="donation-item">
-                    <div class="donation-info">
-                        <span class="donation-date">01.04.2025, 09:45</span>
-                        <span class="donation-name">Іван Т.</span>
-                    </div>
-                    <div class="donation-amount">1000 грн</div>
-                </div>
-                <div class="donation-item">
-                    <div class="donation-info">
-                        <span class="donation-date">31.03.2025, 18:22</span>
-                        <span class="donation-name">Катерина О.</span>
-                    </div>
-                    <div class="donation-amount">300 грн</div>
-                </div>
-                <div class="donation-item">
-                    <div class="donation-info">
-                        <span class="donation-date">31.03.2025, 15:37</span>
-                        <span class="donation-name">Петро В.</span>
-                    </div>
-                    <div class="donation-amount">500 грн</div>
-                </div>
-                <div class="donation-item">
-                    <div class="donation-info">
-                        <span class="donation-date">31.03.2025, 10:12</span>
-                        <span class="donation-name">Анна П.</span>
-                    </div>
-                    <div class="donation-amount">250 грн</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-
         <!-- Права частина - карточка для донату -->
         <div class="donation-card-container">
             <div class="donation-card">
@@ -710,38 +727,33 @@
                         <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
                         {{ fundraising.end_date }}
                     </p>
-
                     <form id="donation-form" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="donation_amount" id="donation-amount" value="1000">
-                        
                         <button type="submit" class="btn-support">
                             <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
                             Підтримати (1000 грн)
                         </button>
                     </form>
-
                     {% if request.user == fundraising.creator %}
-                        <div class="action-buttons">
-                            <div class="btn-container">
-                                <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
-                                    <i class="fas fa-edit"></i>
-                                    <span>Редагувати</span>
-                                </a>
-                            </div>
-                            
-                            <div class="btn-container">
-                                <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="width: 100%; display: flex;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
-                                        <i class="fas fa-trash-alt"></i>
-                                        <span>Видалити</span>
-                                    </button>
-                                </form>
-                            </div>
+                    <div class="action-buttons">
+                        <div class="btn-container">
+                            <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
+                                <i class="fas fa-edit"></i>
+                                <span>Редагувати</span>
+                            </a>
                         </div>
+                        <div class="btn-container">
+                            <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="width: 100%; display: flex;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <span>Видалити</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     {% endif %}
-
                     <!-- Categories below the action buttons -->
                     <div class="categories-container">
                         <h3 class="categories-title">Категорія збору</h3>
@@ -754,6 +766,29 @@
                                 <div class="category-tag">Без категорії</div>
                             {% endif %}
                         </div>
+                    </div>
+                    
+                    <!-- Creator information section -->
+                    <div class="creator-container">
+                        <h3 class="categories-title">Автор збору</h3>
+                        <a href="{% url 'user_profile' user_id=fundraising.creator.id %}" class="creator-info-link">
+                            <div class="creator-info">
+                                <div class="creator-avatar">
+                                    {% if fundraising.creator.avatar %}
+                                        <img src="{{ fundraising.creator.avatar.url }}" alt="{{ fundraising.creator.get_full_name }}">
+                                    {% else %}
+                                        <img src="{% static 'pictures/profile_page/default.png' %}" alt="Аватар">
+                                    {% endif %}
+                                </div>
+                                <div class="creator-name">
+                                    {% if fundraising.creator.get_full_name %}
+                                        {{ fundraising.creator.get_full_name }}
+                                    {% else %}
+                                        {{ fundraising.creator.username }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -836,48 +871,33 @@
     <div class="copyright">
         © 2025 Dovir. Всі права захищені.
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tabs = document.querySelectorAll('.tab');
-            
             tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
-                    // Видаляємо активний клас з усіх вкладок
                     tabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Додаємо активний клас до обраної вкладки
                     this.classList.add('active');
-                    
-                    // Знаходимо всі контейнери з вмістом вкладок
                     const tabContents = document.querySelectorAll('.tab-content');
-                    
-                    // Ховаємо всі контейнери з вмістом
                     tabContents.forEach(content => {
                         content.classList.remove('active');
                     });
                     
-                    // Показуємо вміст обраної вкладки
                     const tabId = this.getAttribute('data-tab');
                     document.getElementById(tabId).classList.add('active');
                 });
             });
             
-            // Обробка кнопок з сумами пожертвування
             const donationButtons = document.querySelectorAll('.donation-amount-btn');
             const donationAmountInput = document.getElementById('donation-amount');
             const customAmountContainer = document.getElementById('custom-amount');
             const customAmountInput = document.querySelector('input[name="custom_donation_amount"]');
-            
             donationButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Знімаємо активний клас з усіх кнопок
                     donationButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
-                    
                     const amount = this.getAttribute('data-amount');
                     
-                    // Handle custom amount
                     if (amount === 'custom') {
                         customAmountContainer.style.display = 'block';
                         customAmountInput.focus();
@@ -888,18 +908,15 @@
                 });
             });
             
-            // Update donation amount when custom amount changes
             customAmountInput.addEventListener('input', function() {
                 donationAmountInput.value = this.value;
             });
             
-            // For quick testing: Add a test button that adds 1000 UAH instantly
             const testButton = document.createElement('button');
             testButton.textContent = "Тест: додати 1000 грн";
             testButton.className = "btn btn-secondary";
             testButton.style.marginTop = "10px";
             document.querySelector('.card-actions').appendChild(testButton);
-            
             testButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 
@@ -912,12 +929,11 @@
                         'X-Requested-With': 'XMLHttpRequest',
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: 'amount=1000'
+                    body: 'amount=1000',
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Update UI with integer percentage
                         document.getElementById('current-sum').textContent = data.current_sum + ' ₴';
                         document.getElementById('progress-bar').style.width = data.progress_percentage + '%';
                         document.getElementById('progress-percentage').textContent = Math.round(data.progress_percentage) + '%';

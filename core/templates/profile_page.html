@@ -35,7 +35,7 @@
             position: relative;
             width: 100%;
             height: 280px; /* Зменшено висоту баннера */
-            background-image: url('../static/pictures/profile_page/forest.jpg');
+            background-image: url("{% static 'pictures/profile_page/forest.jpg' %}");
             background-size: cover;
             background-position: center;
             margin-bottom: 0;
@@ -770,7 +770,6 @@
 <body>
     {% include 'includes/navbar.html' %}
     
-    <!-- Перероблена секція профілю -->
     <div class="profile-section"> 
         <div class="profile-hero">
             <!-- Hero background image automatically applied via CSS -->
@@ -779,28 +778,28 @@
         <div class="profile-content-wrapper">
             <div class="profile-main-content">
                 <div class="profile-avatar-large">
-                    {% if user.avatar %}
-                        <img src="{{ user.avatar.url }}" alt="Фото профілю {{ user.username }}"/>
+                    {% if profile_user.avatar %}
+                        <img src="{{ profile_user.avatar.url }}" alt="Фото профілю {{ profile_user.username }}"/>
                     {% else %}
                         <img src="{% static 'pictures/profile_page/default.png' %}" alt="Фото профілю"/>
                     {% endif %}
                 </div>
                 
                 <div class="profile-info-primary">
-                    {% if user.is_authenticated %}
-                        {% if user.get_full_name %}
-                            <h1 class="profile-name">{{ user.get_full_name }}</h1>
+                    {% if profile_user %}
+                        {% if profile_user.get_full_name %}
+                            <h1 class="profile-name">{{ profile_user.get_full_name }}</h1>
                         {% else %}
-                            <h1 class="profile-name">{{ user.username }}</h1>
+                            <h1 class="profile-name">{{ profile_user.username }}</h1>
                         {% endif %}
                         
                         <div class="profile-location">
-                            {% if user.country %}
-                                {% if user.city %}{{ user.city }}, {% endif %}
-                                {% if user.region %}{{ user.region }}, {% endif %}
-                                {{ user.country }}
-                            {% elif user.city %}
-                                {{ user.city }}, Україна
+                            {% if profile_user.country %}
+                                {% if profile_user.city %}{{ profile_user.city }}, {% endif %}
+                                {% if profile_user.region %}{{ profile_user.region }}, {% endif %}
+                                {{ profile_user.country }}
+                            {% elif profile_user.city %}
+                                {{ profile_user.city }}, Україна
                             {% else %}
                                 Україна
                             {% endif %}
@@ -808,27 +807,27 @@
                         
                         <!-- Social media icons -->
                         <div class="social-media-links">
-                            {% if user.instagram %}
-                                <a href="{{ user.instagram }}" target="_blank" rel="noopener noreferrer" class="social-icon instagram">
+                            {% if profile_user.instagram %}
+                                <a href="{{ profile_user.instagram }}" target="_blank" rel="noopener noreferrer" class="social-icon instagram">
                                     <img src="{% static 'pictures/profile_page/instagram.png' %}" alt="Instagram">
                                 </a>
                             {% endif %}
                             
-                            {% if user.facebook %}
-                                <a href="{{ user.facebook }}" target="_blank" rel="noopener noreferrer" class="social-icon facebook">
+                            {% if profile_user.facebook %}
+                                <a href="{{ profile_user.facebook }}" target="_blank" rel="noopener noreferrer" class="social-icon facebook">
                                     <img src="{% static 'pictures/profile_page/facebook.png' %}" alt="Facebook">
                                 </a>
                             {% endif %}
                             
-                            {% if user.telegram %}
-                                <a href="{{ user.telegram }}" target="_blank" rel="noopener noreferrer" class="social-icon telegram">
+                            {% if profile_user.telegram %}
+                                <a href="{{ profile_user.telegram }}" target="_blank" rel="noopener noreferrer" class="social-icon telegram">
                                     <img src="{% static 'pictures/profile_page/telegram.webp' %}" alt="Telegram">
                                 </a>
                             {% endif %}
                         </div>
                         
-                        {% if user.bio %}
-                            <div class="bio-content">{{ user.bio }}</div>
+                        {% if profile_user.bio %}
+                            <div class="bio-content">{{ profile_user.bio }}</div>
                         {% else %}
                             <div class="bio-content">
                                 Інформація про користувача не додана.
@@ -843,13 +842,15 @@
                 </div>
                 
                 <div class="profile-info-secondary">
-                    {% if user.is_authenticated %}
+                    {% if is_own_profile %}
                         <a href="{% url 'edit_profile' %}" class="edit-profile-btn">
                             Редагувати профіль
                         </a>
                         <a href="#" class="edit-profile-btn logout-btn" style="background-color: #c62828; margin-left: 10px;" onclick="confirmLogout(event)">
                             <i class="fas fa-sign-out-alt"></i> Вийти
                         </a>
+                    {% elif user.is_authenticated %}
+                        <!-- Removed the "My Profile" button when viewing another user's profile -->
                     {% else %}
                         <a href="{% url 'login_page' %}" class="edit-profile-btn">
                             Увійти
@@ -860,7 +861,7 @@
         </div>
     </div>
     
-    {% if user.is_authenticated %}
+    {% if profile_user %}
     <div class="content-sections">
         <!-- Statistics Section -->
         <div class="section-title">
@@ -1102,7 +1103,7 @@
         </div>
         <div class="collections">
             <div class="card">
-                <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card1.jpg')"></div>
+                <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card1.jpg" %}')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Тепловізори для 72 ОМБр ім. Чорних Запорожців</h3>
                     <div class="fundraising-info">
@@ -1138,7 +1139,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-image" style="background-image: url('../static/fundraisings/card2.jpg')"></div>
+                <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card2.jpg" %}')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Автомобілі для евакуації поранених 95 ОДШБр</h3>
                     <div class="fundraising-info">
@@ -1174,7 +1175,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card3.jpg')"></div>
+                <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card3.jpg" %}')"></div>
                 <div class="card-content">
                     <h3 class="card-title">Дрони-розвідники для 24 ОМБр ім. короля Данила</h3>
                     <div class="fundraising-info">
@@ -1214,7 +1215,7 @@
         <div class="hidden-collections" id="moreCollections" style="display: none;">
             <div class="collections">
                 <div class="card">
-                    <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card4.jpg')"></div>
+                    <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card4.jpg" %}')"></div>
                     <div class="card-content">
                         <h3 class="card-title">Рації та обладнання зв'язку для розвідників</h3>
                         <div class="fundraising-info">
@@ -1250,7 +1251,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card1.jpg')"></div>
+                    <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card1.jpg" %}')"></div>
                     <div class="card-content">
                         <h3 class="card-title">Бронежилети та шоломи для 128 ОГШБ</h3>
                         <div class="fundraising-info">
@@ -1286,7 +1287,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image" style="background-image: url('../static/pictures/fundraisings/card2.jpg')"></div>
+                    <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card2.jpg" %}')"></div>
                     <div class="card-content">
                         <h3 class="card-title">Starlink для підрозділів ППО</h3>
                         <div class="fundraising-info">
@@ -1378,6 +1379,11 @@
             moreAchievements.style.display = 'block';
             button.textContent = 'Показати менше';
         }
+    }
+    
+    function toggleDonations() {
+        const moreDonations = document.getElementById('moreDonations');
+        const button = document.querySelector('.donation-history + button');
     }
     
     function toggleDonations() {

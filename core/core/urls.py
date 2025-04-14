@@ -31,7 +31,8 @@ urlpatterns = [
     path("", home, name="home"),
     path('home/', home, name="recipes"),      # Home page
     path('fundraisings/', fundraisings, name='fundraisings'), #fundraising page
-    path('profile/', profile_page, name='profile_page'),
+    path('profile/', profile_page, name='profile_page'),  # Default profile (current user)
+    path('profile/<int:user_id>/', profile_page, name='user_profile'),  # Profile with specific user ID
     path('profile/edit/', edit_profile, name='edit_profile'),
     path("admin/", admin.site.urls),          # Admin interface
     path('login/', login_page, name='login_page'),    # Login page
