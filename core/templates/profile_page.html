@@ -285,11 +285,23 @@
             font-weight: bold;
             cursor: pointer;
             font-size: 16px;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
         }
         
         .show-more-btn:hover {
             color: #5d4037;
+            background-color: #EFEBE9;
+            box-shadow: 0 2px 5px rgba(93, 64, 55, 0.1);
+        }
+        
+        .show-more-btn i {
+            font-size: 18px;
         }
         
         .achievements {
@@ -410,27 +422,69 @@
             margin-bottom: 15px;
             padding: 18px;
             border-radius: 10px;
-            background-color: #efebe9;
+            background-color: #fff;
+            box-shadow: 0 3px 8px rgba(141, 110, 99, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid #5D4037;
+        }
+        
+        .donation-history-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(141, 110, 99, 0.25);
         }
         
         .donation-info {
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 16px;
             color: #3e2723;
+        }
+        
+        .donation-info a {
+            color: #5D4037;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .donation-info a:hover {
+            color: #8D6E63;
+            text-decoration: underline;
         }
         
         .donation-date {
             color: #8d6e63;
             font-size: 14px;
             margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .donation-date i {
+            margin-right: 5px;
+            font-size: 14px;
+            color: #A1887F;
         }
         
         .donation-amount {
-            font-weight: bold;
-            color: #4caf50;
+            font-weight: 700;
+            color: #5D4037;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .donation-empty {
+            text-align: center;
+            padding: 30px;
+            background-color: #EFEBE9;
+            border-radius: 10px;
+            color: #8D6E63;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         
         .hidden-donations {
             display: none;
+            margin-top: -20px;
         }
         
         .collections {
@@ -912,7 +966,9 @@
     <div class="content-sections">
         <div class="section-title">
             <h2>Активні збори</h2>
-            <button class="show-more-btn" onclick="toggleCollections()">Показати більше</button>
+            <button class="show-more-btn" onclick="toggleCollections()" aria-label="Показати більше">
+                <i class="fas fa-chevron-down" id="collections-icon"></i>
+            </button>
         </div>
         <div class="collections">
             {% if user_fundraisings %}
@@ -1029,7 +1085,9 @@
 
         <div class="section-title">
             <h2>Статистика</h2>
-            <button class="show-more-btn" onclick="toggleStats()">Показати більше</button>
+            <button class="show-more-btn" onclick="toggleStats()" aria-label="Показати більше">
+                <i class="fas fa-chevron-down" id="stats-icon"></i>
+            </button>
         </div>
         <div class="stats-cards">
             <div class="stat-card">
@@ -1090,7 +1148,9 @@
         
         <div class="section-title">
             <h2>Досягнення</h2>
-            <button class="show-more-btn" onclick="toggleAchievements()">Показати більше</button>
+            <button class="show-more-btn" onclick="toggleAchievements()" aria-label="Показати більше">
+                <i class="fas fa-chevron-down" id="achievements-icon"></i>
+            </button>
         </div>
         <div class="achievements">
             <div class="achievement">
@@ -1198,57 +1258,75 @@
         
         <div class="section-title">
             <h2>Історія донатів</h2>
-            <button class="show-more-btn" onclick="toggleDonations()">Показати більше</button>
+            {% if user_donations|length > 3 %}
+            <button class="show-more-btn" onclick="toggleDonations()" aria-label="Показати більше">
+                <i class="fas fa-chevron-down" id="donations-icon"></i>
+            </button>
+            {% endif %}
         </div>
         <div class="donation-history">
-            <div class="donation-history-item">
-                <div>
-                    <div class="donation-info">Тепловізори для 72 ОМБр</div>
-                    <div class="donation-date">12.01.2023</div>
+            {% if user_donations %}
+                {% for donation in user_donations|slice:":3" %}
+                <div class="donation-history-item">
+                    <div>
+                        <div class="donation-info">
+                            <a href="{% url 'donate' pk=donation.fundraising.pk %}">{{ donation.fundraising.title }}</a>
+                        </div>
+                        <div class="donation-date">
+                            <i class="fas fa-calendar-alt"></i> 
+                            <span class="donation-date-value">{{ donation.date|date:"d.m.Y" }}</span>
+                            <i class="fas fa-clock" style="margin-left: 10px;"></i>
+                            <span>{{ donation.date|date:"H:i" }}</span>
+                        </div>
+                        {% if donation.message %}
+                        <div class="donation-message">
+                            "{{ donation.message }}"
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="donation-amount">{{ donation.amount }} ₴</div>
                 </div>
-                <div class="donation-amount">2 500₴</div>
-            </div>
-            <div class="donation-history-item">
-                <div>
-                    <div class="donation-info">Дрон для 93 ОМБр</div>
-                    <div class="donation-date">25.02.2023</div>
+                {% endfor %}
+            {% else %}
+                <div class="donation-empty">
+                    <i class="fas fa-hand-holding-heart" style="font-size: 32px; margin-bottom: 15px; display: block;"></i>
+                    <p>Наразі користувач не зробив жодного донату.</p>
+                    {% if is_own_profile %}
+                    <a href="{% url 'fundraisings' %}" class="btn btn-primary" style="max-width: 250px; margin: 15px auto; display: block;">
+                        <i class="fas fa-heart"></i> Підтримати збори
+                    </a>
+                    {% endif %}
                 </div>
-                <div class="donation-amount">3 000₴</div>
-            </div>
-            <div class="donation-history-item">
-                <div>
-                    <div class="donation-info">Аптечки для 81 десантної бригади</div>
-                    <div class="donation-date">03.03.2023</div>
-                </div>
-                <div class="donation-amount">1 500₴</div>
-            </div>
+            {% endif %}
         </div>
-        
+
+        {% if user_donations|length > 3 %}
         <div class="hidden-donations" id="moreDonations" style="display: none;">
             <div class="donation-history">
+                {% for donation in user_donations|slice:"3:" %}
                 <div class="donation-history-item">
                     <div>
-                        <div class="donation-info">Транспорт для 28 ОМБр</div>
-                        <div class="donation-date">17.04.2023</div>
+                        <div class="donation-info">
+                            <a href="{% url 'donate' pk=donation.fundraising.pk %}">{{ donation.fundraising.title }}</a>
+                        </div>
+                        <div class="donation-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="donation-date-value">{{ donation.date|date:"d.m.Y" }}</span>
+                            <i class="fas fa-clock" style="margin-left: 10px;"></i>
+                            <span>{{ donation.date|date:"H:i" }}</span>
+                        </div>
+                        {% if donation.message %}
+                        <div class="donation-message">
+                            "{{ donation.message }}"
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="donation-amount">5 000₴</div>
+                    <div class="donation-amount">{{ donation.amount }} ₴</div>
                 </div>
-                <div class="donation-history-item">
-                    <div>
-                        <div class="donation-info">Рації для розвідки</div>
-                        <div class="donation-date">29.05.2023</div>
-                    </div>
-                    <div class="donation-amount">2 800₴</div>
-                </div>
-                <div class="donation-history-item">
-                    <div>
-                        <div class="donation-info">Ремонт бронетехніки</div>
-                        <div class="donation-date">14.06.2023</div>
-                    </div>
-                    <div class="donation-amount">4 200₴</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
     {% else %}
     <div class="not-authenticated-message">
@@ -1282,53 +1360,53 @@
 <script>
     function toggleStats() {
         const moreStats = document.getElementById('moreStats');
-        const button = document.querySelector('.section-title:nth-of-type(2) button');
+        const icon = document.getElementById('stats-icon');
         
         if (moreStats.style.display === 'block') {
             moreStats.style.display = 'none';
-            button.textContent = 'Показати більше';
+            icon.className = 'fas fa-chevron-down';
         } else {
             moreStats.style.display = 'block';
-            button.textContent = 'Показати менше';
+            icon.className = 'fas fa-chevron-up';
         }
     }
     
     function toggleAchievements() {
         const moreAchievements = document.getElementById('moreAchievements');
-        const button = document.querySelector('.section-title:nth-of-type(3) button');
+        const icon = document.getElementById('achievements-icon');
         
         if (moreAchievements.style.display === 'block') {
             moreAchievements.style.display = 'none';
-            button.textContent = 'Показати більше';
+            icon.className = 'fas fa-chevron-down';
         } else {
             moreAchievements.style.display = 'block';
-            button.textContent = 'Показати менше';
+            icon.className = 'fas fa-chevron-up';
         }
     }
     
     function toggleDonations() {
         const moreDonations = document.getElementById('moreDonations');
-        const button = document.querySelector('.section-title:nth-of-type(4) button');
+        const icon = document.getElementById('donations-icon');
         
         if (moreDonations.style.display === 'block') {
             moreDonations.style.display = 'none';
-            button.textContent = 'Показати більше';
+            icon.className = 'fas fa-chevron-down';
         } else {
             moreDonations.style.display = 'block';
-            button.textContent = 'Показати менше';
+            icon.className = 'fas fa-chevron-up';
         }
     }
     
     function toggleCollections() {
         const moreCollections = document.getElementById('moreCollections');
-        const button = document.querySelector('.section-title:nth-of-type(1) button');
+        const icon = document.getElementById('collections-icon');
         
         if (moreCollections.style.display === 'block') {
             moreCollections.style.display = 'none';
-            button.textContent = 'Показати більше';
+            icon.className = 'fas fa-chevron-down';
         } else {
             moreCollections.style.display = 'block';
-            button.textContent = 'Показати менше';
+            icon.className = 'fas fa-chevron-up';
         }
     }
     
@@ -1370,7 +1448,7 @@
         });
         
         // Format dates in donation history
-        const donationDateElements = document.querySelectorAll('.donation-date');
+        const donationDateElements = document.querySelectorAll('.donation-date-value');
         donationDateElements.forEach(element => {
             const dateText = element.textContent.trim();
             formatAndReplaceDate(element, dateText, ukrainianMonths, true);

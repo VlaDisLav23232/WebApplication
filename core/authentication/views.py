@@ -162,11 +162,19 @@ def profile_page(request, user_id=None):
     except Exception:
         user_fundraisings = []
     
+    # Get donations made by the profile user
+    try:
+        from fundraisings.models import Donation
+        user_donations = Donation.objects.filter(user=profile_user).order_by('-date')
+    except Exception:
+        user_donations = []
+    
     context = {
         'profile_user': profile_user,      # The user whose profile is being viewed
         'user': request.user,              # The currently logged-in user
         'is_own_profile': is_own_profile,
-        'user_fundraisings': user_fundraisings  # Add user's fundraisings to context
+        'user_fundraisings': user_fundraisings,  # Add user's fundraisings to context
+        'user_donations': user_donations   # Add user's donations to context
     }
 
     return render(request, 'profile_page.html', context)
