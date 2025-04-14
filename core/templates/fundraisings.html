@@ -541,6 +541,7 @@
             margin-bottom: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 2;
         }
         
         .category-tag:hover {
@@ -553,7 +554,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            z-index: 2;
+            z-index: 3;
         }
     </style>
 </head>
@@ -677,5 +678,57 @@
     <div class="copyright">
         © 2025 Dovir. Усі права захищені.
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Format all dates to Ukrainian format
+            formatDatesToUkrainian();
+        });
+        
+        // Function to format dates to Ukrainian format
+        function formatDatesToUkrainian() {
+            // Ukrainian month names
+            const ukrainianMonths = [
+                'січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
+                'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'
+            ];
+            
+            // Find all date elements
+            const dateElements = document.querySelectorAll('.card-date');
+            
+            dateElements.forEach(element => {
+                // Get the text content
+                const originalText = element.textContent.trim();
+                
+                // Handle end dates in cards
+                if (originalText.includes('Термін завершення:')) {
+                    const datePart = originalText.split('Термін завершення:')[1].trim();
+                    if (datePart) {
+                        try {
+                            const date = new Date(datePart);
+                            // Check if date is valid
+                            if (!isNaN(date.getTime())) {
+                                // Add +3 hours to convert to Ukrainian timezone
+                                date.setHours(date.getHours() + 3);
+                                
+                                // Format in Ukrainian style
+                                const day = date.getDate();
+                                const month = ukrainianMonths[date.getMonth()];
+                                const year = date.getFullYear();
+                                
+                                // Replace the original date text
+                                element.innerHTML = element.innerHTML.replace(
+                                    datePart, 
+                                    `${day} ${month} ${year} р.`
+                                );
+                            }
+                        } catch (e) {
+                            console.log("Couldn't parse date:", datePart);
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>

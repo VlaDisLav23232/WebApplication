@@ -114,6 +114,7 @@
             line-height: 1.6;
             font-size: 16px;
             margin-bottom: 30px;
+            white-space: pre-line;
         }
         
         /* Донати */
@@ -246,7 +247,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 5px;
         }
         
@@ -254,29 +255,6 @@
             width: 16px;
             height: 16px;
             margin-right: 5px;
-        }
-        
-        .donation-amounts {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .donation-amount-btn {
-            padding: 10px 5px;
-            background-color: #EFEBE9;
-            border: none;
-            border-radius: 4px;
-            font-weight: 700;
-            color: #5D4037;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .donation-amount-btn:hover, .donation-amount-btn.active {
-            background-color: #5D4037;
-            color: white;
         }
         
         .card-actions {
@@ -316,7 +294,7 @@
         .other-fundraisings {
             max-width: 1400px;
             margin: 60px auto 40px;
-            padding: 0 20px;
+            padding: 0 20px; /* Match padding of main-content */
         }
         
         .section-title {
@@ -331,7 +309,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 40px;
-            padding: 0 30px;
+            padding: 0 30px; /* Reduced horizontal padding to match main content */
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -349,6 +327,10 @@
             position: relative;
         }
         
+        .card.hidden-card {
+            display: none;
+        }
+        
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(93, 64, 55, 0.3);
@@ -360,9 +342,84 @@
             background-size: cover;
             background-position: center;
             flex-shrink: 0;
+            position: relative;
         }
         
-        .card-actions {
+        /* Category tag styling */
+        .category-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 2;
+        }
+        
+        /* Increase size of category tags in header and categories container */
+        .header-category {
+            display: inline-block;
+            margin-left: 15px;
+            vertical-align: middle;
+            padding: 6px 14px;
+            font-size: 14px;
+            border-radius: 20px;
+        }
+        
+        /* Increase size of category tags in the categories container */
+        .categories-container .category-tag {
+            padding: 6px 14px;
+            font-size: 14px;
+            border-radius: 20px;
+        }
+        
+        /* Keep card-category (in Other fundraisings) small */
+        .card-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 3;
+            padding: 3px 10px;
+            font-size: 11px;
+            border-radius: 12px;
+        }
+        
+        .category-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+
+        /* Other fundraisings card styles */
+        .other-fundraisings .card-content {
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .other-fundraisings .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 25px;
+            margin-top: 0;
+            color: #5D4037;
+        }
+        
+        .other-fundraisings .fundraising-value {
+            font-size: 18px;
+            color: #4E342E;
+            font-weight: 700;
+        }
+        
+        .other-fundraisings .card-date {
+            font-weight: 700;
+        }
+        
+        .other-fundraisings .card-actions {
             display: flex;
             gap: 10px;
             margin-top: auto;
@@ -370,15 +427,64 @@
             padding-bottom: 5px;
         }
         
-        .btn-secondary {
-            background-color: #EFEBE9;
+        .other-fundraisings .btn {
+            padding: 10px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            flex: 1;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .other-fundraisings .btn-primary {
+            background-color: #5D4037;
+            color: white;
+            border: none;
+        }
+        
+        .other-fundraisings .btn-primary:hover {
+            background-color: #4E342E;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .other-fundraisings .btn-secondary {
+            background-color: white;
             color: #5D4037;
+            border: 1px solid #5D4037;
         }
         
-        .btn-secondary:hover {
-            background-color: #D7CCC8;
+        .other-fundraisings .btn-secondary:hover {
+            background-color: #EFEBE9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
+        /* Show more button */
+        .show-more-btn {
+            margin: 20px auto;
+            display: block;
+            padding: 10px 20px;
+            background-color: #5D4037;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .show-more-btn:hover {
+            background-color: #4E342E;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
         /* Футер */
         .footer {
             background-color: #5D4037;
@@ -509,12 +615,6 @@
             transform: translateY(-2px);
         }
 
-        /* Container for equal-width buttons */
-        .btn-container {
-            display: flex;
-            flex: 1;
-        }
-
         /* Support button enhancement */
         .btn-support {
             font-size: 16px;
@@ -560,28 +660,6 @@
             gap: 8px;
         }
         
-        .category-tag {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .category-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-        }
-        
-        .header-category {
-            display: inline-block;
-            margin-left: 15px;
-            vertical-align: middle;
-        }
-
         /* Creator section styles - updated for whole block clickable */
         .creator-container {
             margin-top: 25px;
@@ -730,9 +808,10 @@
                     <form id="donation-form" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="donation_amount" id="donation-amount" value="1000">
+                        
                         <button type="submit" class="btn-support">
                             <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                            Підтримати (1000 грн)
+                            Підтримати збір (1000 ₴)
                         </button>
                     </form>
                     {% if request.user == fundraising.creator %}
@@ -763,7 +842,7 @@
                                     {{ fundraising.primary_category.name }}
                                 </div>
                             {% else %}
-                                <div class="category-tag">Без категорії</div>
+                                <div class="category-tag" style="background-color: #5D4037;">Без категорії</div>
                             {% endif %}
                         </div>
                     </div>
@@ -800,54 +879,59 @@
         <h2 class="section-title">Інші збори</h2>
         <div class="cards-container">
             {% for fundraising in other_fundraisings %}
-            <div class="card">
-                <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
-                    {% if fundraising.primary_category %}
-                    <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
-                        {{ fundraising.primary_category.name }}
+                {% if forloop.counter <= 3 %}
+                <div class="card">
+                {% else %}
+                <div class="card hidden-card">
+                {% endif %}
+                    <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
+                        {% if fundraising.primary_category %}
+                        <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                            {{ fundraising.primary_category.name }}
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                    <div class="card-content">
+                        <h3 class="card-title">{{ fundraising.title }}</h3>
+                        <div class="fundraising-info-card">
+                            <div class="fundraising-amount">
+                                <span class="fundraising-label">Зібрано:</span>
+                                <span class="fundraising-value">{{ fundraising.current_sum }} ₴</span>
+                            </div>
+                            <div class="fundraising-target">
+                                <span class="fundraising-label">Ціль:</span>
+                                <span class="fundraising-value">{{ fundraising.needed_sum }} ₴</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{ fundraising.progress_percentage }}%;"></div>
+                            </div>
+                            <span class="progress-percentage">{{ fundraising.progress_percentage }}%</span>
+                        </div>
+                        <p class="card-date">
+                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
+                            Термін завершення: {{ fundraising.end_date }}
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn btn-primary">
+                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
+                                Підтримати
+                            </button>
+                            <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
+                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Details">
+                                Детальніше
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">{{ fundraising.title }}</h3>
-                    <div class="fundraising-info-card">
-                        <div class="fundraising-amount">
-                            <span class="fundraising-label">Зібрано:</span>
-                            <span class="fundraising-value">{{ fundraising.collected_amount|default:"0" }} ₴</span>
-                        </div>
-                        <div class="fundraising-target">
-                            <span class="fundraising-label">Ціль:</span>
-                            <span class="fundraising-value">{{ fundraising.needed_sum }} ₴</span>
-                        </div>
-                    </div>
-                    <div class="progress-container">
-                        {% with percentage=fundraising.progress_percentage|default:0 %}
-                        <div class="progress-bar">
-                            <div class="progress" style="width: {{ percentage }}%;"></div>
-                        </div>
-                        <span class="progress-percentage">{{ percentage }}%</span>
-                        {% endwith %}
-                    </div>
-                    <p class="card-date">
-                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
-                        Термін завершення: {{ fundraising.end_date }}
-                    </p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">
-                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                            Підтримати
-                        </button>
-                        <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
-                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Details">
-                            Детальніше
-                        </a>
-                    </div>
-                </div>
-            </div>
             {% empty %}
-            <p>На жаль, збори наразі відсутні.</p>
+                <p>На жаль, збори наразі відсутні.</p>
             {% endfor %}
         </div>
+        {% if other_fundraisings|length > 3 %}
+            <button class="show-more-btn" onclick="showMore()">Показати більше</button>
+        {% endif %}
     </div>
 
     <!-- Футер -->
@@ -888,59 +972,106 @@
                 });
             });
             
-            const donationButtons = document.querySelectorAll('.donation-amount-btn');
-            const donationAmountInput = document.getElementById('donation-amount');
-            const customAmountContainer = document.getElementById('custom-amount');
-            const customAmountInput = document.querySelector('input[name="custom_donation_amount"]');
-            donationButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    donationButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    const amount = this.getAttribute('data-amount');
-                    
-                    if (amount === 'custom') {
-                        customAmountContainer.style.display = 'block';
-                        customAmountInput.focus();
-                    } else {
-                        customAmountContainer.style.display = 'none';
-                        donationAmountInput.value = amount;
-                    }
-                });
-            });
-            
-            customAmountInput.addEventListener('input', function() {
-                donationAmountInput.value = this.value;
-            });
-            
-            const testButton = document.createElement('button');
-            testButton.textContent = "Тест: додати 1000 грн";
-            testButton.className = "btn btn-secondary";
-            testButton.style.marginTop = "10px";
-            document.querySelector('.card-actions').appendChild(testButton);
-            testButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                
-                fetch('/fundraisings/{{ fundraising.pk }}/update-donation/', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'amount=1000',
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById('current-sum').textContent = data.current_sum + ' ₴';
-                        document.getElementById('progress-bar').style.width = data.progress_percentage + '%';
-                        document.getElementById('progress-percentage').textContent = Math.round(data.progress_percentage) + '%';
-                    }
-                });
-            });
+            // Format all dates to Ukrainian format with +3 timezone
+            formatDatesToUkrainian();
         });
+        
+        function showMore() {
+            const hiddenCards = document.querySelectorAll('.hidden-card');
+            hiddenCards.forEach(card => card.style.display = 'block');
+            const showMoreBtn = document.querySelector('.show-more-btn');
+            showMoreBtn.style.display = 'none';
+        }
+        
+        // Enhanced function to format dates to Ukrainian format
+        function formatDatesToUkrainian() {
+            // Ukrainian month names
+            const ukrainianMonths = [
+                'січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
+                'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'
+            ];
+            
+            // Format card dates (in the right panel and "Other fundraisings" section)
+            const cardDateElements = document.querySelectorAll('.card-date');
+            cardDateElements.forEach(element => {
+                const originalText = element.textContent.trim();
+                if (originalText.includes('Термін завершення:')) {
+                    const datePart = originalText.split('Термін завершення:')[1].trim();
+                    if (datePart) {
+                        formatAndReplaceDate(element, datePart, ukrainianMonths, true);
+                    }
+                } else {
+                    // Direct card date (right panel)
+                    formatAndReplaceDate(element, originalText, ukrainianMonths, true);
+                }
+            });
+            
+            // Specifically target donation dates in the "Надходження" tab
+            const donationItems = document.querySelectorAll('#donations .donation-item');
+            donationItems.forEach(item => {
+                const dateElement = item.querySelector('.donation-date');
+                if (dateElement) {
+                    const originalText = dateElement.textContent.trim();
+                    
+                    try {
+                        const date = new Date(originalText);
+                        // Check if date is valid
+                        if (!isNaN(date.getTime())) {
+                            // Add +3 hours to convert to Ukrainian timezone
+                            date.setHours(date.getHours() + 3);
+                            
+                            // Format in Ukrainian style with time
+                            const day = date.getDate();
+                            const month = ukrainianMonths[date.getMonth()];
+                            const year = date.getFullYear();
+                            const hours = date.getHours().toString().padStart(2, '0');
+                            const minutes = date.getMinutes().toString().padStart(2, '0');
+                            
+                            // Replace the date with Ukrainian format
+                            dateElement.textContent = `${day} ${month} ${year}, ${hours}:${minutes}`;
+                        }
+                    } catch (e) {
+                        console.log("Couldn't parse donation date:", originalText);
+                    }
+                }
+            });
+        }
+        
+        // Helper function to parse, format and replace dates
+        function formatAndReplaceDate(element, dateText, ukrainianMonths, isCardDate) {
+            try {
+                const date = new Date(dateText);
+                // Check if date is valid
+                if (!isNaN(date.getTime())) {
+                    // Add +3 hours to convert to Ukrainian timezone
+                    date.setHours(date.getHours() + 3);
+                    
+                    // Format in Ukrainian style
+                    const day = date.getDate();
+                    const month = ukrainianMonths[date.getMonth()];
+                    const year = date.getFullYear();
+                    
+                    if (isCardDate) {
+                        // For card dates, just use the date part
+                        if (element.innerHTML.includes('Термін завершення:')) {
+                            element.innerHTML = element.innerHTML.replace(
+                                dateText.trim(), 
+                                `${day} ${month} ${year} р.`
+                            );
+                        } else {
+                            element.innerHTML = `<img src="/static/pictures/fundraisings/calendar.png" alt="Calendar"> ${day} ${month} ${year} р.`;
+                        }
+                    } else {
+                        // For donation dates, include time
+                        const hours = date.getHours().toString().padStart(2, '0');
+                        const minutes = date.getMinutes().toString().padStart(2, '0');
+                        element.textContent = `${day} ${month} ${year}, ${hours}:${minutes}`;
+                    }
+                }
+            } catch (e) {
+                console.log("Couldn't parse date:", dateText);
+            }
+        }
     </script>
 </body>
 </html>

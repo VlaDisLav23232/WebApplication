@@ -407,14 +407,16 @@
             box-shadow: 0 0 0 2px rgba(93, 64, 55, 0.2);
         }
 
-        .category-radio {
-            margin-right: 10px;
-            accent-color: #5D4037;
-        }
-
-        .category-label {
-            color: #5D4037;
+        /* Preview for selected category tag */
+        .category-preview {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
             font-weight: 600;
+            color: white;
+            margin-top: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -470,14 +472,19 @@
                 <div class="form-group">
                     <label class="form-label">Категорія збору*</label>
                     
-                    <!-- Radio buttons for single category selection -->
+                    <!-- Radio buttons for single category selection with name attribute properly set-->
                     <div class="category-options">
                         {% for category in categories %}
                         <div class="category-option" data-category-id="{{ category.id }}">
-                            <input type="radio" name="selected_categories" value="{{ category.id }}" id="category-{{ category.id }}" class="category-radio" required>
+                            <input type="radio" name="primary_category" value="{{ category.id }}" id="category-{{ category.id }}" class="category-radio" required>
                             <label for="category-{{ category.id }}" class="category-label">{{ category.name }}</label>
                         </div>
                         {% endfor %}
+                    </div>
+                    
+                    <!-- Preview of selected category -->
+                    <div id="selected-category-preview" class="category-preview" style="display: none; background-color: #5D4037;">
+                        Обрана категорія: <span id="selected-category-name">Не обрано</span>
                     </div>
                 </div>
             </div>
@@ -640,6 +647,9 @@
             
             // Improved category selection with radio buttons
             const categoryOptions = document.querySelectorAll('.category-option');
+            const categoryPreview = document.getElementById('selected-category-preview');
+            const categoryNameSpan = document.getElementById('selected-category-name');
+            
             categoryOptions.forEach(option => {
                 option.addEventListener('click', function(e) {
                     // Clear all selections first
@@ -651,6 +661,20 @@
                     const radio = this.querySelector('.category-radio');
                     radio.checked = true;
                     this.classList.add('selected');
+                    
+                    // Update preview
+                    const categoryName = this.querySelector('.category-label').textContent;
+                    categoryNameSpan.textContent = categoryName;
+                    categoryPreview.style.display = 'inline-block';
+                    
+                    // Set the background color based on the category's color if available
+                    const categoryId = this.getAttribute('data-category-id');
+                    // You could fetch color from backend or set it in data attribute
+                    
+                    // Form validation - ensure category is selected
+                    document.querySelectorAll('[name="primary_category"]').forEach(input => {
+                        input.setCustomValidity('');
+                    });
                 });
                 
                 // Handle radio button click
@@ -662,8 +686,21 @@
                     
                     if (this.checked) {
                         option.classList.add('selected');
+                        const categoryName = option.querySelector('.category-label').textContent;
+                        categoryNameSpan.textContent = categoryName;
+                        categoryPreview.style.display = 'inline-block';
                     }
                 });
+            });
+            
+            // Ensure form validation includes category selection
+            document.querySelector('form').addEventListener('submit', function(e) {
+                const categorySelected = document.querySelector('[name="primary_category"]:checked');
+                if (!categorySelected) {
+                    e.preventDefault();
+                    document.querySelectorAll('[name="primary_category"]')[0].setCustomValidity('Будь ласка, оберіть категорію');
+                    document.querySelectorAll('[name="primary_category"]')[0].reportValidity();
+                }
             });
             
             // Dynamic progress stepper

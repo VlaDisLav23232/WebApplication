@@ -20,21 +20,22 @@
         }
         
         .container {
-            max-width: 1200px; /* Збільшено максимальну ширину */
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
         .profile-section {
             width: 100%;
             background-color: white;
-            margin-bottom: 20px; /* Додано відступ після секції профілю */
+            margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         
         .profile-hero {
             position: relative;
             width: 100%;
-            height: 280px; /* Зменшено висоту баннера */
+            height: 280px;
             background-image: url("{% static 'pictures/profile_page/forest.jpg' %}");
             background-size: cover;
             background-position: center;
@@ -53,30 +54,30 @@
         }
         
         .profile-content-wrapper {
-            max-width: 1200px; /* Збільшено максимальну ширину */
+            max-width: 1400px;
             margin: 0 auto;
             position: relative;
-            padding: 0 20px; /* Додано бокові відступи */
+            padding: 0 80px;
         }
         
         .profile-main-content {
             position: relative;
-            padding: 0 20px;
-            padding-top: 30px; /* Зменшено верхній відступ */
-            padding-bottom: 30px; /* Додано нижній відступ */
+            padding: 0;
+            padding-top: 30px;
+            padding-bottom: 30px;
             display: flex;
             align-items: flex-start;
         }
         
         .profile-avatar-large {
-            width: 160px; /* Зменшено розмір аватарки */
-            height: 160px; /* Зменшено розмір аватарки */
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             background-color: white;
             border: 5px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             overflow: hidden;
-            margin-top: -80px; /* Розміщення посередині відносно баннера */
+            margin-top: -80px;
             z-index: 2;
             position: relative;
         }
@@ -90,7 +91,7 @@
         .profile-info-primary {
             flex: 1;
             padding-left: 30px;
-            margin-top: 0; /* Видалено відступ зверху */
+            margin-top: 0;
         }
         
         .profile-name {
@@ -102,7 +103,7 @@
         
         .profile-role {
             font-size: 18px;
-            color: #4A6FA5;
+            color: #A1887F;
             font-weight: 600;
             margin-bottom: 15px;
         }
@@ -158,8 +159,6 @@
             font-size: 15px;
         }
 
-        /* CSS for social media icons */
-        /* CSS for social media icons with images */
         .social-media-links {
             display: flex;
             gap: 15px;
@@ -190,29 +189,18 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
-        /* Updated profile location style */
-        .profile-location {
-            display: flex;
-            align-items: center;
-            color: #5d4037;
-            font-size: 16px;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-        
-        /* Content Sections */
+
         .content-sections {
-            padding: 20px;
-            max-width: 1200px; /* Збільшено максимальну ширину */
+            padding: 30px 80px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
-        /* Statistics Section */
         .stats-cards {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
         .stat-card {
@@ -220,7 +208,7 @@
             min-width: 220px;
             background-color: white;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             border: 1px solid #d7ccc8;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -253,7 +241,7 @@
         .stat-value {
             font-size: 24px;
             font-weight: bold;
-            color: #4A6FA5;
+            color: #8D6E63;
             margin-bottom: 10px;
         }
         
@@ -266,16 +254,16 @@
             display: none;
         }
         
-        /* Section Titles */
         .section-title {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 26px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: #3e2723;
             position: relative;
             padding-left: 20px;
+            margin-top: 40px;
         }
         
         .section-title:before {
@@ -286,7 +274,7 @@
             transform: translateY(-50%);
             width: 8px;
             height: 24px;
-            background-color: #4A6FA5;
+            background-color: #A1887F;
             border-radius: 4px;
         }
         
@@ -304,17 +292,16 @@
             color: #5d4037;
         }
         
-        /* Achievements Section */
         .achievements {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
         .achievement {
             width: calc(25% - 20px);
-            min-width: 200px;
+            min-width: 240px;
             background-color: white;
             border-radius: 15px;
             overflow: hidden;
@@ -361,7 +348,7 @@
             right: 10px;
             padding: 0 10px;
             height: 30px;
-            background-color: #4A6FA5;
+            background-color: #8D6E63;
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -413,17 +400,16 @@
             display: none;
         }
         
-        /* Donation History Section */
         .donation-history {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .donation-history-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 18px;
+            border-radius: 10px;
             background-color: #efebe9;
         }
         
@@ -447,12 +433,11 @@
             display: none;
         }
         
-        /* Collection Cards */
         .collections {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 40px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .card {
@@ -464,6 +449,7 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
         
         .card:hover {
@@ -677,7 +663,33 @@
             font-weight: 600;
         }
 
-        /* Responsiveness */
+        /* Category Tag Styles */
+        .category-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 2;
+        }
+        
+        .category-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+        
+        /* Position category at the top right of the card */
+        .card-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 3;
+        }
+
         @media (max-width: 1200px) {
             .collections {
                 grid-template-columns: repeat(2, 1fr);
@@ -685,6 +697,14 @@
             
             .achievement {
                 width: calc(33.33% - 20px);
+            }
+            
+            .content-sections {
+                padding: 40px 60px;
+            }
+            
+            .profile-content-wrapper {
+                padding: 0 60px;
             }
         }
         
@@ -719,8 +739,20 @@
                 justify-content: center;
             }
             
+            .collections {
+                gap: 30px;
+            }
+            
+            .content-sections {
+                padding: 30px 50px;
+            }
+            
             .achievement {
-                width: calc(50% - 20px);
+                width: calc(50% - 15px);
+            }
+            
+            .profile-content-wrapper {
+                padding: 0 50px;
             }
         }
         
@@ -741,14 +773,20 @@
             
             .collections {
                 grid-template-columns: 1fr;
+                gap: 30px;
             }
             
-            .nav-links {
-                display: none;
+            .content-sections {
+                padding: 30px 40px;
             }
             
-            .achievement {
-                width: 100%;
+            .card {
+                height: auto;
+                min-height: 420px;
+            }
+            
+            .profile-content-wrapper {
+                padding: 0 40px;
             }
         }
         
@@ -758,11 +796,23 @@
             }
             
             .profile-main-content {
-                padding: 20px 10px 0;
+                padding: 20px 0 0;
             }
             
             .content-sections {
-                padding: 20px 10px;
+                padding: 20px 30px;
+            }
+            
+            .section-title {
+                font-size: 22px;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+            
+            .profile-content-wrapper {
+                padding: 0 30px;
             }
         }
     </style>
@@ -772,7 +822,6 @@
     
     <div class="profile-section"> 
         <div class="profile-hero">
-            <!-- Hero background image automatically applied via CSS -->
         </div>
         
         <div class="profile-content-wrapper">
@@ -805,7 +854,6 @@
                             {% endif %}
                         </div>
                         
-                        <!-- Social media icons -->
                         <div class="social-media-links">
                             {% if profile_user.instagram %}
                                 <a href="{{ profile_user.instagram }}" target="_blank" rel="noopener noreferrer" class="social-icon instagram">
@@ -850,7 +898,6 @@
                             <i class="fas fa-sign-out-alt"></i> Вийти
                         </a>
                     {% elif user.is_authenticated %}
-                        <!-- Removed the "My Profile" button when viewing another user's profile -->
                     {% else %}
                         <a href="{% url 'login_page' %}" class="edit-profile-btn">
                             Увійти
@@ -863,7 +910,123 @@
     
     {% if profile_user %}
     <div class="content-sections">
-        <!-- Statistics Section -->
+        <div class="section-title">
+            <h2>Активні збори</h2>
+            <button class="show-more-btn" onclick="toggleCollections()">Показати більше</button>
+        </div>
+        <div class="collections">
+            {% if user_fundraisings %}
+                {% for fundraising in user_fundraisings|slice:":3" %}
+                <div class="card">
+                    <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}')">
+                        {% if fundraising.primary_category %}
+                        <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                            {{ fundraising.primary_category.name }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{ fundraising.title }}</h3>
+                        <div class="fundraising-info">
+                            <div class="fundraising-amount">
+                                <span class="fundraising-label">ЗІБРАНО</span>
+                                <span class="fundraising-value">{{ fundraising.current_sum }} ₴</span>
+                            </div>
+                            <div class="fundraising-target">
+                                <span class="fundraising-label">ЦІЛЬ</span>
+                                <span class="fundraising-value">{{ fundraising.needed_sum }} ₴</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{ fundraising.progress_percentage }}%"></div>
+                            </div>
+                            <span class="progress-percentage">{{ fundraising.progress_percentage }}%</span>
+                        </div>
+                        <div class="card-date">
+                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
+                            Термін завершення: {{ fundraising.end_date }}
+                        </div>
+                        <div class="card-actions">
+                            <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-primary">
+                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
+                                Підтримати
+                            </a>
+                            <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
+                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
+                                Детальніше
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="width:100%; text-align:center; padding: 30px; color: #8d6e63;">
+                    <p>У користувача немає активних зборів.</p>
+                    {% if is_own_profile %}
+                        <a href="{% url 'create_fundraising' %}" class="btn btn-primary" style="max-width: 250px; margin: 15px auto;">
+                            <i class="fas fa-plus-circle"></i> Створити збір
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="hidden-collections" id="moreCollections" style="display: none;">
+            <div class="collections">
+                {% if user_fundraisings.count > 3 %}
+                    {% for fundraising in user_fundraisings|slice:"3:" %}
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}')">
+                            {% if fundraising.primary_category %}
+                            <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
+                                {{ fundraising.primary_category.name }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">{{ fundraising.title }}</h3>
+                            <div class="fundraising-info">
+                                <div class="fundraising-amount">
+                                    <span class="fundraising-label">ЗІБРАНО</span>
+                                    <span class="fundraising-value">{{ fundraising.current_sum }} ₴</span>
+                                </div>
+                                <div class="fundraising-target">
+                                    <span class="fundraising-label">ЦІЛЬ</span>
+                                    <span class="fundraising-value">{{ fundraising.needed_sum }} ₴</span>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: {{ fundraising.progress_percentage }}%"></div>
+                                </div>
+                                <span class="progress-percentage">{{ fundraising.progress_percentage }}%</span>
+                            </div>
+                            <div class="card-date">
+                                <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
+                                Термін завершення: {{ fundraising.end_date }}
+                            </div>
+                            <div class="card-actions">
+                                <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-primary">
+                                    <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
+                                    Підтримати
+                                </a>
+                                <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
+                                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
+                                    Детальніше
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="width:100%; text-align:center; padding: 30px; color: #8d6e63;">
+                        <p>Більше зборів не знайдено.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
         <div class="section-title">
             <h2>Статистика</h2>
             <button class="show-more-btn" onclick="toggleStats()">Показати більше</button>
@@ -871,68 +1034,60 @@
         <div class="stats-cards">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="{% static 'pictures/profile_page/porosh.jpg' %}" alt="Donations"/>
-                </div>
-                <div class="stat-value">25 000₴</div>
-                <div class="stat-label">Загальна сума донатів</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
                     <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Collections"/>
                 </div>
-                <div class="stat-value">12</div>
-                <div class="stat-label">Кількість створених зборів</div>
+                <div class="stat-value">{{ profile_user.created_fundraisings_count }}</div>
+                <div class="stat-label">Створено зборів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
                     <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Closed"/>
                 </div>
-                <div class="stat-value">10</div>
-                <div class="stat-label">Кількість закритих зборів</div>
+                <div class="stat-value">{{ profile_user.completed_fundraisings_count }}</div>
+                <div class="stat-label">Успішно завершено зборів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
                     <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Contributors"/>
                 </div>
-                <div class="stat-value">43</div>
-                <div class="stat-label">Людей підтримали</div>
+                <div class="stat-value">{{ profile_user.unique_donators_count }}</div>
+                <div class="stat-label">Унікальних донаторів</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Active"/>
+                </div>
+                <div class="stat-value">{{ profile_user.supported_fundraisings_count }}</div>
+                <div class="stat-label">Підтримано зборів</div>
             </div>
         </div>
-        
+
         <div class="hidden-stats" id="moreStats" style="display: none;">
             <div class="stats-cards">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Active"/>
-                    </div>
-                    <div class="stat-value">2</div>
-                    <div class="stat-label">Активні збори</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
                         <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Average"/>
                     </div>
-                    <div class="stat-value">83%</div>
-                    <div class="stat-label">Середній відсоток виконання</div>
+                    <div class="stat-value">{{ profile_user.total_received_amount }} ₴</div>
+                    <div class="stat-label">Зібрано на створених зборах</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Max"/>
                     </div>
-                    <div class="stat-value">5 000₴</div>
-                    <div class="stat-label">Найбільший донат</div>
+                    <div class="stat-value">{{ profile_user.largest_donation_amount }} ₴</div>
+                    <div class="stat-label">Найбільший зроблений донат</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Duration"/>
                     </div>
-                    <div class="stat-value">14</div>
-                    <div class="stat-label">Днів до закриття збору (сер.)</div>
+                    <div class="stat-value">{{ profile_user.total_donated_amount }} ₴</div>
+                    <div class="stat-label">Загальна сума донатів</div>
                 </div>
             </div>
         </div>
         
-        <!-- Achievements Section -->
         <div class="section-title">
             <h2>Досягнення</h2>
             <button class="show-more-btn" onclick="toggleAchievements()">Показати більше</button>
@@ -1041,7 +1196,6 @@
             </div>
         </div>
         
-        <!-- Donation History Section -->
         <div class="section-title">
             <h2>Історія донатів</h2>
             <button class="show-more-btn" onclick="toggleDonations()">Показати більше</button>
@@ -1095,235 +1249,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Collection Cards Section -->
-        <div class="section-title">
-            <h2>Активні збори</h2>
-            <button class="show-more-btn" onclick="toggleCollections()">Показати більше</button>
-        </div>
-        <div class="collections">
-            <div class="card">
-                <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card1.jpg" %}')"></div>
-                <div class="card-content">
-                    <h3 class="card-title">Тепловізори для 72 ОМБр ім. Чорних Запорожців</h3>
-                    <div class="fundraising-info">
-                        <div class="fundraising-amount">
-                            <span class="fundraising-label">ЗІБРАНО</span>
-                            <span class="fundraising-value">210,000 ₴</span>
-                        </div>
-                        <div class="fundraising-target">
-                            <span class="fundraising-label">ЦІЛЬ</span>
-                            <span class="fundraising-value">300,000 ₴</span>
-                        </div>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 70%"></div>
-                        </div>
-                        <span class="progress-percentage">70%</span>
-                    </div>
-                    <div class="card-date">
-                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
-                        Термін завершення: 30.03.2025
-                    </div>
-                    <div class="card-actions">
-                        <a href="#" class="btn btn-primary">
-                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
-                            Підтримати
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
-                            Детальніше
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card2.jpg" %}')"></div>
-                <div class="card-content">
-                    <h3 class="card-title">Автомобілі для евакуації поранених 95 ОДШБр</h3>
-                    <div class="fundraising-info">
-                        <div class="fundraising-amount">
-                            <span class="fundraising-label">ЗІБРАНО</span>
-                            <span class="fundraising-value">520,000 ₴</span>
-                        </div>
-                        <div class="fundraising-target">
-                            <span class="fundraising-label">ЦІЛЬ</span>
-                            <span class="fundraising-value">800,000 ₴</span>
-                        </div>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 65%"></div>
-                        </div>
-                        <span class="progress-percentage">65%</span>
-                    </div>
-                    <div class="card-date">
-                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
-                        Термін завершення: 30.03.2025
-                    </div>
-                    <div class="card-actions">
-                        <a href="#" class="btn btn-primary">
-                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
-                            Підтримати
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
-                            Детальніше
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card3.jpg" %}')"></div>
-                <div class="card-content">
-                    <h3 class="card-title">Дрони-розвідники для 24 ОМБр ім. короля Данила</h3>
-                    <div class="fundraising-info">
-                        <div class="fundraising-amount">
-                            <span class="fundraising-label">ЗІБРАНО</span>
-                            <span class="fundraising-value">180,000 ₴</span>
-                        </div>
-                        <div class="fundraising-target">
-                            <span class="fundraising-label">ЦІЛЬ</span>
-                            <span class="fundraising-value">250,000 ₴</span>
-                        </div>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 72%"></div>
-                        </div>
-                        <span class="progress-percentage">72%</span>
-                    </div>
-                    <div class="card-date">
-                        <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
-                        Термін завершення: 30.03.2025
-                    </div>
-                    <div class="card-actions">
-                        <a href="#" class="btn btn-primary">
-                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
-                            Підтримати
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
-                            Детальніше
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="hidden-collections" id="moreCollections" style="display: none;">
-            <div class="collections">
-                <div class="card">
-                    <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card4.jpg" %}')"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Рації та обладнання зв'язку для розвідників</h3>
-                        <div class="fundraising-info">
-                            <div class="fundraising-amount">
-                                <span class="fundraising-label">ЗІБРАНО</span>
-                                <span class="fundraising-value">120,000 ₴</span>
-                            </div>
-                            <div class="fundraising-target">
-                                <span class="fundraising-label">ЦІЛЬ</span>
-                                <span class="fundraising-value">150,000 ₴</span>
-                            </div>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 80%"></div>
-                            </div>
-                            <span class="progress-percentage">80%</span>
-                        </div>
-                        <div class="card-date">
-                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
-                            Термін завершення: 30.03.2025
-                        </div>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">
-                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
-                                Підтримати
-                            </a>
-                            <a href="#" class="btn btn-secondary">
-                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
-                                Детальніше
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card1.jpg" %}')"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Бронежилети та шоломи для 128 ОГШБ</h3>
-                        <div class="fundraising-info">
-                            <div class="fundraising-amount">
-                                <span class="fundraising-label">ЗІБРАНО</span>
-                                <span class="fundraising-value">350,000 ₴</span>
-                            </div>
-                            <div class="fundraising-target">
-                                <span class="fundraising-label">ЦІЛЬ</span>
-                                <span class="fundraising-value">500,000 ₴</span>
-                            </div>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 70%"></div>
-                            </div>
-                            <span class="progress-percentage">70%</span>
-                        </div>
-                        <div class="card-date">
-                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
-                            Термін завершення: 30.03.2025
-                        </div>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">
-                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
-                                Підтримати
-                            </a>
-                            <a href="#" class="btn btn-secondary">
-                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
-                                Детальніше
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image" style="background-image: url('{% static "pictures/fundraisings/card2.jpg" %}')"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Starlink для підрозділів ППО</h3>
-                        <div class="fundraising-info">
-                            <div class="fundraising-amount">
-                                <span class="fundraising-label">ЗІБРАНО</span>
-                                <span class="fundraising-value">85,000 ₴</span>
-                            </div>
-                            <div class="fundraising-target">
-                                <span class="fundraising-label">ЦІЛЬ</span>
-                                <span class="fundraising-value">100,000 ₴</span>
-                            </div>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 85%"></div>
-                            </div>
-                            <span class="progress-percentage">85%</span>
-                        </div>
-                        <div class="card-date">
-                            <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar"/>
-                            Термін завершення: 30.03.2025
-                        </div>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">
-                                <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
-                                Підтримати
-                            </a>
-                            <a href="#" class="btn btn-secondary">
-                                <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Share"/>
-                                Детальніше
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     {% else %}
     <div class="not-authenticated-message">
@@ -1357,7 +1282,7 @@
 <script>
     function toggleStats() {
         const moreStats = document.getElementById('moreStats');
-        const button = document.querySelector('.section-title button');
+        const button = document.querySelector('.section-title:nth-of-type(2) button');
         
         if (moreStats.style.display === 'block') {
             moreStats.style.display = 'none';
@@ -1370,7 +1295,7 @@
     
     function toggleAchievements() {
         const moreAchievements = document.getElementById('moreAchievements');
-        const button = document.querySelector('.section-title:nth-of-type(2) button');
+        const button = document.querySelector('.section-title:nth-of-type(3) button');
         
         if (moreAchievements.style.display === 'block') {
             moreAchievements.style.display = 'none';
@@ -1383,12 +1308,7 @@
     
     function toggleDonations() {
         const moreDonations = document.getElementById('moreDonations');
-        const button = document.querySelector('.donation-history + button');
-    }
-    
-    function toggleDonations() {
-        const moreDonations = document.getElementById('moreDonations');
-        const button = document.querySelector('.donation-history + button');
+        const button = document.querySelector('.section-title:nth-of-type(4) button');
         
         if (moreDonations.style.display === 'block') {
             moreDonations.style.display = 'none';
@@ -1401,7 +1321,7 @@
     
     function toggleCollections() {
         const moreCollections = document.getElementById('moreCollections');
-        const button = document.querySelector('.collections + button');
+        const button = document.querySelector('.section-title:nth-of-type(1) button');
         
         if (moreCollections.style.display === 'block') {
             moreCollections.style.display = 'none';
@@ -1412,11 +1332,81 @@
         }
     }
     
-    // Logout confirmation
     function confirmLogout(event) {
         event.preventDefault();
         if (confirm("Ви дійсно бажаєте вийти зі свого облікового запису?")) {
             window.location.href = "{% url 'logout' %}";
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        formatDatesToUkrainian();
+    });
+    
+    function formatDatesToUkrainian() {
+        // Ukrainian month names
+        const ukrainianMonths = [
+            'січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
+            'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'
+        ];
+        
+        // Format dates in cards
+        const cardDateElements = document.querySelectorAll('.card-date');
+        cardDateElements.forEach(element => {
+            const originalText = element.textContent.trim();
+            if (originalText.includes('Термін завершення:')) {
+                const datePart = originalText.split('Термін завершення:')[1].trim();
+                if (datePart) {
+                    formatAndReplaceDate(element, datePart, ukrainianMonths, true);
+                }
+            }
+        });
+        
+        // Format dates in achievements
+        const achievementDateElements = document.querySelectorAll('.achievement-date');
+        achievementDateElements.forEach(element => {
+            const dateText = element.textContent.trim();
+            formatAndReplaceDate(element, dateText, ukrainianMonths, true);
+        });
+        
+        // Format dates in donation history
+        const donationDateElements = document.querySelectorAll('.donation-date');
+        donationDateElements.forEach(element => {
+            const dateText = element.textContent.trim();
+            formatAndReplaceDate(element, dateText, ukrainianMonths, true);
+        });
+    }
+    
+    function formatAndReplaceDate(element, dateText, ukrainianMonths, isSimpleFormat) {
+        try {
+            const date = new Date(dateText);
+            if (!isNaN(date.getTime())) {
+                // Add +3 hours for Ukrainian timezone
+                date.setHours(date.getHours() + 3);
+                
+                const day = date.getDate();
+                const month = ukrainianMonths[date.getMonth()];
+                const year = date.getFullYear();
+                
+                if (isSimpleFormat) {
+                    if (element.innerHTML.includes('Термін завершення:')) {
+                        element.innerHTML = element.innerHTML.replace(
+                            dateText.trim(), 
+                            `${day} ${month} ${year} р.`
+                        );
+                    } else {
+                        // For achievement dates and donation history dates
+                        element.textContent = `${day} ${month} ${year} р.`;
+                    }
+                } else {
+                    // For timestamps (not used in profile page but keeping for consistency)
+                    const hours = date.getHours().toString().padStart(2, '0');
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    element.textContent = `${day} ${month} ${year}, ${hours}:${minutes}`;
+                }
+            }
+        } catch (e) {
+            console.log("Couldn't parse date:", dateText);
         }
     }
 </script>

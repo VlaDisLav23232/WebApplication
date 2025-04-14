@@ -7,12 +7,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum, Max
 from .models import CustomUser
 from .forms import RegisterForm
-from django.urls import reverse
 from django import forms
 import re
-from fundraisings.models import Fundraising
+
+# Try to import Fundraising and Donation models - with error handling to avoid import errors
+try:
+    from fundraisings.models import Fundraising, Donation
+except ImportError:
+    # If the import fails, create placeholder classes for type hints only
+    class Fundraising:
+        pass
+    class Donation:
+        pass
 
 # Define a view function for the home page
 def home(request):
@@ -137,16 +146,89 @@ def profile_page(request, user_id=None):
         # Get the user with the specified ID or return 404 if not found
         profile_user = get_object_or_404(CustomUser, id=user_id)
     
+    try:
+        # Update user statistics
+        update_user_statistics(profile_user)
+    except Exception as e:
+        # Log the error but continue with the page
+        print(f"Error updating statistics: {e}")
+    
     # Check if the profile being viewed is the current user's profile
     is_own_profile = (profile_user.id == request.user.id)
     
-    context = {
-        'profile_user': profile_user,  # The user whose profile is being viewed
-        'user': request.user,          # The currently logged-in user
-        'is_own_profile': is_own_profile
-    }
+    # Get fundraisings created by the profile user
+    try:
+        user_fundraisings = Fundraising.objects.filter(creator=profile_user)
+    except Exception:
+        user_fundraisings = []
     
+    context = {
+        'profile_user': profile_user,      # The user whose profile is being viewed
+        'user': request.user,              # The currently logged-in user
+        'is_own_profile': is_own_profile,
+        'user_fundraisings': user_fundraisings  # Add user's fundraisings to context
+    }
+
     return render(request, 'profile_page.html', context)
+
+# Функція для оновлення статистики користувача
+def update_user_statistics(user):
+    try:
+        # Import here to avoid circular imports
+        from fundraisings.models import Fundraising, Donation
+        
+        # Initialize default values
+        stats = {
+            'created_fundraisings_count': 0,
+            'completed_fundraisings_count': 0,
+            'total_received_amount': 0,
+            'unique_donators_count': 0,
+            'supported_fundraisings_count': 0,
+            'total_donated_amount': 0,
+            'largest_donation_amount': 0
+        }
+        
+        # 1. Count fundraisings created by user
+        stats['created_fundraisings_count'] = Fundraising.objects.filter(creator=user).count()
+        
+        # 2. Count completed fundraisings if status field exists
+        try:
+            stats['completed_fundraisings_count'] = Fundraising.objects.filter(
+                creator=user, status='completed').count()
+        except Exception:
+            pass
+        
+        # 3. Get all fundraisings created by user
+        user_fundraising_ids = Fundraising.objects.filter(creator=user).values_list('id', flat=True)
+        
+        if user_fundraising_ids:
+            # 4. Calculate total received donations and unique donors
+            donations_to_user = Donation.objects.filter(fundraising_id__in=user_fundraising_ids)
+            total_received = donations_to_user.aggregate(Sum('amount'))['amount__sum']
+            stats['total_received_amount'] = total_received or 0
+            stats['unique_donators_count'] = donations_to_user.exclude(
+                user=None).values('user').distinct().count()
+        
+        # 5. Get user's donations
+        user_donations = Donation.objects.filter(user=user)
+        
+        # 6. Calculate user donation stats
+        stats['supported_fundraisings_count'] = user_donations.values('fundraising').distinct().count()
+        total_donated = user_donations.aggregate(Sum('amount'))['amount__sum']
+        stats['total_donated_amount'] = total_donated or 0
+        largest_donation = user_donations.aggregate(Max('amount'))['amount__max']
+        stats['largest_donation_amount'] = largest_donation or 0
+        
+        # Set all stats on user model
+        for key, value in stats.items():
+            setattr(user, key, value)
+            
+        # Total donations amount is the same as total_donated_amount
+        user.total_donations_amount = stats['total_donated_amount']
+        
+        user.save()
+    except Exception as e:
+        print(f"Error updating user statistics: {e}")
 
 # Функція для редагування профілю
 @login_required(login_url='/login/')

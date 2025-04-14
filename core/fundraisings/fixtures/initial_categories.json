@@ -1,0 +1,38 @@
+[
+  {
+    "model": "fundraisings.category",
+    "pk": 1,
+    "fields": {
+      "name": "Екіпірування",
+      "description": "Збори на екіпірування для військових",
+      "color_code": "#5D4037"
+    }
+  },
+  {
+    "model": "fundraisings.category",
+    "pk": 2,
+    "fields": {
+      "name": "Техніка та обладнання",
+      "description": "Збори на техніку та обладнання для ЗСУ",
+      "color_code": "#2196F3"
+    }
+  },
+  {
+    "model": "fundraisings.category",
+    "pk": 3,
+    "fields": {
+      "name": "Медична допомога",
+      "description": "Збори на медичну допомогу для військових та поранених",
+      "color_code": "#4CAF50"
+    }
+  },
+  {
+    "model": "fundraisings.category",
+    "pk": 4,
+    "fields": {
+      "name": "Транспорт та логістика",
+      "description": "Збори на транспорт та логістичні потреби ЗСУ",
+      "color_code": "#FF9800"
+    }
+  }
+]
