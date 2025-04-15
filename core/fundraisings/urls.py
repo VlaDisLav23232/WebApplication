@@ -7,4 +7,5 @@ urlpatterns = [
     path('<int:pk>/update/', views.update_fundraising, name='update_fundraising'),
     path('<int:pk>/delete/', views.delete_fundraising, name='delete_fundraising'),
     path('<int:pk>/update-donation/', views.update_donation, name='update_donation'),
+    path('', views.fundraisings, name='fundraisings'),  # Додаємо новий маршрут до списку зборів
 ]

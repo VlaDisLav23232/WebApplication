@@ -7,6 +7,8 @@ from decimal import Decimal
 from django.utils import timezone
 from django.contrib import messages
 from django.db import transaction
+from django.db.models import Q, Sum, Count
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def create_fundraising(request):
@@ -161,3 +163,124 @@ def donate(request, pk):
         'other_fundraisings': other_fundraisings,
     }
     return render(request, 'donate.html', context)
+
+
+def fundraisings(request):
+    # Get all fundraisings, ordered by creation date (newest first) by default
+    fundraisings_list = Fundraising.objects.all().order_by('-created_at')
+    
+    # Get all categories for the filter dropdown
+    categories = Category.objects.all()
+    
+    # Get filter parameters from the request
+    sort_option = request.GET.get('sort', 'newest')
+    category_filter = request.GET.get('category', '')
+    
+    # Apply category filter if specified
+    if category_filter:
+        fundraisings_list = fundraisings_list.filter(
+            Q(primary_category__name=category_filter) | 
+            Q(categories__name=category_filter)
+        ).distinct()
+    
+    # Apply sorting
+    if sort_option == 'newest':
+        fundraisings_list = fundraisings_list.order_by('-created_at')
+    elif sort_option == 'oldest':
+        fundraisings_list = fundraisings_list.order_by('created_at')  # Сортування за датою створення (найстаріші спочатку)
+    elif sort_option == 'ending-soon':
+        # Сортуємо за датою завершення (найближчі дати спочатку)
+        fundraisings_list = fundraisings_list.order_by('end_date')
+    elif sort_option == 'completion':
+        # Sort by percentage of completion (current_sum/needed_sum ratio)
+        fundraisings_list = sorted(
+            fundraisings_list,
+            key=lambda f: f.progress_percentage,
+            reverse=True
+        )
+    elif sort_option == 'popular':
+        # Sort by number of donations (we assume more donations = more popular)
+        fundraisings_list = fundraisings_list.annotate(
+            donation_count=Count('donations')
+        ).order_by('-donation_count')
+    
+    # Пагінація: 12 зборів на сторінку
+    paginator = Paginator(fundraisings_list, 12)
+    page = request.GET.get('page')
+    
+    try:
+        fundraisings_page = paginator.page(page)
+    except PageNotAnInteger:
+        # Якщо page не є цілим числом, показуємо першу сторінку
+        fundraisings_page = paginator.page(1)
+    except EmptyPage:
+        # Якщо page більше максимального, показуємо останню сторінку
+        fundraisings_page = paginator.page(paginator.num_pages)
+    
+    # Створюємо діапазон сторінок для відображення
+    # Показуємо максимум 5 сторінок навколо поточної
+    current_page = fundraisings_page.number
+    total_pages = paginator.num_pages
+    
+    # Початкове значення для діапазону сторінок
+    page_range = list(range(max(1, current_page - 2), min(total_pages + 1, current_page + 3)))
+    
+    # Додаємо "..." якщо потрібно
+    if page_range[0] > 1:
+        page_range.insert(0, '...')
+        page_range.insert(0, 1)
+    if page_range[-1] < total_pages:
+        page_range.append('...')
+        page_range.append(total_pages)
+    
+    context = {
+        'fundraisings': fundraisings_page,
+        'categories': categories,
+        'selected_sort': sort_option,
+        'selected_category': category_filter,
+        'page_range': page_range,
+        'total_pages': total_pages,
+    }
+    
+    return render(request, 'fundraisings.html', context)
+
+
+def update_donation(request, pk):
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        try:
+            donation = get_object_or_404(Donation, pk=pk)
+            
+            # Check if user has permission to update
+            if request.user != donation.user and request.user != donation.fundraising.creator:
+                return JsonResponse({'success': False, 'error': 'Permission denied'})
+                
+            # Get updated values
+            amount = request.POST.get('amount')
+            message = request.POST.get('message')
+            anonymous = request.POST.get('anonymous') == 'true'
+            
+            # Update fields
+            if amount:
+                # Calculate difference to adjust fundraising total
+                difference = Decimal(amount) - donation.amount
+                donation.amount = Decimal(amount)
+                
+                # Update the fundraising total
+                fundraising = donation.fundraising
+                result = fundraising.add_donation(difference)
+            
+            if message is not None:
+                donation.message = message
+                
+            donation.anonymous = anonymous
+            donation.save()
+            
+            return JsonResponse({
+                'success': True,
+                'current_sum': str(donation.fundraising.current_sum),
+                'progress_percentage': donation.fundraising.progress_percentage
+            })
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    
+    return JsonResponse({'success': False, 'error': 'Invalid request'})

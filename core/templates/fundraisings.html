@@ -386,6 +386,25 @@
             color: white;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn.dots {
+            background: none;
+            box-shadow: none;
+            cursor: default;
+        }
+        
+        .pagination-btn.dots:hover {
+            box-shadow: none;
+        }
+        
+        .pagination a {
+            text-decoration: none;
+        }
         
         .footer {
             background-color: #5D4037;
@@ -569,17 +588,19 @@
         </div>
     </div>
 
+    <!-- Додаємо якір для прокрутки до секції фільтрації -->
+    <a id="filter-section"></a>
     <div class="filter-container">
         <div class="filter-title">Фільтрувати збори</div>
-        <form method="get" action="{% url 'fundraisings' %}">
+        <form method="get" action="{% url 'fundraisings' %}#filter-section">
             <div class="filter-row">
                 <div class="filter-group">
                     <label class="filter-label">Сортувати за</label>
                     <select class="filter-select" name="sort">
-                        <option value="newest">Найновіші</option>
-                        <option value="ending-soon">Термін завершення</option>
-                        <option value="completion">Завершеність</option>
-                        <option value="popular">Популярні</option>
+                        <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Найновіші</option>
+                        <option value="oldest" {% if selected_sort == 'oldest' %}selected{% endif %}>Найстаріші</option>
+                        <option value="ending-soon" {% if selected_sort == 'ending-soon' %}selected{% endif %}>Термін завершення (найближчі спочатку)</option>
+                        <option value="completion" {% if selected_sort == 'completion' %}selected{% endif %}>Завершеність</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -587,18 +608,18 @@
                     <select class="filter-select" name="category">
                         <option value="">Всі категорії</option>
                         {% for category in categories %}
-                        <option value="{{ category.name }}" {% if request.GET.category == category.name %}selected{% endif %}>{{ category.name }}</option>
+                        <option value="{{ category.name }}" {% if selected_category == category.name %}selected{% endif %}>{{ category.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
             <div class="filter-buttons">
-                <button type="reset" class="filter-btn filter-reset">Скинути</button>
+                <button type="button" class="filter-btn filter-reset" onclick="resetFilters()">Скинути</button>
                 <button type="submit" class="filter-btn filter-apply">Застосувати</button>
             </div>
         </form>
     </div>
-    
+
     <div class="cards-container">
         {% for fundraising in fundraisings %}
         <div class="card">
@@ -647,14 +668,25 @@
     </div>
     
     <div class="pagination">
-        <div class="pagination-btn">&lt;</div>
-        <div class="pagination-btn active">1</div>
-        <div class="pagination-btn">2</div>
-        <div class="pagination-btn">3</div>
-        <div class="pagination-btn">4</div>
-        <div class="pagination-btn">5</div>
-        <div class="pagination-btn">6</div>
-        <div class="pagination-btn">&gt;</div>
+        {% if fundraisings.has_previous %}
+        <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}{% if selected_category %}category={{ selected_category }}&{% endif %}page={{ fundraisings.previous_page_number }}#filter-section" class="pagination-btn">&lt;</a>
+        {% else %}
+        <span class="pagination-btn disabled">&lt;</span>
+        {% endif %}
+        
+        {% for i in page_range %}
+            {% if i == '...' %}
+            <span class="pagination-btn dots">...</span>
+            {% else %}
+            <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}{% if selected_category %}category={{ selected_category }}&{% endif %}page={{ i }}#filter-section" class="pagination-btn {% if fundraisings.number == i %}active{% endif %}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+        
+        {% if fundraisings.has_next %}
+        <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}{% if selected_category %}category={{ selected_category }}&{% endif %}page={{ fundraisings.next_page_number }}#filter-section" class="pagination-btn">&gt;</a>
+        {% else %}
+        <span class="pagination-btn disabled">&gt;</span>
+        {% endif %}
     </div>
     
     <div class="footer">
@@ -683,6 +715,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Format all dates to Ukrainian format
             formatDatesToUkrainian();
+            
+            // Перевіряємо, чи є хеш у URL
+            if(window.location.hash === '#filter-section') {
+                // Прокручуємо до контейнера фільтрів
+                document.getElementById('filter-section').scrollIntoView();
+            }
         });
         
         // Function to format dates to Ukrainian format
@@ -728,6 +766,27 @@
                     }
                 }
             });
+        }
+        
+        // Function to reset filters
+        function resetFilters() {
+            window.location.href = "{% url 'fundraisings' %}";
+        }
+
+        // Прокручування для пагінації
+        document.querySelectorAll('.pagination a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Додаємо затримку, щоб сторінка встигла завантажитися
+                localStorage.setItem('shouldScroll', 'true');
+            });
+        });
+        
+        // Перевіряємо при завантаженні чи потрібно прокрутити
+        if (localStorage.getItem('shouldScroll') === 'true') {
+            if (window.location.hash === '#filter-section') {
+                document.getElementById('filter-section').scrollIntoView();
+                localStorage.removeItem('shouldScroll');
+            }
         }
     </script>
 </body>
