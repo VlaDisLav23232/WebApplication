@@ -32,10 +32,29 @@ class CustomUser(AbstractUser):
     completed_fundraisings_count = models.PositiveIntegerField(default=0, verbose_name="Кількість закритих зборів")
     total_received_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Зібрана сума на збори")
     unique_donators_count = models.PositiveIntegerField(default=0, verbose_name="Кількість унікальних донаторів")
-    supported_fundraisings_count = models.PositiveIntegerField(default=0, verbose_name="Кількість підтриманих зборів")
-    total_donated_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Кількість грошей задоначено")
-    largest_donation_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Найбільший донат")
     
+    @property
+    def supported_fundraisings_count(self):
+        """Count of fundraisings the user has supported (excluding anonymous donations)"""
+        from fundraisings.models import Donation
+        return Donation.objects.filter(user=self, anonymous=False).values('fundraising').distinct().count()
+
+    @property
+    def total_donated_amount(self):
+        """Total amount the user has donated (excluding anonymous donations)"""
+        from fundraisings.models import Donation
+        from django.db.models import Sum
+        total = Donation.objects.filter(user=self, anonymous=False).aggregate(Sum('amount'))
+        return total['amount__sum'] or 0
+
+    @property
+    def largest_donation_amount(self):
+        """Largest single donation made by the user (excluding anonymous donations)"""
+        from fundraisings.models import Donation
+        from django.db.models import Max
+        maximum = Donation.objects.filter(user=self, anonymous=False).aggregate(Max('amount'))
+        return maximum['amount__max'] or 0
+
     # Метадані
     created_at = models.DateTimeField(auto_now_add=True,  null=True, verbose_name="Дата створення")
     updated_at = models.DateTimeField(auto_now=True,  null=True, verbose_name="Дата оновлення")

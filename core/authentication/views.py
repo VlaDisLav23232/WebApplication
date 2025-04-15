@@ -139,44 +139,42 @@ class ProfileUpdateForm(forms.ModelForm):
 # Оновлена функція profile_page
 @login_required(login_url='/login/')
 def profile_page(request, user_id=None):
-    # If no user_id is provided, show the current user's profile
-    if user_id is None:
+    # Get the profile user (either the requested user or the current user)
+    if user_id:
+        profile_user = get_object_or_404(CustomUser, id=user_id)
+    elif request.user.is_authenticated:
         profile_user = request.user
     else:
-        # Get the user with the specified ID or return 404 if not found
-        profile_user = get_object_or_404(CustomUser, id=user_id)
+        profile_user = None
     
-    try:
-        # Update user statistics
-        update_user_statistics(profile_user)
-    except Exception as e:
-        # Log the error but continue with the page
-        print(f"Error updating statistics: {e}")
+    # Check if it's the user's own profile
+    is_own_profile = request.user.is_authenticated and (not user_id or request.user.id == user_id)
     
-    # Check if the profile being viewed is the current user's profile
-    is_own_profile = (profile_user.id == request.user.id)
-    
-    # Get fundraisings created by the profile user
-    try:
-        user_fundraisings = Fundraising.objects.filter(creator=profile_user)
-    except Exception:
-        user_fundraisings = []
-    
-    # Get donations made by the profile user
-    try:
-        from fundraisings.models import Donation
+    # Get user's fundraisings
+    user_fundraisings = None
+    if profile_user:
+        user_fundraisings = Fundraising.objects.filter(creator=profile_user).order_by('-created_at')
+        
+        # Get user's donations (excluding anonymous ones for display)
         user_donations = Donation.objects.filter(user=profile_user).order_by('-date')
-    except Exception:
-        user_donations = []
+        
+        # Check if all user donations are anonymous (for empty state handling)
+        all_anonymous = user_donations.exists() and user_donations.filter(anonymous=False).count() == 0
+        
+        # For display, exclude anonymous donations
+        user_donations_display = user_donations.filter(anonymous=False)
+    else:
+        user_fundraisings = None
+        user_donations_display = None
+        all_anonymous = False
     
     context = {
-        'profile_user': profile_user,      # The user whose profile is being viewed
-        'user': request.user,              # The currently logged-in user
+        'profile_user': profile_user,
         'is_own_profile': is_own_profile,
-        'user_fundraisings': user_fundraisings,  # Add user's fundraisings to context
-        'user_donations': user_donations   # Add user's donations to context
+        'user_fundraisings': user_fundraisings,
+        'user_donations': user_donations_display,
+        'all_anonymous': all_anonymous
     }
-
     return render(request, 'profile_page.html', context)
 
 # Функція для оновлення статистики користувача

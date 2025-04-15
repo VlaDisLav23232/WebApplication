@@ -16,7 +16,7 @@
         }
         
         .banner {
-            background-image: url('../static/pictures/profile_page/baner4.jpg');
+            background-image: url('../static/pictures/profile_page/kyiv2.jpg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -653,10 +653,10 @@
                     Термін завершення: {{ fundraising.end_date }}
                 </p>
                 <div class="card-actions">
-                    <button class="btn btn-primary">
+                    <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn btn-primary">
                         <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
                         Підтримати
-                    </button>
+                    </a>
                     <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
                         <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Details">
                         Детальніше

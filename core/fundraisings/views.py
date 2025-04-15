@@ -284,3 +284,39 @@ def update_donation(request, pk):
             return JsonResponse({'success': False, 'error': str(e)})
     
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+
+def donation_form(request, pk):
+    fundraising = get_object_or_404(Fundraising, pk=pk)
+    
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                amount = request.POST.get('donation_amount')
+                
+                if amount:
+                    try:
+                        amount_decimal = Decimal(amount)
+                        
+                        donation = Donation.objects.create(
+                            fundraising=fundraising,
+                            user=request.user if request.user.is_authenticated else None,
+                            amount=amount_decimal,
+                            message=request.POST.get('message', ''),
+                            anonymous=request.POST.get('anonymous', False) == 'on'
+                        )
+                        
+                        messages.success(request, 'Ваш донат було успішно здійснено! Дякуємо за підтримку!')
+                    except ValueError:
+                        messages.error(request, 'Будь ласка, введіть коректну суму.')
+                else:
+                    messages.error(request, 'Сума донату не може бути порожньою.')
+        except Exception as e:
+            messages.error(request, f'Помилка при створенні донату: {str(e)}')
+        
+        return redirect('donate', pk=fundraising.pk)
+    
+    context = {
+        'fundraising': fundraising,
+    }
+    return render(request, 'donation.html', context)

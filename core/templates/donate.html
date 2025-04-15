@@ -773,11 +773,31 @@
                 <div class="donation-item">
                     <div class="donation-info">
                         <span class="donation-date">{{ donation.date }}</span>
-                        <span class="donation-name">{{ donation.name }}</span>
+                        <span class="donation-name">
+                            {% if donation.anonymous %}
+                                Анонімний донат
+                            {% else %}
+                                {% if donation.user %}
+                                    {% if donation.user.get_full_name %}
+                                        {{ donation.user.get_full_name }}
+                                    {% else %}
+                                        {{ donation.user.username }}
+                                    {% endif %}
+                                {% else %}
+                                    Гість
+                                {% endif %}
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="donation-amount">{{ donation.amount }} грн</div>
                 </div>
                 {% endfor %}
+                
+                {% if not donations %}
+                <div class="donation-empty">
+                    <p>Наразі немає донатів для цього збору.</p>
+                </div>
+                {% endif %}
             </div>
         </div>
         <!-- Права частина - карточка для донату -->
@@ -805,15 +825,10 @@
                         <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
                         {{ fundraising.end_date }}
                     </p>
-                    <form id="donation-form" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="donation_amount" id="donation-amount" value="1000">
-                        
-                        <button type="submit" class="btn-support">
-                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                            Підтримати збір (1000 ₴)
-                        </button>
-                    </form>
+                    <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn-support">
+                        <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
+                        Підтримати збір
+                    </a>
                     {% if request.user == fundraising.creator %}
                     <div class="action-buttons">
                         <div class="btn-container">
@@ -914,10 +929,10 @@
                             Термін завершення: {{ fundraising.end_date }}
                         </p>
                         <div class="card-actions">
-                            <button class="btn btn-primary">
+                            <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn btn-primary">
                                 <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
                                 Підтримати
-                            </button>
+                            </a>
                             <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
                                 <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Details">
                                 Детальніше

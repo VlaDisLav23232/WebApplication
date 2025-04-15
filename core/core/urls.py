@@ -46,7 +46,8 @@ urlpatterns = [
     path('fundraising/<int:pk>/delete/', delete_fundraising, name='delete_fundraising'),
     path('change_password/', home, name='change_password'), #change password 
     path('delete_account/', home, name='deactivate_account'),
-    path('update_settings/', home, name="update_settings")
+    path('update_settings/', home, name="update_settings"),
+    path('donate/<int:pk>/', donation_form, name='donation_form'),  # Donation form
 ]
 
 # Serve media files if DEBUG is True (development mode)
