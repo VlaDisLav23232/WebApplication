@@ -19,7 +19,7 @@ Including another URLconf
 
 # Import necessary modules
 from django.contrib import admin  # Django admin module
-from django.urls import path       # URL routing
+from django.urls import path, include  # URL routing and including other URL configurations
 from authentication.views import *  # Import views from the authentication app
 from django.conf import settings   # Application settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns  # Static files serving
@@ -48,6 +48,10 @@ urlpatterns = [
     path('delete_account/', home, name='deactivate_account'),
     path('update_settings/', home, name="update_settings"),
     path('donate/<int:pk>/', donation_form, name='donation_form'),  # Donation form
+    path('fundraising/', include('fundraisings.urls')),  # Include fundraisings URLs with prefix
+    path('create-report/', create_report, name='create_report'),  # Create report page
+    path('create-report/<int:fundraising_id>/', create_report, name='create_report_with_id'),  # Create report with fundraising ID
+    path('reports/', reports, name='reports'),  # Reports page
 ]
 
 # Serve media files if DEBUG is True (development mode)

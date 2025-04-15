@@ -5,9 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOVIR - Платформа збору коштів</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <title>DOVIR - Звіти</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
             padding: 0;
@@ -16,11 +22,11 @@
         }
         
         .banner {
-            background-image: url('../static/pictures/profile_page/kyiv2.jpg');
+            background-image: url('../static/pictures/profile_page/zvit.jpg');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 40px 0; /* Зменшено відступ зверху та знизу */
+            padding: 40px 0;
             position: relative;
             text-align: center;
             display: flex;
@@ -53,7 +59,7 @@
         }
         
         .banner-title {
-            font-size: 110px; /* Збільшено розмір */
+            font-size: 110px;
             margin-bottom: 20px;
             margin-top: 20px;
             font-family: 'Open Sans', sans-serif;
@@ -63,8 +69,8 @@
         }
         
         .divider {
-            width: 75%; /* Довша лінія */
-            height: 1px; /* Тонша лінія */
+            width: 75%;
+            height: 1px;
             background-color: white;
             margin: 15px auto 25px auto;
         }
@@ -72,7 +78,7 @@
         .banner-text {
             max-width: 100%;
             font-size: 18px;
-            line-height: 1.6; /* Трохи збільшили для кращої читабельності */
+            line-height: 1.6;
             margin: 0 auto;
             font-weight: 300;
             padding-top: 8px;
@@ -82,30 +88,30 @@
         .filter-container {
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15); /* Трохи більше тіні */
-            padding: 25px; /* Більший внутрішній відступ */
+            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15);
+            padding: 25px;
             margin: 30px 80px 20px 80px;
         }
 
         .filter-title {
-            font-size: 20px; /* Більший розмір шрифту */
+            font-size: 20px;
             font-weight: 700;
             color: #5D4037;
             margin-bottom: 20px;
-            letter-spacing: 0.5px; /* Додаємо невеликий інтервал між літерами */
+            letter-spacing: 0.5px;
         }
 
         .filter-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 25px; /* Збільшений відступ між елементами */
+            gap: 25px;
             margin-bottom: 15px;
         }
 
         .filter-group {
             display: flex;
             flex-direction: column;
-            min-width: 250px; /* Трохи ширші елементи */
+            min-width: 250px;
             flex: 1;
         }
 
@@ -117,14 +123,14 @@
         }
 
         .filter-select {
-            padding: 12px 15px; /* Більший padding для кращого вигляду */
-            border-radius: 6px; /* Більший радіус */
+            padding: 12px 15px;
+            border-radius: 6px;
             border: 1px solid #BDB9B7;
             background-color: white;
             color: #5D4037;
             font-family: 'Open Sans', sans-serif;
-            font-size: 15px; /* Трохи більший шрифт */
-            transition: all 0.2s ease; /* Плавна анімація для ховеру */
+            font-size: 15px;
+            transition: all 0.2s ease;
         }
 
         .filter-select:focus {
@@ -141,7 +147,7 @@
         }
 
         .filter-btn {
-            padding: 10px 20px; /* Більший padding для кнопок */
+            padding: 10px 20px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 15px;
@@ -153,12 +159,12 @@
             background-color: #5D4037;
             color: white;
             border: none;
-            box-shadow: 0 3px 8px rgba(93, 64, 55, 0.3); /* Додали тінь для глибини */
+            box-shadow: 0 3px 8px rgba(93, 64, 55, 0.3);
         }
 
         .filter-apply:hover {
             background-color: #4E342E;
-            transform: translateY(-2px); /* Невеликий ефект підняття при ховері */
+            transform: translateY(-2px);
         }
 
         .filter-reset {
@@ -171,11 +177,12 @@
             background-color: #EFEBE9;
         }
         
+        /* Fix card width and layout to match fundraisings page */
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Змінено на 3 карточки в ряд */
+            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
-            padding: 30px 80px; /* Змінено padding-top */
+            padding: 30px 80px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -191,6 +198,7 @@
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
+            width: 100%;
         }
         
         .card:hover {
@@ -204,6 +212,45 @@
             background-size: cover;
             background-position: center;
             flex-shrink: 0;
+            position: relative;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .report-status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .report-status-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .report-status-text {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .report-badge {
+            display: none;
         }
         
         .card-content {
@@ -225,26 +272,26 @@
         .fundraising-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px; /* Зменшено відстань до шкали */
+            margin-bottom: 15px;
         }
         
         .fundraising-amount {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Вирівняно по лівому краю */
+            align-items: flex-start;
         }
         
         .fundraising-target {
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Вирівняно по правому краю */
+            align-items: flex-end;
         }
         
         .fundraising-label {
             font-size: 12px;
             color: #8D6E63;
             font-weight: 600;
-            margin-bottom: 3px; /* Зменшено відступ */
+            margin-bottom: 3px;
         }
         
         .fundraising-value {
@@ -283,7 +330,7 @@
             font-size: 14px;
             font-weight: 700;
             color: #5D4037;
-            line-height: 8px; /* Match the height of the progress bar */
+            line-height: 8px;
             display: flex;
             align-items: center;
         }
@@ -295,7 +342,7 @@
             align-items: center;
             margin-bottom: 20px;
             font-weight: 700;
-            margin-top: 5px; /* Зменшено відстань від шкали */
+            margin-top: 5px;
         }
         
         .card-date img {
@@ -308,8 +355,8 @@
             display: flex;
             gap: 10px;
             margin-top: auto;
-            margin-bottom: 5px; /* Зменшено відступ від нижнього краю вдвічі */
-            padding-bottom: 5px; /* Зменшено відступ від нижнього краю вдвічі */
+            margin-bottom: 5px;
+            padding-bottom: 5px;
         }
         
         .btn {
@@ -326,6 +373,7 @@
             flex: 1;
             transition: all 0.3s;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
         }
         
         .btn img {
@@ -355,6 +403,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
+        /* Fix pagination to match fundraisings page exactly */
         .pagination {
             display: flex;
             justify-content: center;
@@ -454,6 +503,33 @@
             font-weight: 600;
         }
         
+        /* Enhanced category tag styles */
+        .category-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 2;
+        }
+        
+        .category-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+        
+        /* Position category at the top right of the card */
+        .card-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 3;
+        }
+        
         /* Адаптивний дизайн */
         @media (max-width: 1200px) {
             .cards-container {
@@ -548,33 +624,6 @@
                 flex-direction: column;
             }
         }
-
-        /* Enhanced category tag styles */
-        .category-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            z-index: 2;
-        }
-        
-        .category-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-        }
-        
-        /* Position category at the top right of the card */
-        .card-category {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 3;
-        }
     </style>
 </head>
 <body>
@@ -582,25 +631,23 @@
     
     <div class="banner">
         <div class="banner-content">
-            <h1 class="banner-title">АКТУАЛЬНІ ЗБОРИ</h1>
+            <h1 class="banner-title">ЗВІТИ</h1>
             <div class="divider"></div>
-            <p class="banner-text">Ці збори потребують вашої підтримки просто зараз. Навіть невеликий внесок може зробити велику різницю для наших захисників на передовій. Разом ми зможемо забезпечити їх усім необхідним.</p>
+            <p class="banner-text">Тут ви можете побачити звіти про успішно завершені збори та дізнатись, як були використані зібрані кошти. Прозорість та відкритість — наші основні принципи.</p>
         </div>
     </div>
 
     <!-- Додаємо якір для прокрутки до секції фільтрації -->
     <a id="filter-section"></a>
     <div class="filter-container">
-        <div class="filter-title">Фільтрувати збори</div>
-        <form method="get" action="{% url 'fundraisings' %}#filter-section">
+        <div class="filter-title">Фільтрувати звіти</div>
+        <form method="get" action="{% url 'reports' %}#filter-section">
             <div class="filter-row">
                 <div class="filter-group">
                     <label class="filter-label">Сортувати за</label>
                     <select class="filter-select" name="sort">
                         <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Найновіші</option>
                         <option value="oldest" {% if selected_sort == 'oldest' %}selected{% endif %}>Найстаріші</option>
-                        <option value="ending-soon" {% if selected_sort == 'ending-soon' %}selected{% endif %}>Термін завершення (найближчі спочатку)</option>
-                        <option value="completion" {% if selected_sort == 'completion' %}selected{% endif %}>Завершеність</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -629,6 +676,10 @@
                     {{ fundraising.primary_category.name }}
                 </div>
                 {% endif %}
+                <div class="report-status">
+                    <div class="report-status-title">ЗБІР ЗАКРИТО</div>
+                    <div class="report-status-text">ДЯКУЄМО!</div>
+                </div>
             </div>
             <div class="card-content">
                 <h3 class="card-title">{{ fundraising.title }}</h3>
@@ -650,13 +701,9 @@
                 </div>
                 <p class="card-date">
                     <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
-                    Термін завершення: {{ fundraising.end_date }}
+                    Звіт створено: {{ fundraising.report.created_at }}
                 </p>
                 <div class="card-actions">
-                    <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn btn-primary">
-                        <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                        Підтримати
-                    </a>
                     <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-secondary">
                         <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Details">
                         Детальніше
@@ -666,8 +713,8 @@
         </div>
         {% empty %}
         <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #5D4037;">
-            <h3>Наразі активних зборів немає</h3>
-            <p style="margin-top: 10px;">Ви можете <a href="{% url 'create_fundraising' %}" style="color: #5D4037; font-weight: bold;">створити новий збір</a> або переглянути <a href="{% url 'reports' %}" style="color: #5D4037; font-weight: bold;">звіти</a> про завершені збори.</p>
+            <h3>Наразі звітів немає</h3>
+            <p style="margin-top: 10px;">Збори ще в процесі реалізації. Звіти з'являться після їх завершення.</p>
         </div>
         {% endfor %}
     </div>
@@ -701,9 +748,9 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Актуальні збори</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>
@@ -743,9 +790,9 @@
                 // Get the text content
                 const originalText = element.textContent.trim();
                 
-                // Handle end dates in cards
-                if (originalText.includes('Термін завершення:')) {
-                    const datePart = originalText.split('Термін завершення:')[1].trim();
+                // Handle report dates
+                if (originalText.includes('Звіт створено:')) {
+                    const datePart = originalText.split('Звіт створено:')[1].trim();
                     if (datePart) {
                         try {
                             const date = new Date(datePart);
@@ -760,10 +807,7 @@
                                 const year = date.getFullYear();
                                 
                                 // Replace the original date text
-                                element.innerHTML = element.innerHTML.replace(
-                                    datePart, 
-                                    `${day} ${month} ${year} р.`
-                                );
+                                element.innerHTML = `<img src="/static/pictures/fundraisings/calendar.png" alt="Calendar"> Звіт створено: ${day} ${month} ${year} р.`;
                             }
                         } catch (e) {
                             console.log("Couldn't parse date:", datePart);
@@ -775,7 +819,7 @@
         
         // Function to reset filters
         function resetFilters() {
-            window.location.href = "{% url 'fundraisings' %}";
+            window.location.href = "{% url 'reports' %}";
         }
 
         // Прокручування для пагінації

@@ -726,12 +726,223 @@
                 padding: 10px;   
             }
         }
+
+        /* Close Fundraising Button Styles - Updated */
+        .close-fundraising-container {
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .close-fundraising-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px 16px;
+            background-color: white;
+            color: #2196F3;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #2196F3;
+            box-shadow: 0 2px 6px rgba(33, 150, 243, 0.2);
+        }
+        
+        .close-fundraising-btn:hover {
+            background-color: #F5F9FF;
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .close-fundraising-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Report Tab Styles - Updated */
+        .report-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+        
+        .report-subtitle {
+            font-size: 20px;
+            font-weight: 600;
+            color: #5D4037;
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+        
+        .report-date {
+            display: flex;
+            align-items: center;
+            color: #8D6E63;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .report-date img {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+        }
+        
+        .report-images {
+            margin-top: 30px;
+            border-top: 1px solid #EFEBE9;
+            padding-top: 20px;
+            text-align: left;
+        }
+        
+        .report-images-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 20px;
+        }
+        
+        .report-image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .report-image-container {
+            margin-top: 15px;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .report-image-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 100%;
+            display: inline-block;
+        }
+        
+        .report-image-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+        }
+        
+        .report-image-item img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+        
+        .report-videos {
+            margin-top: 30px;
+            border-top: 1px solid #EFEBE9;
+            padding-top: 20px;
+            text-align: left;
+        }
+        
+        .report-videos-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 20px;
+        }
+        
+        .report-video-container {
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .report-video {
+            width: 100%;
+            max-height: 500px;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Image modal styling for fullscreen view */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Error message styles */
+        .error-messages {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #FFEBEE;
+            border-left: 4px solid #D32F2F;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .error-message {
+            color: #D32F2F;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .error-message:last-child {
+            margin-bottom: 0;
+        }
+
+        .error-message.success {
+            color: #2E7D32;
+            background-color: #E8F5E9;
+            border-left-color: #2E7D32;
+        }
     </style>
 </head>
 <body>
     {% include 'includes/navbar.html' %}
     <!-- Основний контент -->
     <div class="main-content">
+        <!-- Add error message display -->
+        {% if messages %}
+        <div class="error-messages">
+            {% for message in messages %}
+                <div class="error-message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
         <!-- Ліва частина - інформація про збір -->
         <div class="fundraising-info">
             <div class="fundraising-header">
@@ -759,6 +970,9 @@
             <div class="tabs">
                 <div class="tab active" data-tab="goal">Мета збору</div>
                 <div class="tab" data-tab="donations">Надходження</div>
+                {% if fundraising.has_report %}
+                <div class="tab" data-tab="report">Подяка та звіт</div>
+                {% endif %}
             </div>
             <!-- Вміст вкладки "Мета збору" -->
             <div class="tab-content active" id="goal">
@@ -799,6 +1013,45 @@
                 </div>
                 {% endif %}
             </div>
+            <!-- Вміст вкладки "Подяка та звіт" -->
+            {% if fundraising.has_report %}
+            <div class="tab-content" id="report">
+                <h3 class="report-title">Подяка та звіт</h3>
+                <div class="report-date">
+                    <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
+                    {{ fundraising.report.created_at }}
+                </div>
+                <div class="report-subtitle">{{ fundraising.report.title }}</div>
+                <div class="fundraising-description">
+                    <p>{{ fundraising.report.description }}</p>
+                </div>
+                
+                <!-- Display report image -->
+                {% if fundraising.report.images.first %}
+                <div class="report-images">
+                    <h4 class="report-images-title">Фотозвіт</h4>
+                    <div class="report-image-container">
+                        <div class="report-image-item">
+                            <img src="{{ fundraising.report.images.first.image.url }}" alt="Фото звіту" data-report-image-url="{{ fundraising.report.images.first.image.url }}">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Display report video if exists -->
+                {% if fundraising.report.videos.first %}
+                <div class="report-videos">
+                    <h4 class="report-videos-title">Відеозвіт</h4>
+                    <div class="report-video-container">
+                        <video controls class="report-video">
+                            <source src="{{ fundraising.report.videos.first.video.url }}" type="video/mp4">
+                            Ваш браузер не підтримує відтворення відео.
+                        </video>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
         <!-- Права частина - карточка для донату -->
         <div class="donation-card-container">
@@ -823,32 +1076,71 @@
                     </div>
                     <p class="card-date">
                         <img src="{% static 'pictures/fundraisings/calendar.png' %}" alt="Calendar">
-                        {{ fundraising.end_date }}
+                        {% if fundraising.has_report %}
+                            Збір закрито: {{ fundraising.report.created_at }}
+                        {% else %}
+                            {{ fundraising.end_date }}
+                        {% endif %}
                     </p>
-                    <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn-support">
-                        <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
-                        Підтримати збір
-                    </a>
-                    {% if request.user == fundraising.creator %}
-                    <div class="action-buttons">
-                        <div class="btn-container">
-                            <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
-                                <i class="fas fa-edit"></i>
-                                <span>Редагувати</span>
-                            </a>
-                        </div>
-                        <div class="btn-container">
-                            <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="width: 100%; display: flex;">
-                                {% csrf_token %}
-                                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
-                                    <i class="fas fa-trash-alt"></i>
-                                    <span>Видалити</span>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                    
+                    <!-- Show support button only if the fundraising doesn't have a report -->
+                    {% if not fundraising.has_report %}
+                        <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn-support">
+                            <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Support">
+                            Підтримати збір
+                        </a>
                     {% endif %}
-                    <!-- Categories below the action buttons -->
+                    
+                    {% if request.user == fundraising.creator %}
+                        <div class="action-buttons">
+                            {% if not fundraising.has_report %}
+                                <!-- Show edit and delete buttons only if no report exists -->
+                                <div class="btn-container">
+                                    <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Редагувати</span>
+                                    </a>
+                                </div>
+                                <div class="btn-container">
+                                    <form method="post" action="{% url 'delete_fundraising' pk=fundraising.pk %}" style="width: 100%; display: flex;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="action-btn delete-btn" onclick="return confirm('Ви точно хочете видалити цей збір? Ця дія незворотна.');">
+                                            <i class="fas fa-trash-alt"></i>
+                                            <span>Видалити</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            {% else %}
+                                <!-- Show only edit button with full width if report exists -->
+                                <div class="btn-container" style="width: 100%;">
+                                    <a href="{% url 'update_fundraising' pk=fundraising.pk %}" class="action-btn edit-btn" style="width: 100%;">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Редагувати</span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Show close fundraising button only if no report exists -->
+                        {% if not fundraising.has_report %}
+                            <div class="close-fundraising-container">
+                                {% url 'create_report' fundraising_id=fundraising.pk as create_report_url %}
+                                {% if create_report_url %}
+                                    <a href="{{ create_report_url }}" class="close-fundraising-btn">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Закрити збір та створити звіт</span>
+                                    </a>
+                                {% else %}
+                                    <a href="javascript:alert('Функціонал створення звіту тимчасово недоступний. Будь ласка, спробуйте пізніше.')" class="close-fundraising-btn">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Закрити збір та створити звіт</span>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    
+                    <!-- Categories section - always visible -->
                     <div class="categories-container">
                         <h3 class="categories-title">Категорія збору</h3>
                         <div class="categories-list">
@@ -862,7 +1154,7 @@
                         </div>
                     </div>
                     
-                    <!-- Creator information section -->
+                    <!-- Creator information section - always visible -->
                     <div class="creator-container">
                         <h3 class="categories-title">Автор збору</h3>
                         <a href="{% url 'user_profile' user_id=fundraising.creator.id %}" class="creator-info-link">
@@ -888,17 +1180,12 @@
             </div>
         </div>
     </div>
-
     <!-- Інші збори -->
     <div class="other-fundraisings">
         <h2 class="section-title">Інші збори</h2>
         <div class="cards-container">
             {% for fundraising in other_fundraisings %}
-                {% if forloop.counter <= 3 %}
-                <div class="card">
-                {% else %}
-                <div class="card hidden-card">
-                {% endif %}
+                <div class="card{% if forloop.counter > 3 %} hidden-card{% endif %}">
                     <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
                         {% if fundraising.primary_category %}
                         <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
@@ -948,7 +1235,6 @@
             <button class="show-more-btn" onclick="showMore()">Показати більше</button>
         {% endif %}
     </div>
-
     <!-- Футер -->
     <div class="footer">
         <div class="footer-column">
@@ -981,7 +1267,6 @@
                     tabContents.forEach(content => {
                         content.classList.remove('active');
                     });
-                    
                     const tabId = this.getAttribute('data-tab');
                     document.getElementById(tabId).classList.add('active');
                 });
@@ -989,24 +1274,139 @@
             
             // Format all dates to Ukrainian format with +3 timezone
             formatDatesToUkrainian();
+            // Image gallery click handler for report images
+            const reportImages = document.querySelectorAll('.report-image-item img');
+            reportImages.forEach(image => {
+                image.addEventListener('click', function() {
+                    // Create a modal to show the full image
+                    const modal = document.createElement('div');
+                    modal.className = 'image-modal';
+                    modal.innerHTML = `
+                        <div class="modal-content">
+                            <span class="close-modal">&times;</span>
+                            <img src="${this.src}" alt="Full size image">
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    
+                    // Close modal functionality
+                    modal.querySelector('.close-modal').addEventListener('click', function() {
+                        document.body.removeChild(modal);
+                    });
+                    
+                    // Close when clicking outside the image
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === modal) {
+                            document.body.removeChild(modal);
+                        }
+                    });
+                });
+            });
+            // Fix for multiple image display in reports
+            const reportImageGallery = document.querySelector('.report-image-gallery');
+            if (reportImageGallery) {
+                const reportImages = reportImageGallery.querySelectorAll('.report-image-item');
+                if (reportImages.length === 1) {
+                    const galleryContainer = reportImageGallery.parentElement;
+                    if (galleryContainer) {
+                        const imageUrlElements = document.querySelectorAll('[data-report-image-url]');
+                        if (imageUrlElements.length > 0) {
+                            imageUrlElements.forEach(element => {
+                                const imageUrl = element.getAttribute('data-report-image-url');
+                                if (imageUrl && !reportImageGallery.querySelector(`img[src="${imageUrl}"]`)) {
+                                    const newImageItem = document.createElement('div');
+                                    newImageItem.className = 'report-image-item';
+                                    newImageItem.innerHTML = `<img src="${imageUrl}" alt="Фото звіту">`;
+                                    reportImageGallery.appendChild(newImageItem);
+                                    
+                                    newImageItem.querySelector('img').addEventListener('click', handleReportImageClick);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            function handleReportImageClick() {
+                const modal = document.createElement('div');
+                modal.className = 'image-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <img src="${this.src}" alt="Full size image">
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                modal.querySelector('.close-modal').addEventListener('click', function() {
+                    document.body.removeChild(modal);
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
+            }
+            // Format report creation date in Ukrainian format
+            const reportDateElements = document.querySelectorAll('.card-date');
+            reportDateElements.forEach(element => {
+                const text = element.textContent.trim();
+                if (text.includes('Збір закрито:')) {
+                    const datePart = text.split('Збір закрито:')[1].trim();
+                    if (datePart) {
+                        try {
+                            const date = new Date(datePart);
+                            if (!isNaN(date.getTime())) {
+                                const day = date.getDate();
+                                const month = ukrainianMonths[date.getMonth()];
+                                const year = date.getFullYear();
+                                const formattedDate = `${day} ${month} ${year} р.`;
+                                element.innerHTML = element.innerHTML.replace(
+                                    datePart.trim(),
+                                    formattedDate
+                                );
+                            }
+                        } catch (e) {
+                            console.log("Couldn't parse report date:", datePart);
+                        }
+                    }
+                }
+            });
         });
         
         function showMore() {
-            const hiddenCards = document.querySelectorAll('.hidden-card');
-            hiddenCards.forEach(card => card.style.display = 'block');
-            const showMoreBtn = document.querySelector('.show-more-btn');
-            showMoreBtn.style.display = 'none';
+            try {
+                const hiddenCards = document.querySelectorAll('.hidden-card');
+                if (hiddenCards.length === 0) {
+                    console.log("No hidden cards found");
+                    return;
+                }
+                
+                console.log(`Found ${hiddenCards.length} hidden cards`);
+                
+                hiddenCards.forEach(card => {
+                    card.classList.remove('hidden-card');
+                    card.style.display = 'block';
+                    console.log("Card revealed:", card);
+                });
+                
+                const showMoreBtn = document.querySelector('.show-more-btn');
+                if (showMoreBtn) {
+                    showMoreBtn.style.display = 'none';
+                } else {
+                    console.log("Show more button not found");
+                }
+            } catch (error) {
+                console.error("Error in showMore function:", error);
+                alert("Виникла помилка при відображенні додаткових зборів");
+            }
         }
         
         // Enhanced function to format dates to Ukrainian format
         function formatDatesToUkrainian() {
-            // Ukrainian month names
             const ukrainianMonths = [
                 'січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
                 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'
             ];
             
-            // Format card dates (in the right panel and "Other fundraisings" section)
             const cardDateElements = document.querySelectorAll('.card-date');
             cardDateElements.forEach(element => {
                 const originalText = element.textContent.trim();
@@ -1016,33 +1416,26 @@
                         formatAndReplaceDate(element, datePart, ukrainianMonths, true);
                     }
                 } else {
-                    // Direct card date (right panel)
                     formatAndReplaceDate(element, originalText, ukrainianMonths, true);
                 }
             });
             
-            // Specifically target donation dates in the "Надходження" tab
             const donationItems = document.querySelectorAll('#donations .donation-item');
             donationItems.forEach(item => {
                 const dateElement = item.querySelector('.donation-date');
                 if (dateElement) {
                     const originalText = dateElement.textContent.trim();
-                    
                     try {
                         const date = new Date(originalText);
-                        // Check if date is valid
                         if (!isNaN(date.getTime())) {
-                            // Add +3 hours to convert to Ukrainian timezone
                             date.setHours(date.getHours() + 3);
                             
-                            // Format in Ukrainian style with time
                             const day = date.getDate();
                             const month = ukrainianMonths[date.getMonth()];
                             const year = date.getFullYear();
                             const hours = date.getHours().toString().padStart(2, '0');
                             const minutes = date.getMinutes().toString().padStart(2, '0');
                             
-                            // Replace the date with Ukrainian format
                             dateElement.textContent = `${day} ${month} ${year}, ${hours}:${minutes}`;
                         }
                     } catch (e) {
@@ -1052,32 +1445,24 @@
             });
         }
         
-        // Helper function to parse, format and replace dates
         function formatAndReplaceDate(element, dateText, ukrainianMonths, isCardDate) {
             try {
                 const date = new Date(dateText);
-                // Check if date is valid
                 if (!isNaN(date.getTime())) {
-                    // Add +3 hours to convert to Ukrainian timezone
                     date.setHours(date.getHours() + 3);
-                    
-                    // Format in Ukrainian style
                     const day = date.getDate();
                     const month = ukrainianMonths[date.getMonth()];
                     const year = date.getFullYear();
-                    
                     if (isCardDate) {
-                        // For card dates, just use the date part
                         if (element.innerHTML.includes('Термін завершення:')) {
                             element.innerHTML = element.innerHTML.replace(
-                                dateText.trim(), 
+                                dateText.trim, 
                                 `${day} ${month} ${year} р.`
                             );
                         } else {
                             element.innerHTML = `<img src="/static/pictures/fundraisings/calendar.png" alt="Calendar"> ${day} ${month} ${year} р.`;
                         }
                     } else {
-                        // For donation dates, include time
                         const hours = date.getHours().toString().padStart(2, '0');
                         const minutes = date.getMinutes().toString().padStart(2, '0');
                         element.textContent = `${day} ${month} ${year}, ${hours}:${minutes}`;

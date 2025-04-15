@@ -16,7 +16,7 @@
         }
 
         .banner {
-            background-image: url('../static/pictures/profile_page/kyiv.jpg');
+            background-image: url("{% static 'pictures/profile_page/kyiv.jpg' %}");
             background-size: cover;
             background-position: center;
             color: white;
@@ -532,17 +532,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="link-for-money">Реквізити для переказу*</label>
-                    <textarea id="link-for-money" name="link_for_money" class="form-textarea" placeholder="Введіть банківські реквізити для збору коштів" required></textarea>
-                    <p class="help-text">Номер карти, рахунку або інші деталі для переказу коштів</p>
-                </div>
-
                 <div class="checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" class="checkbox-input" id="confirm-link-for-money" name="confirm_link_for_money" required>
-                        Підтверджую правильність введених банківських реквізитів
-                    </label>
                     <label class="checkbox-label">
                         <input type="checkbox" class="checkbox-input" id="confirm-terms" name="confirm_terms" required>
                         Я ознайомився та погоджуюсь з правилами та умовами використання платформи DOVIR

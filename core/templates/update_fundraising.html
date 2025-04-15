@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOVIR - Створення збору</title>
+    <title>DOVIR - Оновлення збору</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -378,25 +378,13 @@
             font-weight: 600;
         }
 
+        /* Responsive styles */
         @media (max-width: 1200px) {
             .banner-title {
                 font-size: 80px;
             }
-
             .form-container {
                 margin: 30px 60px 40px 60px;
-            }
-
-            .navbar {
-                padding: 0 40px;
-            }
-
-            .logo-img {
-                height: 48px;
-            }
-
-            .logo-text {
-                font-size: 22px;
             }
         }
 
@@ -404,116 +392,61 @@
             .banner-title {
                 font-size: 70px;
             }
-
             .form-container {
                 margin: 30px 50px 40px 50px;
             }
-
             .form-row {
                 flex-direction: column;
                 gap: 20px;
             }
-
-            .navbar {
-                padding: 0 30px;
-            }
-
-            .nav-links {
-                gap: 20px;
-            }
-
-            .logo-img {
-                height: 45px;
-            }
-
-            .logo-text {
-                font-size: 20px;
-            }
         }
 
         @media (max-width: 768px) {
-            .navbar {
-                height: auto;
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .logo {
-                height: auto;
-            }
-
-            .nav-links {
-                width: 100%;
-                justify-content: space-between;
-            }
-
             .banner-title {
                 font-size: 50px;
             }
-
             .banner-text {
                 font-size: 16px;
             }
-
             .footer {
                 flex-direction: column;
                 gap: 30px;
             }
-
             .form-container {
                 margin: 20px 40px 30px 40px;
                 padding: 20px;
             }
-
             .date-inputs {
                 flex-direction: column;
                 gap: 15px;
             }
-
             .progress-stepper {
                 flex-wrap: wrap;
                 gap: 20px;
             }
-
             .step {
                 width: 45%;
             }
-
             .step-line {
                 display: none;
             }
         }
 
         @media (max-width: 576px) {
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 15px;
-                justify-content: center;
-            }
-
-            .nav-links a {
-                font-size: 12px;
-            }
-
             .banner-title {
                 font-size: 36px;
             }
-
             .banner-text {
                 font-size: 14px;
             }
-
             .form-container {
                 margin: 20px 30px 30px 30px;
                 padding: 15px;
             }
-
             .form-actions {
                 flex-direction: column-reverse;
                 gap: 15px;
             }
-
             .form-btn {
                 width: 100%;
             }
@@ -538,26 +471,6 @@
             font-size: 14px;
         }
 
-        .current-images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .image-item {
-            width: 120px;
-            text-align: center;
-        }
-
-        .image-item img.thumbnail {
-            width: 100%;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
         /* Category display in update form */
         .current-category {
             display: inline-block;
@@ -575,6 +488,28 @@
             color: #8D6E63;
             margin-top: 5px;
             font-size: 13px;
+        }
+
+        .error-messages {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #FFEBEE;
+            border-left: 4px solid #D32F2F;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            color: #D32F2F;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .error-message:last-child {
+            margin-bottom: 0;
+        }
+
+        .error-message.success {
+            color: #2E7D32;
         }
     </style>
 </head>
@@ -614,6 +549,16 @@
         </div>
 
         <h2 class="form-title">Оновлення інформації про збір</h2>
+
+        {% if messages %}
+        <div class="error-messages">
+            {% for message in messages %}
+                <div class="error-message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -690,26 +635,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="link-for-money">Реквізити для переказу*</label>
-                    <textarea id="link-for-money" name="link_for_money" class="form-textarea" placeholder="Введіть банківські реквізити для збору коштів" required>{{ fundraising.link_for_money }}</textarea>
-                    <p class="help-text">Номер карти, рахунку або інші деталі для переказу коштів</p>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="current-status">Статус збору</label>
-                    <select id="current-status" name="status" class="form-select">
-                        <option value="active" {% if fundraising.status == 'active' %}selected{% endif %}>Активний</option>
-                        <option value="paused" {% if fundraising.status == 'paused' %}selected{% endif %}>Призупинено</option>
-                        <option value="completed" {% if fundraising.status == 'completed' %}selected{% endif %}>Завершено</option>
-                    </select>
-                </div>
-
                 <div class="checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" class="checkbox-input" id="confirm-link-for-money" name="confirm_link_for_money" required>
-                        Підтверджую правильність введених банківських реквізитів
-                    </label>
                     <label class="checkbox-label">
                         <input type="checkbox" class="checkbox-input" id="confirm-terms" name="confirm_terms" required>
                         Я ознайомився та погоджуюсь з правилами та умовами використання платформи DOVIR
@@ -722,7 +648,7 @@
             </div>
 
             <div class="form-actions">
-                <button type="button" class="form-btn btn-secondary">СКАСУВАТИ</button>
+                <a href="{% url 'donate' pk=fundraising.pk %}" class="form-btn btn-secondary">СКАСУВАТИ</a>
                 <button type="submit" class="form-btn btn-primary">ЗБЕРЕГТИ ЗМІНИ</button>
             </div>
         </form>
@@ -752,28 +678,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const addMoreButton = document.getElementById('add-more-categories');
-            const newCategoriesContainer = document.getElementById('new-categories-container');
-
-            if (addMoreButton) {
-                addMoreButton.addEventListener('click', function() {
-                    const newInputGroup = document.createElement('div');
-                    newInputGroup.className = 'new-category-input-group mb-2';
-                    newInputGroup.innerHTML = `
-                        <div class="d-flex">
-                            <input type="text" name="new_category_names[]" class="form-control" placeholder="Назва нової категорії">
-                            <button type="button" class="btn btn-outline-danger ms-2 remove-category">×</button>
-                        </div>
-                    `;
-
-                    newCategoriesContainer.appendChild(newInputGroup);
-
-                    newInputGroup.querySelector('.remove-category').addEventListener('click', function() {
-                        newCategoriesContainer.removeChild(newInputGroup);
-                    });
-                });
-            }
-
             // Handle file upload click and drag-and-drop
             const mainImageUpload = document.getElementById('main-image-upload');
             const mainImageInput = document.getElementById('main-image');
@@ -788,7 +692,9 @@
                 if (file) {
                     document.querySelector('#main-image-upload .upload-text').textContent = file.name;
                 } else {
-                    document.querySelector('#main-image-upload .upload-text').textContent = '{% if fundraising.main_image %}Замінити зображення{% else %}Файл не вибрано{% endif %}';
+                    const defaultText = document.querySelector('#main-image-upload .upload-text').getAttribute('data-default-text') || 
+                        "{% if fundraising.main_image %}Замінити зображення{% else %}Перетягніть файл сюди або натисніть для завантаження{% endif %}";
+                    document.querySelector('#main-image-upload .upload-text').textContent = defaultText;
                 }
             });
             
@@ -826,10 +732,55 @@
                         document.querySelector('#main-image-upload .upload-text').textContent = file.name;
                     } else {
                         alert('Будь ласка, завантажте тільки файли у форматі JPG або PNG.');
-                        // Reset the text to the default or current state
-                        document.querySelector('#main-image-upload .upload-text').textContent = '{% if fundraising.main_image %}Замінити зображення{% else %}Перетягніть файл сюди або натисніть для завантаження{% endif %}';
                     }
                 }
+            });
+
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                // Basic validation to help form submission
+                const title = document.getElementById('fundraising-title').value;
+                const description = document.getElementById('fundraising-description').value;
+                const neededSum = document.getElementById('needed_sum').value;
+                const endDate = document.getElementById('end-date').value;
+                const confirmTerms = document.getElementById('confirm-terms').checked;
+                
+                let hasErrors = false;
+                let errorMsg = '';
+                
+                if (!title.trim()) {
+                    hasErrors = true;
+                    errorMsg += "Будь ласка, введіть назву збору\n";
+                }
+                
+                if (!description.trim()) {
+                    hasErrors = true;
+                    errorMsg += "Будь ласка, додайте опис збору\n";
+                }
+                
+                if (!neededSum || neededSum < 1000) {
+                    hasErrors = true;
+                    errorMsg += "Будь ласка, вкажіть цільову суму (мінімум 1000 грн)\n";
+                }
+                
+                if (!endDate) {
+                    hasErrors = true;
+                    errorMsg += "Будь ласка, виберіть дату завершення збору\n";
+                }
+                
+                if (!confirmTerms) {
+                    hasErrors = true;
+                    errorMsg += "Будь ласка, підтвердіть, що ви ознайомилися з правилами та умовами\n";
+                }
+                
+                if (hasErrors) {
+                    e.preventDefault();
+                    alert(errorMsg);
+                    return;
+                }
+                
+                // Let the form submit normally if validation passes
             });
         });
     </script>
