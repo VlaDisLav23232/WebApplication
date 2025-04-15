@@ -36,7 +36,7 @@
             position: relative;
             width: 100%;
             height: 280px;
-            background-image: url("{% static 'pictures/profile_page/forest.jpg' %}");
+            background-image: url("{% static 'pictures/profile_page/baner4.jpg' %}");
             background-size: cover;
             background-position: center;
             margin-bottom: 0;
@@ -317,77 +317,90 @@
             background-color: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         
         .achievement:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
         .achievement-icon {
-            width: 100%;
-            height: 140px;
-            overflow: hidden;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.03), rgba(0,0,0,0));
+            padding-bottom: 20px;
         }
         
-        .achievement-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .achievement:hover .achievement-icon img {
-            transform: scale(1.05);
-        }
-        
-        .achievement-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+        .achievement-icon i {
+            font-size: 45px;
+            margin-bottom: 15px;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(135deg, var(--achievement-color) 0%, var(--achievement-color-light) 100%);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
         }
         
         .achievement-badge {
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 0 10px;
+            width: 30px;
             height: 30px;
-            background-color: #8D6E63;
-            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
             color: white;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        .badge-1 {
+            background-color: #8D6E63;
+        }
+        
+        .badge-2 {
+            background-image: linear-gradient(135deg, #9E9E9E 0%, #E0E0E0 100%);
+        }
+        
+        .badge-3 {
+            background-image: linear-gradient(135deg, #FFC107 0%, #FFECB3 100%);
         }
         
         .achievement-content {
-            padding: 15px;
+            padding: 20px;
             position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .achievement-title {
             font-weight: bold;
             margin-bottom: 8px;
             font-size: 18px;
-            color: #3e2723;
+            color: var(--achievement-color);
+            text-align: center;
         }
         
         .achievement-value {
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #5d4037;
             font-weight: 500;
+            text-align: center;
+            flex-grow: 1;
         }
         
         .achievement-date {
@@ -395,23 +408,35 @@
             color: #8d6e63;
             display: flex;
             align-items: center;
+            justify-content: center;
+            margin-top: auto;
         }
         
-        .achievement-date:before {
-            content: "";
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background-image: url('../static/pictures/fundraisings/calendar.png');
-            background-size: contain;
+        .achievement-date i {
             margin-right: 5px;
-            opacity: 0.7;
         }
         
         .hidden-achievements {
             display: none;
         }
         
+        .empty-achievements {
+            text-align: center;
+            width: 100%;
+            padding: 40px;
+            background-color: #EFEBE9;
+            color: #8D6E63;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+        
+        .empty-achievements i {
+            display: block;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #A1887F;
+        }
+
         .donation-history {
             margin-bottom: 40px;
         }
@@ -1004,7 +1029,7 @@
                             Термін завершення: {{ fundraising.end_date }}
                         </div>
                         <div class="card-actions">
-                            <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-primary">
+                            <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn btn-primary">
                                 <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                                 Підтримати
                             </a>
@@ -1063,7 +1088,7 @@
                                 Термін завершення: {{ fundraising.end_date }}
                             </div>
                             <div class="card-actions">
-                                <a href="{% url 'donate' pk=fundraising.pk %}" class="btn btn-primary">
+                                <a href="{% url 'donation_form' pk=fundraising.pk %}" class="btn btn-primary">
                                     <img src="{% static 'pictures/fundraisings/heart.png' %}" alt="Donate"/>
                                     Підтримати
                                 </a>
@@ -1148,113 +1173,71 @@
         
         <div class="section-title">
             <h2>Досягнення</h2>
+            {% if user_achievements and user_achievements.count > 4 %}
             <button class="show-more-btn" onclick="toggleAchievements()" aria-label="Показати більше">
                 <i class="fas fa-chevron-down" id="achievements-icon"></i>
             </button>
+            {% endif %}
         </div>
         <div class="achievements">
-            <div class="achievement">
-                <div class="achievement-icon">
-                    <img src="{% static 'pictures/fundraisings/card2.jpg' %}" alt="Розмінувач"/>
-                    <div class="achievement-overlay"></div>
-                    <div class="achievement-badge">★</div>
+            {% if user_achievements %}
+                {% for achievement in user_achievements|slice:":4" %}
+                    <div class="achievement" style="--achievement-color: {{ achievement.color }}; --achievement-color-light: {{ achievement.color|safe }}80;">
+                        <div class="achievement-icon">
+                            <i class="fas fa-{{ achievement.icon }}"></i>
+                            <div class="achievement-badge badge-{{ achievement.level }}">
+                                {% if achievement.level == 1 %}I
+                                {% elif achievement.level == 2 %}II
+                                {% elif achievement.level == 3 %}III
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-title">{{ achievement.title }}</div>
+                            <div class="achievement-value">{{ achievement.description }}</div>
+                            <div class="achievement-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                {{ achievement.date_earned|date:"d.m.Y" }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-achievements">
+                    <i class="fas fa-trophy"></i>
+                    <p>Досягнення з'являться, коли ви будете активно працювати із сайтом.</p>
+                    <p>Створюйте збори, підтримуйте інших та отримуйте унікальні нагороди!</p>
                 </div>
-                <div class="achievement-content">
-                    <div class="achievement-title">Розмінувач</div>
-                    <div class="achievement-value">1000₴ на розмінування</div>
-                    <div class="achievement-date">05.02.2023</div>
-                </div>
-            </div>
-            <div class="achievement">
-                <div class="achievement-icon">
-                    <img src="{% static 'pictures/fundraisings/card3.jpg' %}" alt="Розвідник"/>
-                    <div class="achievement-overlay"></div>
-                    <div class="achievement-badge">★</div>
-                </div>
-                <div class="achievement-content">
-                    <div class="achievement-title">Розвідник</div>
-                    <div class="achievement-value">Допоміг з дроном для розвідки</div>
-                    <div class="achievement-date">12.03.2023</div>
-                </div>
-            </div>
-            <div class="achievement">
-                <div class="achievement-icon">
-                    <img src="{% static 'pictures/fundraisings/card1.jpg' %}" alt="Медик"/>
-                    <div class="achievement-overlay"></div>
-                    <div class="achievement-badge">★</div>
-                </div>
-                <div class="achievement-content">
-                    <div class="achievement-title">Медик</div>
-                    <div class="achievement-value">Зібрав на 5 аптечок</div>
-                    <div class="achievement-date">23.04.2023</div>
-                </div>
-            </div>
-            <div class="achievement">
-                <div class="achievement-icon">
-                    <img src="{% static 'pictures/fundraisings/card4.jpg' %}" alt="Захисник"/>
-                    <div class="achievement-overlay"></div>
-                    <div class="achievement-badge">★★★</div>
-                </div>
-                <div class="achievement-content">
-                    <div class="achievement-title">Захисник</div>
-                    <div class="achievement-value">Придбав 10 бронежилетів</div>
-                    <div class="achievement-date">10.05.2023</div>
-                </div>
-            </div>
+            {% endif %}
         </div>
-        
+
+        {% if user_achievements and user_achievements.count > 4 %}
         <div class="hidden-achievements" id="moreAchievements" style="display: none;">
             <div class="achievements">
-                <div class="achievement">
-                    <div class="achievement-icon">
-                        <img src="{% static 'pictures/fundraisings/card3.jpg' %}" alt="Тепловізор"/>
-                        <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★★</div>
+                {% for achievement in user_achievements|slice:"4:" %}
+                    <div class="achievement" style="--achievement-color: {{ achievement.color }}; --achievement-color-light: {{ achievement.color|safe }}80;">
+                        <div class="achievement-icon">
+                            <i class="fas fa-{{ achievement.icon }}"></i>
+                            <div class="achievement-badge badge-{{ achievement.level }}">
+                                {% if achievement.level == 1 %}I
+                                {% elif achievement.level == 2 %}II
+                                {% elif achievement.level == 3 %}III
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-title">{{ achievement.title }}</div>
+                            <div class="achievement-value">{{ achievement.description }}</div>
+                            <div class="achievement-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                {{ achievement.date_earned|date:"d.m.Y" }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="achievement-content">
-                        <div class="achievement-title">Нічний мисливець</div>
-                        <div class="achievement-value">Зібрав на 3 тепловізори</div>
-                        <div class="achievement-date">18.06.2023</div>
-                    </div>
-                </div>
-                <div class="achievement">
-                    <div class="achievement-icon">
-                        <img src="{% static 'pictures/fundraisings/card2.jpg' %}" alt="Транспортер"/>
-                        <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★★</div>
-                    </div>
-                    <div class="achievement-content">
-                        <div class="achievement-title">Колісний привід</div>
-                        <div class="achievement-value">Профінансував джип для ЗСУ</div>
-                        <div class="achievement-date">07.07.2023</div>
-                    </div>
-                </div>
-                <div class="achievement">
-                    <div class="achievement-icon">
-                        <img src="{% static 'pictures/fundraisings/card1.jpg' %}" alt="Постачальник"/>
-                        <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★★</div>
-                    </div>
-                    <div class="achievement-content">
-                        <div class="achievement-title">Логіст</div>
-                        <div class="achievement-value">Організував доставку 50 посилок</div>
-                        <div class="achievement-date">22.08.2023</div>
-                    </div>
-                </div>
-                <div class="achievement">
-                    <div class="achievement-icon">
-                        <img src="{% static 'pictures/fundraisings/card4.jpg' %}" alt="Зв'язківець"/>
-                        <div class="achievement-overlay"></div>
-                        <div class="achievement-badge">★★★</div>
-                    </div>
-                    <div class="achievement-content">
-                        <div class="achievement-title">Стратег</div>
-                        <div class="achievement-value">Закрив збір на Starlink за 48 годин</div>
-                        <div class="achievement-date">14.09.2023</div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
         
         <div class="section-title">
             <h2>Історія донатів</h2>
@@ -1267,31 +1250,46 @@
         <div class="donation-history">
             {% if user_donations %}
                 {% for donation in user_donations|slice:":3" %}
-                <div class="donation-history-item">
-                    <div>
-                        <div class="donation-info">
-                            <a href="{% url 'donate' pk=donation.fundraising.pk %}">{{ donation.fundraising.title }}</a>
+                    {% if not donation.anonymous %}
+                    <div class="donation-history-item">
+                        <div>
+                            <div class="donation-info">
+                                <a href="{% url 'donate' pk=donation.fundraising.pk %}">{{ donation.fundraising.title }}</a>
+                            </div>
+                            <div class="donation-date">
+                                <i class="fas fa-calendar-alt"></i> 
+                                <span class="donation-date-value">{{ donation.date|date:"d.m.Y" }}</span>
+                                <i class="fas fa-clock" style="margin-left: 10px;"></i>
+                                <span>{{ donation.date|date:"H:i" }}</span>
+                            </div>
                         </div>
-                        <div class="donation-date">
-                            <i class="fas fa-calendar-alt"></i> 
-                            <span class="donation-date-value">{{ donation.date|date:"d.m.Y" }}</span>
-                            <i class="fas fa-clock" style="margin-left: 10px;"></i>
-                            <span>{{ donation.date|date:"H:i" }}</span>
-                        </div>
-                        {% if donation.message %}
-                        <div class="donation-message">
-                            "{{ donation.message }}"
-                        </div>
-                        {% endif %}
+                        <div class="donation-amount">{{ donation.amount }} ₴</div>
                     </div>
-                    <div class="donation-amount">{{ donation.amount }} ₴</div>
-                </div>
+                    {% endif %}
                 {% endfor %}
+                
+                {% if user_donations|length == 0 or all_anonymous %}
+                <div class="donation-empty">
+                    <i class="fas fa-hand-holding-heart" style="font-size: 32px; margin-bottom: 15px; display: block;"></i>
+                    <p>Наразі користувач не зробив жодного публічного донату.</p>
+                    {% if is_own_profile %}
+                    <p class="donation-note" style="margin-top: 10px; font-size: 14px; color: #8D6E63;">
+                        <i class="fas fa-info-circle"></i> Анонімні донати не відображаються у вашому профілі та не враховуються у вашій статистиці.
+                    </p>
+                    <a href="{% url 'fundraisings' %}" class="btn btn-primary" style="max-width: 250px; margin: 15px auto; display: block;">
+                        <i class="fas fa-heart"></i> Підтримати збори
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
             {% else %}
                 <div class="donation-empty">
                     <i class="fas fa-hand-holding-heart" style="font-size: 32px; margin-bottom: 15px; display: block;"></i>
-                    <p>Наразі користувач не зробив жодного донату.</p>
+                    <p>Наразі користувач не зробив жодного публічного донату.</p>
                     {% if is_own_profile %}
+                    <p class="donation-note" style="margin-top: 10px; font-size: 14px; color: #8D6E63;">
+                        <i class="fas fa-info-circle"></i> Анонімні донати не відображаються у вашому профілі та не враховуються у вашій статистиці.
+                    </p>
                     <a href="{% url 'fundraisings' %}" class="btn btn-primary" style="max-width: 250px; margin: 15px auto; display: block;">
                         <i class="fas fa-heart"></i> Підтримати збори
                     </a>
@@ -1304,25 +1302,22 @@
         <div class="hidden-donations" id="moreDonations" style="display: none;">
             <div class="donation-history">
                 {% for donation in user_donations|slice:"3:" %}
-                <div class="donation-history-item">
-                    <div>
-                        <div class="donation-info">
-                            <a href="{% url 'donate' pk=donation.fundraising.pk %}">{{ donation.fundraising.title }}</a>
+                    {% if not donation.anonymous %}
+                    <div class="donation-history-item">
+                        <div>
+                            <div class="donation-info">
+                                <a href="{% url 'donate' pk=donation.fundraising.pk %}">{{ donation.fundraising.title }}</a>
+                            </div>
+                            <div class="donation-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="donation-date-value">{{ donation.date|date:"d.m.Y" }}</span>
+                                <i class="fas fa-clock" style="margin-left: 10px;"></i>
+                                <span>{{ donation.date|date:"H:i" }}</span>
+                            </div>
                         </div>
-                        <div class="donation-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span class="donation-date-value">{{ donation.date|date:"d.m.Y" }}</span>
-                            <i class="fas fa-clock" style="margin-left: 10px;"></i>
-                            <span>{{ donation.date|date:"H:i" }}</span>
-                        </div>
-                        {% if donation.message %}
-                        <div class="donation-message">
-                            "{{ donation.message }}"
-                        </div>
-                        {% endif %}
+                        <div class="donation-amount">{{ donation.amount }} ₴</div>
                     </div>
-                    <div class="donation-amount">{{ donation.amount }} ₴</div>
-                </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

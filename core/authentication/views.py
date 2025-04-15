@@ -15,12 +15,14 @@ import re
 
 # Try to import Fundraising and Donation models - with error handling to avoid import errors
 try:
-    from fundraisings.models import Fundraising, Donation
+    from fundraisings.models import Fundraising, Donation, Achievement
 except ImportError:
     # If the import fails, create placeholder classes for type hints only
     class Fundraising:
         pass
     class Donation:
+        pass
+    class Achievement:
         pass
 
 # Define a view function for the home page
@@ -150,19 +152,36 @@ def profile_page(request, user_id=None):
     # Check if it's the user's own profile
     is_own_profile = request.user.is_authenticated and (not user_id or request.user.id == user_id)
     
-    # Get user's fundraisings
+    # Get user's fundraisings and other data
     user_fundraisings = None
+    user_achievements = None
     if profile_user:
-        user_fundraisings = Fundraising.objects.filter(creator=profile_user).order_by('-created_at')
-        
-        # Get user's donations (excluding anonymous ones for display)
-        user_donations = Donation.objects.filter(user=profile_user).order_by('-date')
-        
-        # Check if all user donations are anonymous (for empty state handling)
-        all_anonymous = user_donations.exists() and user_donations.filter(anonymous=False).count() == 0
-        
-        # For display, exclude anonymous donations
-        user_donations_display = user_donations.filter(anonymous=False)
+        try:
+            # Get user's fundraisings
+            user_fundraisings = Fundraising.objects.filter(creator=profile_user).order_by('-created_at')
+            
+            # Get user's donations (excluding anonymous ones for display)
+            user_donations = Donation.objects.filter(user=profile_user).order_by('-date')
+            
+            # Check if all user donations are anonymous (for empty state handling)
+            all_anonymous = user_donations.exists() and user_donations.filter(anonymous=False).count() == 0
+            
+            # For display, exclude anonymous donations
+            user_donations_display = user_donations.filter(anonymous=False)
+            
+            # Get user's achievements - handle case if model doesn't exist yet
+            try:
+                from fundraisings.models import Achievement
+                user_achievements = Achievement.check_achievements(profile_user)
+            except (ImportError, AttributeError):
+                user_achievements = []
+                
+        except Exception as e:
+            # Handle any errors gracefully
+            print(f"Error in profile page: {e}")
+            user_fundraisings = []
+            user_donations_display = []
+            all_anonymous = False
     else:
         user_fundraisings = None
         user_donations_display = None
@@ -173,7 +192,8 @@ def profile_page(request, user_id=None):
         'is_own_profile': is_own_profile,
         'user_fundraisings': user_fundraisings,
         'user_donations': user_donations_display,
-        'all_anonymous': all_anonymous
+        'all_anonymous': all_anonymous,
+        'user_achievements': user_achievements
     }
     return render(request, 'profile_page.html', context)
 

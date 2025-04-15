@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from fundraisings.models import Fundraising, Category, Donation
+from fundraisings.models import Fundraising, Category, Donation, Achievement
 from fundraisings.forms import UpdateFundraisingForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, JsonResponse
@@ -133,6 +133,12 @@ def donate(request, pk):
                             message=request.POST.get('message', ''),
                             anonymous=request.POST.get('anonymous', False) == 'on'
                         )
+                        
+                        # Check for achievements
+                        if request.user.is_authenticated:
+                            Achievement.check_achievements(request.user)
+                            # Also check achievements for the fundraising creator
+                            Achievement.check_achievements(fundraising.creator)
                         
                         messages.success(request, 'Ваш донат було успішно здійснено!')
                     except ValueError:
@@ -305,6 +311,12 @@ def donation_form(request, pk):
                             message=request.POST.get('message', ''),
                             anonymous=request.POST.get('anonymous', False) == 'on'
                         )
+                        
+                        # Check and update achievements if user is authenticated
+                        if request.user.is_authenticated:
+                            Achievement.check_achievements(request.user)
+                            # Also check achievements for the fundraising creator
+                            Achievement.check_achievements(fundraising.creator)
                         
                         messages.success(request, 'Ваш донат було успішно здійснено! Дякуємо за підтримку!')
                     except ValueError:
