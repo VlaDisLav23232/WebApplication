@@ -533,3 +533,23 @@ def profile_page(request, user_id=None):
     }
 
     return render(request, 'profile_page.html', context)
+
+
+def about_us(request):
+    closed_fundraisings_count = Fundraising.objects.filter(status='completed').count()
+    total_donated_amount = Donation.objects.aggregate(total=Sum('amount'))['total'] or 0
+
+    # Count users who created and closed at least one fundraising
+    users_with_closed_fundraisings = Fundraising.objects.filter(
+        status='completed'
+    ).values('creator').distinct().count()
+
+    # Count users who made at least one donation
+    users_with_donations = Donation.objects.filter(user__isnull=False).values('user').distinct().count()
+
+    return render(request, 'about_us.html', {
+        'closed_fundraisings_count': closed_fundraisings_count,
+        'total_donated_amount': total_donated_amount,
+        'users_with_closed_fundraisings': users_with_closed_fundraisings,
+        'users_with_donations': users_with_donations,
+    })
