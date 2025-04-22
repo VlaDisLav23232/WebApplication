@@ -7,7 +7,7 @@ from decimal import Decimal
 from django.utils import timezone
 from django.contrib import messages
 from django.db import transaction, connection
-from django.db.models import Q, Sum, Count, Case, When, Value, IntegerField
+from django.db.models import Q, Sum, Count, Case, When, Value, IntegerField, Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from authentication.models import CustomUser
 
@@ -229,6 +229,11 @@ def donate(request, pk):
                             anonymous=request.POST.get('anonymous', False) == 'on'
                         )
                         
+                        # Update user statistics
+                        if request.user.is_authenticated:
+                            update_user_statistics(request.user)
+                        update_user_statistics(fundraising.creator)
+                        
                         # Check for achievements
                         if request.user.is_authenticated:
                             Achievement.check_achievements(request.user)
@@ -251,6 +256,41 @@ def donate(request, pk):
         'other_fundraisings': other_fundraisings,
     }
     return render(request, 'donate.html', context)
+
+
+def update_user_statistics(user):
+    """Update user statistics related to donations"""
+    try:
+        # Calculate donation statistics
+        from django.db.models import Sum, Count, Max
+        
+        # User's donations
+        user_donations = Donation.objects.filter(user=user)
+        total_donated = user_donations.aggregate(Sum('amount'))['amount__sum'] or 0
+        largest_donation = user_donations.aggregate(Max('amount'))['amount__max'] or 0
+        supported_fundraisings = user_donations.values('fundraising').distinct().count()
+        
+        # Update fields using setters
+        user.total_donated_amount = total_donated
+        user.largest_donation_amount = largest_donation
+        user.supported_fundraisings_count = supported_fundraisings
+        
+        # Direct field updates
+        user.total_donations_amount = total_donated
+        user.created_fundraisings_count = Fundraising.objects.filter(creator=user).count()
+        user.completed_fundraisings_count = Fundraising.objects.filter(
+            creator=user, status='completed').count()
+        
+        # Statistics for fundraisings created by the user
+        user_fundraisings = Fundraising.objects.filter(creator=user)
+        donations_received = Donation.objects.filter(fundraising__in=user_fundraisings)
+        user.total_received_amount = donations_received.aggregate(Sum('amount'))['amount__sum'] or 0
+        user.unique_donators_count = donations_received.exclude(user=None).values('user').distinct().count()
+        
+        # Save changes
+        user.save()
+    except Exception as e:
+        print(f"Error updating user statistics: {e}")
 
 
 def fundraisings(request):

@@ -1,8 +1,11 @@
-#Changed by claude
+"""
+Authentication views for the Dovir Web Application.
 
+This module implements user authentication functionality including login, registration,
+profile management, and user statistics. It handles user authentication flows
+and profile editing capabilities.
+"""
 
-
-# Import necessary modules and models
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,11 +16,9 @@ from .forms import RegisterForm
 from django import forms
 import re
 
-# Try to import Fundraising and Donation models - with error handling to avoid import errors
 try:
     from fundraisings.models import Fundraising, Donation, Achievement
 except ImportError:
-    # If the import fails, create placeholder classes for type hints only
     class Fundraising:
         pass
     class Donation:
@@ -25,50 +26,73 @@ except ImportError:
     class Achievement:
         pass
 
-# Define a view function for the home page
+
 def home(request):
+    """
+    Render the home page of the application.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered home page template
+    """
     user = request.user if request.user.is_authenticated else None
     return render(request, 'index.html', {'user': user})
 
-# Define a view function for the login page
+
 def login_page(request):
-    # Якщо користувач вже авторизований, перенаправляємо на головну
+    """
+    Handle user authentication and login.
+    
+    If user is already authenticated, redirects to home page.
+    Processes login form, validates credentials and handles errors.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered login page or redirect to home on success
+    """
     if request.user.is_authenticated:
         return redirect('/home/')
         
-    # Check if the HTTP request method is POST (form submission)
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
         
-        # Check if a user with the provided email exists
         user_exists = CustomUser.objects.filter(email=email).exists()
         if not user_exists:
             messages.error(request, 'Користувача з такою електронною поштою не існує')
             return redirect('/login/')
         
-        # Get the user with the provided email
         user = CustomUser.objects.get(email=email)
-        
-        # Authenticate the user with username and password
         user = authenticate(username=user.username, password=password)
         
         if user is None:
-            # Display an error message if authentication fails (invalid password)
             messages.error(request, "Неправильний пароль")
             return redirect('/login/')
         else:
-            # Log in the user and redirect to the home page upon successful login
             login(request, user)
             return redirect('/home/')
     
-    # Render the login page template (GET request)
     user = request.user if request.user.is_authenticated else None
     return render(request, 'signin.html', {'user': user})
 
-# Define a view function for the registration page
+
 def register_page(request):
-    # Якщо користувач вже авторизований, перенаправляємо на головну
+    """
+    Handle new user registration.
+    
+    Creates new user accounts with unique usernames based on email addresses.
+    Validates form data and automatically logs in new users upon successful registration.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered registration form or redirect to home on success
+    """
     if request.user.is_authenticated:
         return redirect('/home/')
         
@@ -76,9 +100,8 @@ def register_page(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            # Generate username from email (before the @ symbol)
             user.username = form.cleaned_data['email'].split('@')[0]
-            # Check if username exists and make it unique if needed
+            
             base_username = user.username
             counter = 1
             while CustomUser.objects.filter(username=user.username).exists():
@@ -87,23 +110,36 @@ def register_page(request):
                 
             user.set_password(form.cleaned_data['password'])
             user.save()
-            # Автоматично авторизуємо користувача
             login(request, user)
-            return redirect('/home/')  # Перенаправляємо на головну сторінку
+            return redirect('/home/')
     else:
         form = RegisterForm()
     
     user = request.user if request.user.is_authenticated else None
     return render(request, 'signup.html', {'form': form, 'user': user})
 
-# Функція для виходу з облікового запису
+
 def logout_view(request):
+    """
+    Log out the current user.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Redirect to login page
+    """
     logout(request)
-    # Redirect without showing messages from previous pages
     return redirect('/login/')
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    """
+    Form for updating user profile information.
+    
+    Validates and formats social media links and provides form fields for all 
+    user profile information.
+    """
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'email', 'bio', 'birth_date',
@@ -115,6 +151,12 @@ class ProfileUpdateForm(forms.ModelForm):
         }
         
     def clean_instagram(self):
+        """
+        Validate Instagram link format.
+        
+        Returns:
+            Formatted Instagram link
+        """
         instagram = self.cleaned_data.get('instagram')
         if instagram:
             if not re.match(r'^https?:\/\/(www\.)?instagram\.com\/.+', instagram, re.I):
@@ -122,6 +164,12 @@ class ProfileUpdateForm(forms.ModelForm):
         return instagram
         
     def clean_facebook(self):
+        """
+        Validate Facebook link format.
+        
+        Returns:
+            Formatted Facebook link
+        """
         facebook = self.cleaned_data.get('facebook')
         if facebook:
             if not re.match(r'^https?:\/\/(www\.)?facebook\.com\/.+', facebook, re.I):
@@ -129,19 +177,35 @@ class ProfileUpdateForm(forms.ModelForm):
         return facebook
         
     def clean_telegram(self):
+        """
+        Validate and format Telegram link.
+        
+        Returns:
+            Properly formatted Telegram link
+        """
         telegram = self.cleaned_data.get('telegram')
         if telegram:
-            # Видаляємо @ якщо користувач додав його
             telegram = telegram.strip().lstrip('@')
-            # Додаємо https://t.me/ якщо його немає
             if not telegram.startswith('https://t.me/') and not telegram.startswith('http://t.me/'):
                 telegram = 'https://t.me/' + telegram
         return telegram
 
-# Оновлена функція profile_page
+
 @login_required(login_url='/login/')
 def profile_page(request, user_id=None):
-    # Get the profile user (either the requested user or the current user)
+    """
+    Display user profile page.
+    
+    Shows user information, fundraisings, donations, and achievements.
+    If no user_id is provided, displays the current user's profile.
+    
+    Args:
+        request: HTTP request object
+        user_id: Optional user ID to view another user's profile
+        
+    Returns:
+        Rendered profile page
+    """
     if user_id:
         profile_user = get_object_or_404(CustomUser, id=user_id)
     elif request.user.is_authenticated:
@@ -149,27 +213,20 @@ def profile_page(request, user_id=None):
     else:
         profile_user = None
     
-    # Check if it's the user's own profile
     is_own_profile = request.user.is_authenticated and (not user_id or request.user.id == user_id)
     
-    # Get user's fundraisings and other data
     user_fundraisings = None
     user_achievements = None
     if profile_user:
         try:
-            # Get user's fundraisings
             user_fundraisings = Fundraising.objects.filter(creator=profile_user).order_by('-created_at')
             
-            # Get user's donations (excluding anonymous ones for display)
             user_donations = Donation.objects.filter(user=profile_user).order_by('-date')
             
-            # Check if all user donations are anonymous (for empty state handling)
             all_anonymous = user_donations.exists() and user_donations.filter(anonymous=False).count() == 0
             
-            # For display, exclude anonymous donations
             user_donations_display = user_donations.filter(anonymous=False)
             
-            # Get user's achievements - handle case if model doesn't exist yet
             try:
                 from fundraisings.models import Achievement
                 user_achievements = Achievement.check_achievements(profile_user)
@@ -177,7 +234,6 @@ def profile_page(request, user_id=None):
                 user_achievements = []
                 
         except Exception as e:
-            # Handle any errors gracefully
             print(f"Error in profile page: {e}")
             user_fundraisings = []
             user_donations_display = []
@@ -197,13 +253,20 @@ def profile_page(request, user_id=None):
     }
     return render(request, 'profile_page.html', context)
 
-# Функція для оновлення статистики користувача
+
 def update_user_statistics(user):
+    """
+    Update user statistics based on fundraisings and donations.
+    
+    Calculates and stores metrics like created fundraisings count, 
+    total donations, largest donation, etc.
+    
+    Args:
+        user: CustomUser object to update
+    """
     try:
-        # Import here to avoid circular imports
         from fundraisings.models import Fundraising, Donation
         
-        # Initialize default values
         stats = {
             'created_fundraisings_count': 0,
             'completed_fundraisings_count': 0,
@@ -214,51 +277,54 @@ def update_user_statistics(user):
             'largest_donation_amount': 0
         }
         
-        # 1. Count fundraisings created by user
         stats['created_fundraisings_count'] = Fundraising.objects.filter(creator=user).count()
         
-        # 2. Count completed fundraisings if status field exists
         try:
             stats['completed_fundraisings_count'] = Fundraising.objects.filter(
                 creator=user, status='completed').count()
         except Exception:
             pass
         
-        # 3. Get all fundraisings created by user
         user_fundraising_ids = Fundraising.objects.filter(creator=user).values_list('id', flat=True)
         
         if user_fundraising_ids:
-            # 4. Calculate total received donations and unique donors
             donations_to_user = Donation.objects.filter(fundraising_id__in=user_fundraising_ids)
             total_received = donations_to_user.aggregate(Sum('amount'))['amount__sum']
             stats['total_received_amount'] = total_received or 0
             stats['unique_donators_count'] = donations_to_user.exclude(
                 user=None).values('user').distinct().count()
         
-        # 5. Get user's donations
         user_donations = Donation.objects.filter(user=user)
         
-        # 6. Calculate user donation stats
         stats['supported_fundraisings_count'] = user_donations.values('fundraising').distinct().count()
         total_donated = user_donations.aggregate(Sum('amount'))['amount__sum']
         stats['total_donated_amount'] = total_donated or 0
         largest_donation = user_donations.aggregate(Max('amount'))['amount__max']
         stats['largest_donation_amount'] = largest_donation or 0
         
-        # Set all stats on user model
         for key, value in stats.items():
             setattr(user, key, value)
             
-        # Total donations amount is the same as total_donated_amount
         user.total_donations_amount = stats['total_donated_amount']
         
         user.save()
     except Exception as e:
         print(f"Error updating user statistics: {e}")
 
-# Функція для редагування профілю
+
 @login_required(login_url='/login/')
 def edit_profile(request):
+    """
+    Handle user profile editing.
+    
+    Processes form submissions for updating user profile information.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered edit profile form or redirect to profile page on success
+    """
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
@@ -270,27 +336,54 @@ def edit_profile(request):
     
     return render(request, 'edit_profile.html', {'form': form, 'user': request.user})
 
+
 def categories(request):
+    """
+    Display categories page.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered categories page
+    """
     user = request.user if request.user.is_authenticated else None
     return render(request, 'cats.html', {'user': user})
 
+
 def about_us(request):
+    """
+    Display about us page.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered about us page
+    """
     user = request.user if request.user.is_authenticated else None
     return render(request, 'about_us.html', {'user': user})
 
+
 def fundraisings(request):
-    from fundraisings.models import Category  # Import Category model
+    """
+    Display fundraisings page with optional category filtering.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        Rendered fundraisings page with filtered results
+    """
+    from fundraisings.models import Category
     
     category_filter = request.GET.get('category', None)
     
     if category_filter:
-        # Filter fundraisings by category
         fundraisings_list = Fundraising.objects.filter(categories__name=category_filter)
     else:
-        # Show all fundraisings
         fundraisings_list = Fundraising.objects.all()
         
-    # Add categories to context for the filter dropdown
     categories = Category.objects.all()
     
     context = {
