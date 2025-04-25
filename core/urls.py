@@ -61,3 +61,8 @@ if settings.DEBUG:
 
 # Serve static files using staticfiles_urlpatterns
 urlpatterns += staticfiles_urlpatterns()
+
+# Simplify the media and static files configuration
+# This makes the URLs work regardless of DEBUG setting
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
