@@ -265,6 +265,291 @@
             font-weight: 600;
         }
 
+        /* Enhanced responsive styles */
+        @media (max-width: 1200px) {
+            .intro-section, .partners-section, .stats-section {
+                max-width: 90%;
+            }
+            
+            .stats-grid {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            .stat-item {
+                width: 45%;
+            }
+            
+            .partners-grid {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .banner-title {
+                font-size: 80px;
+            }
+            
+            .feature-section {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .feature-image {
+                width: 100%;
+                height: 300px;
+            }
+            
+            .feature-content {
+                width: 100%;
+                padding: 40px 30px;
+            }
+            
+            .partners-grid {
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            .partner-item {
+                width: 45%;
+                height: 120px;
+            }
+            
+            .stats-grid {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 25px;
+            }
+            
+            .stat-item {
+                width: 45%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .banner-title {
+                font-size: 60px;
+            }
+            
+            .banner-text {
+                font-size: 16px;
+                max-width: 90%;
+            }
+            
+            .intro-section, .partners-section, .stats-section {
+                margin: 40px auto;
+                padding: 0 25px;
+            }
+            
+            .intro-title {
+                font-size: 30px;
+            }
+            
+            .intro-text {
+                font-size: 16px;
+                line-height: 1.7;
+            }
+            
+            .feature-image {
+                height: 250px;
+            }
+            
+            .feature-content {
+                padding: 35px 25px;
+            }
+            
+            .feature-title {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+            
+            .feature-text {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+            
+            .partner-item {
+                width: 45%;
+                margin: 0 auto;
+            }
+            
+            .stats-grid {
+                gap: 20px;
+            }
+            
+            .stat-item {
+                width: 45%;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 25px;
+                padding: 25px 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .banner-title {
+                font-size: 40px;
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
+            
+            .banner-text {
+                font-size: 14px;
+                line-height: 1.5;
+                padding: 0 10px;
+            }
+            
+            .divider {
+                width: 85%;
+                margin: 10px auto;
+            }
+            
+            .intro-section, .partners-section, .stats-section {
+                margin: 30px auto;
+                padding: 0 20px;
+            }
+            
+            .intro-title {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            
+            .intro-text {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+            
+            .feature-section {
+                margin-bottom: 20px;
+            }
+            
+            .feature-image {
+                height: 200px;
+            }
+            
+            .feature-content {
+                padding: 25px 20px;
+            }
+            
+            .feature-title {
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+            
+            .feature-text {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            .partner-item {
+                width: 100%;
+                height: 100px;
+                margin-bottom: 15px;
+            }
+            
+            .partners-title, .stats-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            
+            .partners-grid {
+                gap: 20px;
+            }
+            
+            .stats-grid {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .footer {
+                padding: 25px 20px;
+            }
+            
+            .footer-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            
+            .footer-text, .footer-link {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .copyright {
+                padding: 12px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .banner-title {
+                font-size: 32px;
+            }
+            
+            .banner {
+                padding: 30px 0;
+            }
+            
+            .banner-text {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+            
+            .intro-title {
+                font-size: 22px;
+            }
+            
+            .intro-text {
+                font-size: 14px;
+            }
+            
+            .feature-image {
+                height: 180px;
+            }
+            
+            .feature-content {
+                padding: 20px 15px;
+            }
+            
+            .feature-title {
+                font-size: 20px;
+            }
+            
+            .feature-text {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .partners-title, .stats-title {
+                font-size: 22px;
+            }
+            
+            .footer-title {
+                font-size: 16px;
+            }
+            
+            .footer-text, .footer-link {
+                font-size: 13px;
+            }
+            
+            .copyright {
+                font-size: 11px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -372,9 +657,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
             <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
-            <a href="{% url 'fundraisings' %}" class="footer-link">Актуальні збори</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
             <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

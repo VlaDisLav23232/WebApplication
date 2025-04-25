@@ -4,6 +4,11 @@ from django.conf import settings
 import django.utils.timezone
 
 class Migration(migrations.Migration):
+    """
+    Initial migration for the Fundraising app.
+    This migration creates the Fundraising and Donation models,
+    along with the Category model for categorizing fundraisers.
+    """
     initial = True
 
     dependencies = [

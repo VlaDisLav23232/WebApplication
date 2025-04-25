@@ -3,6 +3,9 @@ import django.db.models.deletion
 from django.conf import settings
 
 class Migration(migrations.Migration):
+    """
+    Migration to add the Donation model.
+    """
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),

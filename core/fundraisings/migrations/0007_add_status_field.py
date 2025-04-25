@@ -1,8 +1,11 @@
 from django.db import migrations, models
 
 class Migration(migrations.Migration):
+    """
+    Migration to add a status field to the Fundraising model.
+    """
     dependencies = [
-        ('fundraisings', '0004_merge_20250414_1517'),  # Make sure this matches your actual latest migration
+        ('fundraisings', '0004_merge_20250414_1517'),
     ]
 
     operations = [

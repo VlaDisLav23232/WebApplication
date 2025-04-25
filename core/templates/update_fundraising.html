@@ -367,6 +367,7 @@
 
         .footer-link:hover {
             color: #D7CCC8;
+            text-decoration: underline;
         }
 
         .copyright {
@@ -378,7 +379,7 @@
             font-weight: 600;
         }
 
-        /* Responsive styles */
+        /* Improved responsive styles */
         @media (max-width: 1200px) {
             .banner-title {
                 font-size: 80px;
@@ -393,7 +394,7 @@
                 font-size: 70px;
             }
             .form-container {
-                margin: 30px 50px 40px 50px;
+                margin: 30px 40px 40px 40px;
             }
             .form-row {
                 flex-direction: column;
@@ -413,7 +414,7 @@
                 gap: 30px;
             }
             .form-container {
-                margin: 20px 40px 30px 40px;
+                margin: 20px 30px 30px 30px;
                 padding: 20px;
             }
             .date-inputs {
@@ -430,18 +431,31 @@
             .step-line {
                 display: none;
             }
+            .checkbox-label {
+                align-items: flex-start;
+            }
+            .checkbox-input {
+                margin-top: 3px;
+            }
         }
 
         @media (max-width: 576px) {
             .banner-title {
                 font-size: 36px;
+                margin-bottom: 10px;
+                margin-top: 10px;
             }
             .banner-text {
                 font-size: 14px;
             }
+            .divider {
+                margin: 10px auto 15px auto;
+                width: 85%;
+            }
             .form-container {
-                margin: 20px 30px 30px 30px;
+                margin: 20px 20px 30px 20px;
                 padding: 15px;
+                border-radius: 6px;
             }
             .form-actions {
                 flex-direction: column-reverse;
@@ -449,6 +463,38 @@
             }
             .form-btn {
                 width: 100%;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            .form-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            .section-heading {
+                font-size: 16px;
+            }
+            .form-label {
+                font-size: 14px;
+            }
+            .form-input, .form-select, .form-textarea {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .banner-title {
+                font-size: 28px;
+            }
+            .banner-text {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+            .footer-column {
+                padding: 0px;
+            }
+            .footer {
+                padding: 20px 30px;
             }
         }
 
@@ -661,9 +707,9 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'active_fundraisings' %}" class="footer-link">Актуальні збори</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

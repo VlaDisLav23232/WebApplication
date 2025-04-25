@@ -169,6 +169,52 @@
             text-decoration: underline;
         }
         
+        /* Footer styling */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #5D4037;
+            color: white;
+        }
+        
+        .footer-column {
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .footer-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 5px;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #D7CCC8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 10px;
+            background-color: #4E342E;
+            color: white;
+            font-size: 14px;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .nav-links {
@@ -177,6 +223,19 @@
             
             .form-container {
                 margin: 20px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-column {
+                margin-bottom: 20px;
+            }
+            
+            .decorative-element {
+                opacity: 0.3; /* Make decorative elements more subtle on mobile */
             }
         }
         
@@ -187,6 +246,22 @@
             
             .form-container {
                 padding: 20px;
+            }
+            
+            /* Hide some decorative elements on very small screens */
+            .elem-4, .elem-6, .elem-8, .elem-9, .elem-10 {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            /* Further reduce visible decorative elements */
+            .elem-3, .elem-5, .elem-7 {
+                display: none;
+            }
+            
+            .decorative-element {
+                opacity: 0.2;
             }
         }
     </style>
@@ -239,6 +314,30 @@
                 </a>
             </div>
         </form>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-column">
+            <h3 class="footer-title">Про Dovir</h3>
+            <p class="footer-text">Ми допомагаємо збирати кошти для підтримки Збройних Сил України, забезпечуючи їх необхідним обладнанням та амуніцією.</p>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Навігація</h3>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Контакти</h3>
+            <p class="footer-text">Електронна пошта: info@dovir.ua</p>
+            <p class="footer-text">Телефон: +380 12 345 6789</p>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2025 Dovir. Усі права захищені.
     </div>
     
     <script>

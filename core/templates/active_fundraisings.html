@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Актуальні збори</h1>
+    
+    <div class="fundraisings-grid">
+        {% if fundraisings %}
+            {% for fundraising in fundraisings %}
+                <div class="fundraising-card">
+                    {% if fundraising.image %}
+                        <img src="{{ fundraising.image.url }}" alt="{{ fundraising.title }}" class="fundraising-image">
+                    {% endif %}
+                    <div class="fundraising-content">
+                        <h2 class="fundraising-title">{{ fundraising.title }}</h2>
+                        <p class="fundraising-description">{{ fundraising.description|truncatechars:100 }}</p>
+                        <div class="fundraising-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{ fundraising.progress_percentage }}%"></div>
+                            </div>
+                            <p class="progress-text">{{ fundraising.collected_amount }} грн із {{ fundraising.target_amount }} грн ({{ fundraising.progress_percentage }}%)</p>
+                        </div>
+                        <a href="{% url 'fundraising_detail' fundraising.id %}" class="button button-primary">Детальніше</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-fundraisings">На даний момент немає активних зборів.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -18,6 +18,7 @@
         display: flex;
         align-items: center;
         height: 100%;
+        margin-right: 0; /* Reset the previously added margin */
     }
 
     .logo-img {
@@ -37,6 +38,8 @@
     .nav-links {
         display: flex;
         gap: 30px;
+        margin: 0 auto; /* Center the nav links between logo and profile */
+        padding: 0; /* Reset the previously added padding */
     }
     
     .nav-links a {
@@ -59,35 +62,10 @@
         display: flex;
         align-items: center;
         gap: 15px;
+        margin-left: 0; /* Reset the previously added margin */
     }
     
-    .lang-selector {
-        display: flex;
-        border-radius: 4px;
-        overflow: hidden;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .lang-btn {
-        padding: 5px 8px;
-        font-size: 12px;
-        font-weight: 400; /* Changed from 300 to 400 for consistency */
-        cursor: pointer;
-        font-family: 'Open Sans', sans-serif;
-        letter-spacing: 0.5px;
-    }
-    
-    .lang-btn.active {
-        background-color: #5D4037;
-        color: white;
-        font-weight: 500; /* Changed from 400 to 500 for slightly bolder active state */
-    }
-    
-    .lang-btn.inactive {
-        background-color: #E0E0E0;
-        color: #5D4037;
-    }
-    
+    /* Enlarged profile pic size */
     .profile-pic {
         width: 50px;
         height: 50px;
@@ -100,6 +78,7 @@
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
         cursor: pointer;
         overflow: hidden;
+        flex-shrink: 0; /* Prevent avatar from growing/shrinking */
     }
 
     .profile-pic img {
@@ -107,16 +86,127 @@
         height: 100%;
         object-fit: cover;
     }
+    
+    /* Mobile navigation styles */
+    .mobile-menu-toggle {
+        display: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 10px;
+    }
+    
+    .mobile-menu-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #5D4037;
+        margin: 5px 0;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        z-index: 100;
+        padding: 20px;
+        flex-direction: column;
+    }
+    
+    .mobile-menu a {
+        padding: 12px 0;
+        text-decoration: none;
+        color: #5D4037;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid #EFEBE9;
+    }
+    
+    .mobile-menu a:last-child {
+        border-bottom: none;
+    }
+    
+    .mobile-menu.active {
+        display: flex;
+    }
+    
+    @media (max-width: 992px) {
+        .nav-links {
+            gap: 20px;
+        }
+    }
 
     @media (max-width: 768px) {
         .nav-links {
             display: none;
         }
+        
+        .mobile-menu-toggle {
+            display: block;
+            order: 3; /* Put hamburger menu after logo and before profile pic */
+        }
+        
+        .right-nav {
+            gap: 10px;
+        }
+        
+        /* Fixed navbar layout for mobile */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            order: 1;
+        }
+        
+        .right-nav {
+            order: 2;
+        }
     }
     
     @media (max-width: 576px) {
-        .right-nav {
-            display: none;
+        .navbar {
+            padding: 0 15px;
+            height: 60px; /* Smaller height on mobile */
+        }
+        
+        .logo-img {
+            height: 50px; /* Smaller logo on mobile */
+            margin-right: 5px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+        }
+        
+        .profile-pic {
+            width: 45px; /* Larger avatar on mobile */
+            height: 45px;
+        }
+        
+        .mobile-menu {
+            top: 60px; /* Match reduced navbar height */
+        }
+    }
+    
+    @media (max-width: 400px) {
+        .logo-text {
+            font-size: 18px;
+        }
+        
+        .logo-img {
+            height: 50px;
         }
     }
 </style>
@@ -133,11 +223,12 @@
         <a href="{% url 'reports' %}">ЗВІТИ</a>
         <a href="{% url 'about_us' %}">ПРО НАС</a>
     </div>
+    <button class="mobile-menu-toggle" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     <div class="right-nav">
-        <div class="lang-selector">
-            <div class="lang-btn active">UA</div>
-            <div class="lang-btn inactive">EN</div>
-        </div>
         {% if user.is_authenticated %}
             <a href="{% url 'profile_page' %}">
                 <div class="profile-pic">
@@ -157,3 +248,53 @@
         {% endif %}
     </div>
 </div>
+
+<div class="mobile-menu">
+    <a href="{% url 'home' %}">НА ГОЛОВНУ</a>
+    <a href="{% url 'create_fundraising' %}">СТВОРИТИ ЗБІР</a>
+    <a href="{% url 'fundraisings' %}">ЗАДОНАТИТИ</a>
+    <a href="{% url 'reports' %}">ЗВІТИ</a>
+    <a href="{% url 'about_us' %}">ПРО НАС</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                
+                // Animate hamburger icon
+                const spans = this.querySelectorAll('span');
+                if (mobileMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+                } else {
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && 
+                    !mobileMenuToggle.contains(e.target) && 
+                    mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    
+                    // Reset hamburger icon
+                    const spans = mobileMenuToggle.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+        }
+    });
+</script>

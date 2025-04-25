@@ -6,6 +6,8 @@ profile management, and user statistics. It handles user authentication flows
 and profile editing capabilities.
 """
 
+from django import forms
+import re
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,8 +15,6 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Max
 from .models import CustomUser
 from .forms import RegisterForm
-from django import forms
-import re
 
 try:
     from fundraisings.models import Fundraising, Donation, Achievement

@@ -701,9 +701,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

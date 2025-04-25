@@ -69,6 +69,65 @@
             width: 20px;
             height: 20px;
         }
+
+        .copy-link {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .copy-link-btn {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #5D4037;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(93, 64, 55, 0.2);
+        }
+        
+        .copy-link-btn:hover {
+            background-color: #4E342E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(93, 64, 55, 0.3);
+        }
+        
+        .copy-link-btn img {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
+        
+        .copy-message {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: calc(100% + 5px);
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .copy-message.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 576px) {
+            .copy-link-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
         
         /* Вкладки */
         .tabs {
@@ -727,6 +786,286 @@
             }
         }
 
+        /* Enhanced responsive design for mobile and tablet devices */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+                padding: 0 15px;
+                gap: 20px;
+            }
+            
+            .donation-card-container {
+                position: static;
+                width: 100%;
+            }
+            
+            .fundraising-title {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header-category {
+                display: inline-block;
+                margin-top: 8px;
+                margin-left: 0;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .fundraising-image {
+                height: 250px;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0 10px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+            
+            .footer-column {
+                width: 100%;
+            }
+            
+            .other-fundraisings {
+                margin: 40px auto 20px;
+            }
+            
+            .section-title {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (min-width: 577px) and (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0 10px;
+                margin: 15px auto;
+            }
+            
+            .donation-card {
+                margin-bottom: 10px;
+            }
+            
+            .fundraising-title {
+                font-size: 20px;
+            }
+            
+            .social-share {
+                margin-bottom: 15px;
+            }
+            
+            .tab {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            
+            .fundraising-image {
+                height: 200px;
+                margin-bottom: 15px;
+            }
+            
+            .fundraising-description {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .donation-item {
+                flex-direction: column;
+                padding: 12px 8px;
+            }
+            
+            .donation-amount {
+                margin-top: 5px;
+            }
+            
+            .card-title {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            
+            .fundraising-value {
+                font-size: 16px;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .other-fundraisings .btn {
+                padding: 10px 0;
+                font-size: 13px;
+                width: 100%;
+            }
+            
+            .creator-avatar {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .report-image-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-container {
+                margin-bottom: 5px;
+            }
+            
+            .card-date {
+                font-size: 13px;
+                margin-bottom: 15px;
+            }
+            
+            .btn-support {
+                padding: 12px 15px;
+                font-size: 15px;
+            }
+            
+            .action-buttons {
+                gap: 8px;
+            }
+            
+            .close-fundraising-btn {
+                padding: 10px;
+                font-size: 13px;
+            }
+            
+            .categories-container, 
+            .creator-container {
+                margin-top: 20px;
+                padding-top: 15px;
+            }
+            
+            .categories-title {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .category-tag {
+                padding: 3px 10px;
+                font-size: 11px;
+            }
+            
+            .report-title {
+                font-size: 22px;
+            }
+            
+            .report-subtitle {
+                font-size: 18px;
+            }
+            
+            .card {
+                height: auto;
+                min-height: 400px;
+            }
+        }
+        
+        /* Better handling of tab overflow on small screens */
+        @media (max-width: 768px) {
+            .tabs {
+                display: flex;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
+            }
+            
+            .tabs::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+            
+            .tab {
+                flex: 0 0 auto;
+            }
+            
+            /* Fix for donation items on mobile */
+            #donations .donation-item {
+                align-items: flex-start;
+            }
+            
+            /* Adjust donation card for better vertical spacing */
+            .card-content {
+                padding: 15px;
+            }
+            
+            /* Improve tap target size for buttons */
+            .btn, 
+            .action-btn, 
+            .close-fundraising-btn,
+            .btn-support {
+                min-height: 44px; /* Minimum size for touchable elements */
+            }
+            
+            /* Ensure proper spacing for image modals on mobile */
+            .modal-content {
+                width: 95%;
+            }
+            
+            .close-modal {
+                top: -25px;
+                right: -5px;
+            }
+            
+            /* Better handling of report images */
+            .report-image-item img {
+                max-height: 300px;
+            }
+        }
+
+        /* Medium-sized devices (tablets) */
+        @media (min-width: 769px) and (max-width: 992px) {
+            .main-content {
+                gap: 20px;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .footer {
+                flex-direction: row;
+            }
+            
+            .footer-column {
+                flex: 1;
+            }
+            
+            .fundraising-title {
+                font-size: 26px;
+            }
+            
+            .card-image {
+                height: 160px;
+            }
+            
+            .card {
+                height: 420px;
+            }
+        }
+
         /* Close Fundraising Button Styles - Updated */
         .close-fundraising-container {
             margin-top: 15px;
@@ -905,22 +1244,20 @@
             width: 100%;
             margin-bottom: 20px;
             padding: 15px;
-            background-color: #FFEBEE;
-            border-left: 4px solid #D32F2F;
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
+        
         .error-message {
             color: #D32F2F;
             font-weight: 600;
             margin-bottom: 5px;
+            padding: 8px 15px;
+            background-color: #FFEBEE;
+            border-left: 4px solid #D32F2F;
+            border-radius: 4px;
         }
-
-        .error-message:last-child {
-            margin-bottom: 0;
-        }
-
+        
         .error-message.success {
             color: #2E7D32;
             background-color: #E8F5E9;
@@ -930,21 +1267,22 @@
 </head>
 <body>
     {% include 'includes/navbar.html' %}
+    
     <!-- Основний контент -->
     <div class="main-content">
-        <!-- Add error message display -->
-        {% if messages %}
-        <div class="error-messages">
-            {% for message in messages %}
-                <div class="error-message {% if message.tags %}{{ message.tags }}{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
         <!-- Ліва частина - інформація про збір -->
         <div class="fundraising-info">
+            <!-- Add error message display inside the fundraising-info container -->
+            {% if messages %}
+            <div class="error-messages">
+                {% for message in messages %}
+                    <div class="error-message {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
             <div class="fundraising-header">
                 <h1 class="fundraising-title">
                     {{ fundraising.title }}
@@ -954,16 +1292,12 @@
                     </span>
                     {% endif %}
                 </h1>
-                <div class="social-share">
-                    <div class="social-btn">
-                        <img src="{% static 'pictures/zbir/facebook.png' %}" alt="Facebook">
-                    </div>
-                    <div class="social-btn">
-                        <img src="{% static 'pictures/zbir/instagram.png' %}" alt="Instagram">
-                    </div>
-                    <div class="social-btn">
-                        <img src="{% static 'pictures/zbir/telegram.png' %}" alt="Telegram">
-                    </div>
+                <div class="copy-link">
+                    <button id="copy-link-btn" class="copy-link-btn" title="Скопіювати посилання">
+                        <img src="{% static 'pictures/fundraisings/link.png' %}" alt="Copy Link"> 
+                        <span>Скопіювати посилання</span>
+                    </button>
+                    <span id="copy-message" class="copy-message">Скопійовано!</span>
                 </div>
             </div>
             <!-- Вкладки -->
@@ -1243,9 +1577,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>
@@ -1271,6 +1607,35 @@
                     document.getElementById(tabId).classList.add('active');
                 });
             });
+
+            const copyLinkBtn = document.getElementById('copy-link-btn');
+            const copyMessage = document.getElementById('copy-message');
+            
+            if (copyLinkBtn) {
+                copyLinkBtn.addEventListener('click', function() {
+                    const currentURL = window.location.href;
+                    
+                    // Create a temporary input element
+                    const tempInput = document.createElement('input');
+                    tempInput.value = currentURL;
+                    document.body.appendChild(tempInput);
+                    
+                    // Select and copy the text
+                    tempInput.select();
+                    document.execCommand('copy');
+                    
+                    // Remove the temporary element
+                    document.body.removeChild(tempInput);
+                    
+                    // Show success message
+                    copyMessage.classList.add('show');
+                    
+                    // Hide message after 2 seconds
+                    setTimeout(function() {
+                        copyMessage.classList.remove('show');
+                    }, 2000);
+                });
+            }
             
             // Format all dates to Ukrainian format with +3 timezone
             formatDatesToUkrainian();

@@ -84,6 +84,51 @@
             padding-top: 8px;
         }
         
+        /* Enhanced responsive design for banner */
+        @media (max-width: 992px) {
+            .banner-title {
+                font-size: 80px;
+                margin: 15px 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .banner-title {
+                font-size: 60px;
+                margin: 10px 0;
+            }
+            
+            .divider {
+                margin: 10px auto;
+            }
+            
+            .banner-content {
+                padding: 0 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .banner-title {
+                font-size: 40px;
+                margin: 8px 0;
+            }
+            
+            .divider {
+                width: 85%;
+                margin: 8px auto;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .banner-title {
+                font-size: 32px;
+            }
+            
+            .banner {
+                padding: 30px 0;
+            }
+        }
+        
         /* Фільтр */
         .filter-container {
             background-color: white;
@@ -748,9 +793,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
             <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
-            <a href="{% url 'fundraisings' %}" class="footer-link">Актуальні збори</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
             <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

@@ -540,6 +540,185 @@
             font-size: 12px;
             font-weight: 600;
         }
+
+        /* Enhanced mobile responsive design */
+        @media (max-width: 992px) {
+            .cards-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+                justify-content: center;
+            }
+            
+            .card {
+                width: 100%;
+                height: 380px;
+            }
+            
+            .more-btn,
+            .create-card {
+                width: 100%;
+                height: 320px;
+            }
+            
+            .about-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .about-content {
+                padding-right: 0;
+            }
+            
+            .about-images {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 0 30px;
+            }
+            
+            .card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .more-btn,
+            .create-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .about-section {
+                padding: 40px 0;
+            }
+            
+            .about-title {
+                font-size: 30px;
+            }
+            
+            .about-text {
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .cards-container {
+                padding: 0 20px;
+            }
+            
+            .card {
+                height: 360px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+            
+            .card-title {
+                font-size: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .fundraising-value {
+                font-size: 16px;
+            }
+            
+            .card-date {
+                font-size: 13px;
+                margin-bottom: 12px;
+            }
+            
+            .card-actions {
+                margin-bottom: 20px;
+            }
+            
+            .btn {
+                padding: 8px 0;
+                font-size: 13px;
+            }
+            
+            .more-btn,
+            .create-card {
+                height: 280px;
+            }
+            
+            .arrow-circle,
+            .plus-circle {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 20px;
+            }
+            
+            .arrow-icon,
+            .plus-icon {
+                font-size: 45px;
+            }
+            
+            .more-text,
+            .create-card-text {
+                font-size: 20px;
+            }
+            
+            .more-subtext,
+            .create-card-subtext {
+                font-size: 14px;
+            }
+            
+            .about-container {
+                padding: 0 25px;
+            }
+            
+            .about-title {
+                font-size: 26px;
+            }
+            
+            .footer {
+                padding: 25px 30px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .cards-container {
+                padding: 0 15px;
+            }
+            
+            .card-image {
+                height: 140px;
+            }
+            
+            .card-title {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            
+            .fundraising-label {
+                font-size: 11px;
+            }
+            
+            .fundraising-value {
+                font-size: 15px;
+            }
+            
+            .progress-percentage {
+                font-size: 13px;
+            }
+            
+            .footer-title {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            
+            .footer-text,
+            .footer-link {
+                font-size: 13px;
+            }
+            
+            .copyright {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -618,9 +797,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

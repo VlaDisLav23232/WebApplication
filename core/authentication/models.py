@@ -1,12 +1,14 @@
 """
 Authentication models for the Dovir Web Application.
 
-This module defines the custom user model and related models for the authentication
-system, including user profile data, statistics, and categories.
+This module defines the custom user model for the authentication
+system, including user profile data and statistics.
 """
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import Sum, Max
+from fundraisings.models import Donation
 
 
 class CustomUser(AbstractUser):
@@ -54,10 +56,33 @@ class CustomUser(AbstractUser):
     # Supporting fields for properties
     supported_fundraisings_count_field = models.PositiveIntegerField(default=0,
                                            verbose_name="Кількість підтриманих зборів")
-    total_donated_amount_field = models.DecimalField(max_digits=10, decimal_places=2, default=0, 
+    total_donated_amount_field = models.DecimalField(max_digits=10, decimal_places=2, default=0,
                                  verbose_name="Сума зроблених донатів")
-    largest_donation_amount_field = models.DecimalField(max_digits=10, decimal_places=2, default=0, 
+    largest_donation_amount_field = models.DecimalField(max_digits=10, decimal_places=2, default=0,
                                   verbose_name="Найбільший донат")
+
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True,  null=True, verbose_name="Дата створення")
+    updated_at = models.DateTimeField(auto_now=True,  null=True, verbose_name="Дата оновлення")
+
+    class Meta:
+        """Meta class"""
+        verbose_name = "Користувач"
+        verbose_name_plural = "Користувачі"
+
+    def __str__(self):
+        """Return username as string representation."""
+        return str(self.username)
+
+    def get_full_name(self):
+        """
+        Return user's full name (first name and last name).
+        
+        Returns:
+            str: User's full name
+        """
+        full_name = f"{self.first_name} {self.last_name}"
+        return full_name.strip()
 
     @property
     def supported_fundraisings_count(self):
@@ -68,11 +93,11 @@ class CustomUser(AbstractUser):
             int: Number of distinct fundraisings supported
         """
         try:
-            from fundraisings.models import Donation
-            return Donation.objects.filter(user=self, anonymous=False).values('fundraising').distinct().count()
+            return Donation.objects.filter(user=self,\
+                    anonymous=False).values('fundraising').distinct().count()
         except:
             return self.supported_fundraisings_count_field
-    
+
     @supported_fundraisings_count.setter
     def supported_fundraisings_count(self, value):
         """Set supported fundraisings count field."""
@@ -87,13 +112,11 @@ class CustomUser(AbstractUser):
             Decimal: Total donation amount
         """
         try:
-            from fundraisings.models import Donation
-            from django.db.models import Sum
             total = Donation.objects.filter(user=self, anonymous=False).aggregate(Sum('amount'))
             return total['amount__sum'] or 0
         except:
             return self.total_donated_amount_field
-    
+
     @total_donated_amount.setter
     def total_donated_amount(self, value):
         """Set total donated amount field."""
@@ -108,63 +131,12 @@ class CustomUser(AbstractUser):
             Decimal: Amount of largest donation
         """
         try:
-            from fundraisings.models import Donation
-            from django.db.models import Max
             maximum = Donation.objects.filter(user=self, anonymous=False).aggregate(Max('amount'))
             return maximum['amount__max'] or 0
         except:
             return self.largest_donation_amount_field
-            
+
     @largest_donation_amount.setter
     def largest_donation_amount(self, value):
         """Set largest donation amount field."""
         self.largest_donation_amount_field = value
-
-    # Metadata
-    created_at = models.DateTimeField(auto_now_add=True,  null=True, verbose_name="Дата створення")
-    updated_at = models.DateTimeField(auto_now=True,  null=True, verbose_name="Дата оновлення")
-    
-    # Category tracking
-    categories = models.ManyToManyField(
-        'Category', 
-        related_name='users', 
-        blank=True, 
-        verbose_name="Категорії"
-    )
-    
-    class Meta:
-        verbose_name = "Користувач"
-        verbose_name_plural = "Користувачі"
-    
-    def __str__(self):
-        """Return username as string representation."""
-        return str(self.username)
-    
-    def get_full_name(self):
-        """
-        Return user's full name (first name and last name).
-        
-        Returns:
-            str: User's full name
-        """
-        full_name = f"{self.first_name} {self.last_name}"
-        return full_name.strip()
-
-
-class Category(models.Model):
-    """
-    Model for user interest categories.
-    
-    Categories can be associated with users to track their interests.
-    """
-    name = models.CharField(max_length=100, unique=True, verbose_name="Назва категорії")
-    description = models.TextField(blank=True, null=True, verbose_name="Опис категорії")
-    icon = models.CharField(max_length=50, blank=True, null=True, verbose_name="Іконка")
-    
-    class Meta:
-        verbose_name = "Категорія"
-        verbose_name_plural = "Категорії"
-
-    def __str__(self):
-        """Return category name as string representation."""
-        return str(self.name)

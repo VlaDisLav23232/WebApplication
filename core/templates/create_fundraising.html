@@ -418,6 +418,194 @@
             margin-top: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
+
+        /* Enhanced responsive styles */
+        @media (max-width: 1200px) {
+            .banner-title {
+                font-size: 80px;
+            }
+
+            .form-container {
+                margin: 30px 60px 40px 60px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .banner-title {
+                font-size: 70px;
+            }
+
+            .form-container {
+                margin: 30px 40px 40px 40px;
+                padding: 25px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .category-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .banner-title {
+                font-size: 50px;
+            }
+
+            .banner-text {
+                font-size: 16px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .form-container {
+                margin: 20px 30px 30px 30px;
+                padding: 20px;
+            }
+            
+            .progress-stepper {
+                margin: 30px 0 20px;
+            }
+            
+            .step {
+                width: 50%;
+                margin-bottom: 15px;
+            }
+            
+            .step-line {
+                display: none;
+            }
+            
+            .step-title {
+                font-size: 12px;
+            }
+            
+            .progress-stepper {
+                flex-wrap: wrap;
+            }
+            
+            .date-inputs {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .banner-title {
+                font-size: 36px;
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
+
+            .banner-text {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+            
+            .divider {
+                margin: 10px auto 15px auto;
+                width: 85%;
+            }
+
+            .form-container {
+                margin: 15px 20px 30px 20px;
+                padding: 15px;
+                border-radius: 6px;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                gap: 15px;
+            }
+
+            .form-btn {
+                width: 100%;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .form-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            
+            .section-heading {
+                font-size: 16px;
+            }
+            
+            .step-circle {
+                width: 25px;
+                height: 25px;
+                font-size: 12px;
+            }
+            
+            .checkbox-label {
+                align-items: flex-start;
+            }
+            
+            .checkbox-input {
+                margin-top: 3px;
+            }
+            
+            .upload-icon {
+                margin-bottom: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .upload-text {
+                font-size: 14px;
+            }
+            
+            .upload-subtext {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .banner-title {
+                font-size: 28px;
+            }
+            
+            .banner {
+                padding: 30px 0;
+            }
+            
+            .banner-text {
+                font-size: 13px;
+            }
+            
+            .form-container {
+                margin: 15px 15px 20px 15px;
+                padding: 10px;
+            }
+            
+            .upload-container {
+                padding: 15px;
+            }
+            
+            .footer {
+                padding: 20px 25px;
+            }
+            
+            .form-title {
+                font-size: 16px;
+            }
+            
+            .category-options {
+                gap: 8px;
+            }
+            
+            .category-option {
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -559,9 +747,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

@@ -1,16 +1,24 @@
+"""Migration to add user statistics fields to the CustomUser model."""
 from django.db import migrations, models
 
 class Migration(migrations.Migration):
+    """
+    Migration that adds user statistics fields to the CustomUser model.
+    
+    This adds fields for tracking fundraising activities and donations,
+    including counts and amounts for both created and supported fundraisings.
+    """
 
     dependencies = [
-        ('authentication', '0001_initial'),  # Make sure this matches your actual initial migration
+        ('authentication', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='customuser',
             name='total_donations_amount',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name='Загальна сума донатів'),
+            field=models.DecimalField(decimal_places=2,\
+                        default=0, max_digits=10, verbose_name='Загальна сума донатів'),
         ),
         migrations.AddField(
             model_name='customuser',

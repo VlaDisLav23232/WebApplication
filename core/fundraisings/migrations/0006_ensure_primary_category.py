@@ -2,6 +2,9 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 class Migration(migrations.Migration):
+    """
+    Migration to add the Achievement model.
+    """
     dependencies = [
         ('fundraisings', '0005_fix_invalid_primary_category'),
     ]
@@ -11,6 +14,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='fundraising',
             name='primary_category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='primary_fundraisings', to='fundraisings.category'),
+            field=models.ForeignKey(blank=True, null=True,\
+                on_delete=django.db.models.deletion.SET_NULL,\
+                related_name='primary_fundraisings', to='fundraisings.category'),
         ),
     ]

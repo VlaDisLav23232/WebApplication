@@ -14,8 +14,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-#Changed by claude
-
 
 # Import necessary modules
 from django.contrib import admin  # Django admin module
@@ -32,7 +30,8 @@ urlpatterns = [
     path('home/', home, name="recipes"),      # Home page
     path('fundraisings/', fundraisings, name='fundraisings'), #fundraising page
     path('profile/', profile_page, name='profile_page'),  # Default profile (current user)
-    path('profile/<int:user_id>/', profile_page, name='user_profile'),  # Profile with specific user ID
+    path('profile/<int:user_id>/',\
+        profile_page, name='user_profile'),  # Profile with specific user ID
     path('profile/edit/', edit_profile, name='edit_profile'),
     path("admin/", admin.site.urls),          # Admin interface
     path('login/', login_page, name='login_page'),    # Login page
@@ -50,7 +49,8 @@ urlpatterns = [
     path('donate/<int:pk>/', donation_form, name='donation_form'),  # Donation form
     path('fundraising/', include('fundraisings.urls')),  # Include fundraisings URLs with prefix
     path('create-report/', create_report, name='create_report'),  # Create report page
-    path('create-report/<int:fundraising_id>/', create_report, name='create_report_with_id'),  # Create report with fundraising ID
+    path('create-report/<int:fundraising_id>/',\
+        create_report, name='create_report_with_id'),  # Create report with fundraising ID
     path('reports/', reports, name='reports'),  # Reports page
 ]
 

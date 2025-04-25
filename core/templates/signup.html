@@ -212,22 +212,120 @@
             color: #f44336;
         }
         
-        /* Responsive design */
+        /* Responsive design - enhanced */
         @media (max-width: 768px) {
             .form-container {
-                margin: 20px;
+                margin: 20px auto 40px;
+                max-width: calc(100% - 40px);
             }
             
             .form-row {
                 flex-direction: column;
-                gap: 0;
+                gap: 15px;
+            }
+            
+            .decorative-element {
+                opacity: 0.3; /* Make decorative elements more subtle on mobile */
+            }
+            
+            .form-title {
+                font-size: 24px;
             }
         }
         
         @media (max-width: 576px) {
             .form-container {
-                padding: 20px;
+                padding: 20px 15px;
+                margin: 15px auto 30px;
+                max-width: calc(100% - 30px);
             }
+            
+            .form-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .form-label {
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            
+            .form-control {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .submit-button {
+                padding: 12px;
+                font-size: 15px;
+            }
+            
+            /* Hide some decorative elements on very small screens */
+            .elem-4, .elem-6, .elem-8, .elem-9, .elem-10, .elem-12, .elem-14, .elem-15 {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .form-container {
+                padding: 15px 12px;
+                margin: 10px auto 20px;
+            }
+            
+            .form-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            
+            /* Further reduce visible decorative elements */
+            .elem-3, .elem-5, .elem-7, .elem-11, .elem-13 {
+                display: none;
+            }
+            
+            .decorative-element {
+                opacity: 0.2;
+            }
+        }
+        
+        /* Footer styles */
+        .footer {
+            background-color: #5D4037;
+            color: white;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-column {
+            flex: 1;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #D7CCC8;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -352,6 +450,31 @@
                 </a>
             </div>
         </form>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-column">
+            <h3 class="footer-title">Про Dovir</h3>
+            <p class="footer-text">Ми допомагаємо збирати кошти для підтримки Збройних Сил України, забезпечуючи їх необхідним обладнанням та амуніцією.</p>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Навігація</h3>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
+        </div>
+        <div class="footer-column">
+            <h3 class="footer-title">Контакти</h3>
+            <p class="footer-text">Електронна пошта: info@dovir.ua</p>
+            <p class="footer-text">Телефон: +380 12 345 6789</p>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        © 2025 Dovir. Усі права захищені.
     </div>
     
     <script>

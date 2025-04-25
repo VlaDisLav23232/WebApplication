@@ -1,6 +1,13 @@
 from django.db import migrations, models
 
 class Migration(migrations.Migration):
+    """
+    Migration that adds statistical fields to the CustomUser model.
+    
+    These fields track various metrics related to user activity, including
+    donation amounts, fundraising participation, and campaign management.
+    """
+
     dependencies = [
         ('authentication', '0001_initial'),
     ]
@@ -9,7 +16,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='customuser',
             name='total_donations_amount',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name='Загальна сума донатів'),
+            field=models.DecimalField(decimal_places=2,\
+            default=0, max_digits=10, verbose_name='Загальна сума донатів'),
         ),
         migrations.AddField(
             model_name='customuser',
@@ -24,26 +32,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='customuser',
             name='total_received_amount',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name='Зібрана сума на збори'),
+            field=models.DecimalField(decimal_places=2,\
+                    default=0, max_digits=10, verbose_name='Зібрана сума на збори'),
         ),
         migrations.AddField(
             model_name='customuser',
             name='unique_donators_count',
-            field=models.PositiveIntegerField(default=0, verbose_name='Кількість унікальних донаторів'),
+            field=models.PositiveIntegerField(default=0,\
+                            verbose_name='Кількість унікальних донаторів'),
         ),
         migrations.AddField(
             model_name='customuser',
             name='supported_fundraisings_count',
-            field=models.PositiveIntegerField(default=0, verbose_name='Кількість підтриманих зборів'),
+            field=models.PositiveIntegerField(default=0,\
+                    verbose_name='Кількість підтриманих зборів'),
         ),
         migrations.AddField(
             model_name='customuser',
             name='total_donated_amount',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name='Кількість грошей задоначено'),
+            field=models.DecimalField(decimal_places=2, default=0,\
+                    max_digits=10, verbose_name='Кількість грошей задоначено'),
         ),
         migrations.AddField(
             model_name='customuser',
             name='largest_donation_amount',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10, verbose_name='Найбільший донат'),
+            field=models.DecimalField(decimal_places=2, default=0,\
+                        max_digits=10, verbose_name='Найбільший донат'),
         ),
     ]

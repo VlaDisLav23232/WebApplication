@@ -7,7 +7,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
     color_code = models.CharField(max_length=10, default="#5D4037")
-    
+
     @classmethod
     def get_default_categories(cls):
         """

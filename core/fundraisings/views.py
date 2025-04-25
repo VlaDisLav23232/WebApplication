@@ -354,6 +354,12 @@ def fundraisings(request):
     return render(request, 'fundraisings.html', context)
 
 
+def active_fundraisings(request):
+    """View to display all active fundraisings"""
+    fundraisings = Fundraising.objects.filter(is_active=True).order_by('-created_at')
+    return render(request, 'active_fundraisings.html', {'fundraisings': fundraisings})
+
+
 def update_donation(request, pk):
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         try:

@@ -495,6 +495,7 @@
             transform: scale(1.1);
         }
 
+        /* Enhanced responsive styles */
         @media (max-width: 1200px) {
             .banner-title {
                 font-size: 80px;
@@ -511,7 +512,8 @@
             }
 
             .form-container {
-                margin: 30px 50px 40px 50px;
+                margin: 30px 40px 40px 40px;
+                padding: 25px;
             }
 
             .form-row {
@@ -535,23 +537,41 @@
             }
 
             .form-container {
-                margin: 20px 40px 30px 40px;
+                margin: 20px 30px 30px 30px;
                 padding: 20px;
+            }
+            
+            .preview-thumbnail {
+                width: 70px;
+                height: 50px;
+            }
+            
+            .form-title {
+                font-size: 22px;
             }
         }
 
         @media (max-width: 576px) {
             .banner-title {
                 font-size: 36px;
+                margin-bottom: 10px;
+                margin-top: 10px;
             }
 
             .banner-text {
                 font-size: 14px;
+                line-height: 1.4;
+            }
+            
+            .divider {
+                margin: 10px auto 15px auto;
+                width: 85%;
             }
 
             .form-container {
-                margin: 20px 30px 30px 30px;
+                margin: 15px 20px 30px 20px;
                 padding: 15px;
+                border-radius: 6px;
             }
 
             .form-actions {
@@ -561,6 +581,74 @@
 
             .form-btn {
                 width: 100%;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .form-title {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+            
+            .section-heading {
+                font-size: 16px;
+            }
+            
+            .preview-content {
+                flex-wrap: wrap;
+            }
+            
+            .preview-thumbnail {
+                margin-bottom: 5px;
+            }
+            
+            .preview-remove {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
+            
+            .summary-header h3 {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .banner-title {
+                font-size: 28px;
+            }
+            
+            .banner {
+                padding: 30px 0;
+            }
+            
+            .banner-text {
+                font-size: 13px;
+            }
+            
+            .upload-icon {
+                margin-bottom: 10px;
+            }
+            
+            .upload-text {
+                font-size: 14px;
+            }
+            
+            .upload-subtext {
+                font-size: 12px;
+            }
+            
+            .upload-container {
+                padding: 15px;
+            }
+            
+            .footer {
+                padding: 20px 25px;
+            }
+            
+            .footer-title {
+                font-size: 16px;
+                margin-bottom: 15px;
             }
         }
     </style>
@@ -675,9 +763,11 @@
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Навігація</h3>
-            <a href="#" class="footer-link">Створити збір</a>
-            <a href="#" class="footer-link">Актуальні збори</a>
-            <a href="#" class="footer-link">Звіти</a>
+            <a href="{% url 'home' %}" class="footer-link">На головну</a>
+            <a href="{% url 'create_fundraising' %}" class="footer-link">Створити збір</a>
+            <a href="{% url 'fundraisings' %}" class="footer-link">Задонатити</a>
+            <a href="{% url 'reports' %}" class="footer-link">Звіти</a>
+            <a href="{% url 'about_us' %}" class="footer-link">Про нас</a>
         </div>
         <div class="footer-column">
             <h3 class="footer-title">Контакти</h3>

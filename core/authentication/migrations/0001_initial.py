@@ -5,6 +5,13 @@ from django.utils import timezone
 
 
 class Migration(migrations.Migration):
+    """
+    Initial migration for the authentication app.
+    
+    Creates the Category and CustomUser models with all their fields,
+    relationships, and permission configurations.
+    """
+
     initial = True
 
     dependencies = [
@@ -15,10 +22,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Category',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='Назва категорії')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Опис категорії')),
-                ('icon', models.CharField(blank=True, max_length=50, null=True, verbose_name='Іконка')),
+                ('id', models.BigAutoField(auto_created=True,\
+                                primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=100,\
+                                unique=True, verbose_name='Назва категорії')),
+                ('description', models.TextField(blank=True,\
+                                null=True, verbose_name='Опис категорії')),
+                ('icon', models.CharField(blank=True,\
+                                max_length=50, null=True, verbose_name='Іконка')),
             ],
             options={
                 'verbose_name': 'Категорія',
