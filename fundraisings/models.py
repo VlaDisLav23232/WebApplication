@@ -55,7 +55,12 @@ class Fundraising(models.Model):
         blank=False, 
         verbose_name="Головне зображення"
     )
-    link_for_money = models.TextField()
+    link_for_money = models.URLField(
+        verbose_name="Посилання для грошей", 
+        null=False, 
+        blank=False,
+        default='https://dovir.ua/payment'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     confirm_reporting = models.BooleanField(default=False)

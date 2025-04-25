@@ -12,53 +12,51 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from authentication.models import CustomUser
 
 
+@login_required
 def create_fundraising(request):
+    """
+    Handle creation of new fundraisings.
+    """
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
         needed_sum = request.POST.get('needed_sum')
         end_date = request.POST.get('end_date')
-        link_for_money = request.POST.get('link_for_money')
         main_image = request.FILES.get('main_image')
-        confirm_reporting = request.POST.get('confirm_reporting') == 'on'
+        primary_category = request.POST.get('primary_category')
+        confirm_terms = request.POST.get('confirm_terms')
+        confirm_reporting = bool(request.POST.get('confirm_reporting'))
+        # Get link_for_money from form or use default
+        link_for_money = request.POST.get('link_for_money', 'https://dovir.ua/payment')
         
-        # Simplified category handling
-        primary_category_id = request.POST.get('primary_category')
+        # Validate required fields
+        if not all([title, description, needed_sum, end_date, main_image, primary_category, confirm_terms]):
+            messages.error(request, "Будь ласка, заповніть всі обов'язкові поля")
+            return redirect('create_fundraising')
         
         try:
-            # Try to get the selected category or use default
-            if primary_category_id:
-                primary_category = Category.objects.get(id=primary_category_id)
-            else:
-                # Get a default category without creating during initialization
-                primary_category = Category.get_default_category()
-                
-        except Category.DoesNotExist:
-            # If selected category doesn't exist, use default
-            primary_category = Category.get_default_category()
-
-        # Create the fundraising object
-        fundraising = Fundraising.objects.create(
-            title=title,
-            description=description,
-            creator=request.user,
-            needed_sum=needed_sum,
-            end_date=end_date,
-            link_for_money=link_for_money,
-            main_image=main_image,
-            confirm_reporting=confirm_reporting,
-            primary_category=primary_category
-        )
-        
-        # Add to categories M2M relationship
-        fundraising.categories.add(primary_category)
-        
-        messages.success(request, 'Збір успішно створено!')
-        return redirect('donate', pk=fundraising.pk)
-    else:
-        # Get existing categories, rather than creating defaults
-        categories = Category.objects.all()
-        return render(request, 'create_fundraising.html', {'categories': categories})
+            # Create fundraising with link_for_money
+            fundraising = Fundraising.objects.create(
+                title=title,
+                description=description,
+                needed_sum=needed_sum,
+                end_date=end_date,
+                main_image=main_image,
+                creator=request.user,
+                primary_category_id=primary_category,
+                confirm_reporting=confirm_reporting,
+                link_for_money=link_for_money,
+            )
+            
+            messages.success(request, 'Збір успішно створено!')
+            return redirect('donate', pk=fundraising.pk)
+            
+        except Exception as e:
+            messages.error(request, f"Помилка при створенні збору: {str(e)}")
+            return redirect('create_fundraising')
+    
+    categories = Category.objects.all()
+    return render(request, 'create_fundraising.html', {'categories': categories})
     
 
 def update_fundraising(request, pk):
