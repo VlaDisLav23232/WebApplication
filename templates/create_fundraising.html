@@ -774,11 +774,28 @@
                 mainImageInput.click();
             });
 
-            // Simplified file selection handling
+            // Enhanced file validation
             mainImageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 
                 if (file) {
+                    // Check file type
+                    const allowedTypes = ['image/jpeg', 'image/png'];
+                    if (!allowedTypes.includes(file.type)) {
+                        alert('Будь ласка, завантажте тільки файли у форматі JPG або PNG.');
+                        this.value = '';
+                        document.querySelector('#main-image-upload .upload-text').textContent = 'Перетягніть файл сюди або натисніть для завантаження';
+                        return;
+                    }
+                    
+                    // Check file size (5MB limit)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('Розмір файлу не може перевищувати 5MB.');
+                        this.value = '';
+                        document.querySelector('#main-image-upload .upload-text').textContent = 'Перетягніть файл сюди або натисніть для завантаження';
+                        return;
+                    }
+                    
                     document.querySelector('#main-image-upload .upload-text').textContent = file.name;
                 } else {
                     document.querySelector('#main-image-upload .upload-text').textContent = 'Файл не вибрано';

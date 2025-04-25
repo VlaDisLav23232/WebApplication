@@ -644,7 +644,8 @@
                     <label class="form-label">Головне зображення*</label>
                     {% if fundraising.main_image %}
                     <div class="current-image">
-                        <img src="{{ fundraising.main_image.url }}" alt="Поточне головне зображення" class="thumbnail">
+                        <img src="{{ fundraising.main_image.url }}" alt="Поточне головне зображення" class="thumbnail"
+                             onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';">
                         <p>Поточне зображення</p>
                     </div>
                     {% endif %}
@@ -736,6 +737,25 @@
                 const file = e.target.files[0];
                 
                 if (file) {
+                    // Check file type
+                    const allowedTypes = ['image/jpeg', 'image/png'];
+                    if (!allowedTypes.includes(file.type)) {
+                        alert('Будь ласка, завантажте тільки файли у форматі JPG або PNG.');
+                        this.value = '';
+                        document.querySelector('#main-image-upload .upload-text').textContent = 
+                            "{% if fundraising.main_image %}Замінити зображення{% else %}Перетягніть файл сюди або натисніть для завантаження{% endif %}";
+                        return;
+                    }
+                    
+                    // Check file size (5MB limit)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('Розмір файлу не може перевищувати 5MB.');
+                        this.value = '';
+                        document.querySelector('#main-image-upload .upload-text').textContent = 
+                            "{% if fundraising.main_image %}Замінити зображення{% else %}Перетягніть файл сюди або натисніть для завантаження{% endif %}";
+                        return;
+                    }
+                    
                     document.querySelector('#main-image-upload .upload-text').textContent = file.name;
                 } else {
                     const defaultText = document.querySelector('#main-image-upload .upload-text').getAttribute('data-default-text') || 
@@ -743,7 +763,7 @@
                     document.querySelector('#main-image-upload .upload-text').textContent = defaultText;
                 }
             });
-            
+
             // Drag and drop functionality
             mainImageUpload.addEventListener('dragover', function(e) {
                 e.preventDefault();

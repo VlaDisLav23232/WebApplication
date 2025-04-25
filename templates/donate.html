@@ -1177,6 +1177,7 @@
             width: 100%;
             max-height: 500px;
             object-fit: contain;
+            onerror: this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';
         }
         
         .report-videos {
@@ -1203,6 +1204,7 @@
             max-height: 500px;
             border-radius: 8px;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            onerror="this.style.display='none'; this.parentElement.innerHTML+='<div class=\'video-error\'>Відео недоступне</div>';"
         }
         
         /* Image modal styling for fullscreen view */
@@ -1311,7 +1313,8 @@
             </div>
             <!-- Вміст вкладки "Мета збору" -->
             <div class="tab-content active" id="goal">
-                <img class="fundraising-image" src="{{ fundraising.main_image.url }}" alt="Головне зображення">
+                <img class="fundraising-image" src="{{ fundraising.main_image.url }}" alt="Головне зображення" 
+                     onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';">
                 <div class="fundraising-description">
                     <p>{{ fundraising.description }}</p>
                 </div>
@@ -1367,7 +1370,8 @@
                     <h4 class="report-images-title">Фотозвіт</h4>
                     <div class="report-image-container">
                         <div class="report-image-item">
-                            <img src="{{ fundraising.report.images.first.image.url }}" alt="Фото звіту" data-report-image-url="{{ fundraising.report.images.first.image.url }}">
+                            <img src="{{ fundraising.report.images.first.image.url }}" alt="Фото звіту" 
+                                 onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';">
                         </div>
                     </div>
                 </div>
@@ -1378,7 +1382,7 @@
                 <div class="report-videos">
                     <h4 class="report-videos-title">Відеозвіт</h4>
                     <div class="report-video-container">
-                        <video controls class="report-video">
+                        <video controls class="report-video" onerror="this.style.display='none'; this.parentElement.innerHTML+='<div class=\'video-error\'>Відео недоступне</div>';">
                             <source src="{{ fundraising.report.videos.first.video.url }}" type="video/mp4">
                             Ваш браузер не підтримує відтворення відео.
                         </video>

@@ -1060,7 +1060,8 @@
                 {% for fundraising in user_fundraisings|slice:":3" %}
                     {% if not fundraising.has_report %}
                     <div class="card">
-                        <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}')">
+                        <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
+                             onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                             {% if fundraising.primary_category %}
                             <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                                 {{ fundraising.primary_category.name }}
@@ -1131,7 +1132,8 @@
                 {% for fundraising in user_fundraisings %}
                     {% if not fundraising.has_report and forloop.counter > 3 %}
                     <div class="card">
-                        <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}')">
+                        <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
+                             onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                             {% if fundraising.primary_category %}
                             <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                                 {{ fundraising.primary_category.name }}
@@ -1192,7 +1194,8 @@
             {% if closed_fundraisings %}
                 {% for fundraising in closed_fundraisings|slice:":3" %}
                 <div class="card">
-                    <div class="card-image closed" style="background-image: url('{{ fundraising.main_image.url }}');">
+                    <div class="card-image closed" style="background-image: url('{{ fundraising.main_image.url }}');" 
+                         onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                         {% if fundraising.primary_category %}
                         <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                             {{ fundraising.primary_category.name }}
@@ -1246,7 +1249,8 @@
                 {% for fundraising in closed_fundraisings %}
                     {% if forloop.counter > 3 %}
                     <div class="card">
-                        <div class="card-image closed" style="background-image: url('{{ fundraising.main_image.url }}');">
+                        <div class="card-image closed" style="background-image: url('{{ fundraising.main_image.url }}');" 
+                             onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                             {% if fundraising.primary_category %}
                             <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                                 {{ fundraising.primary_category.name }}

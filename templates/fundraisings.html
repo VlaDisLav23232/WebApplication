@@ -623,7 +623,8 @@
     <div class="cards-container">
         {% for fundraising in fundraisings %}
         <div class="card">
-            <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
+            <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
+                 onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                 {% if fundraising.primary_category %}
                 <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                     {{ fundraising.primary_category.name }}

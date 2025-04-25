@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from decimal import Decimal
+import uuid
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -48,7 +49,12 @@ class Fundraising(models.Model):
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
-    main_image = models.ImageField(upload_to='fundraising_images/', null=True, blank=True)
+    main_image = models.ImageField(
+        upload_to='fundraisings/%Y/%m/', 
+        null=True, 
+        blank=False, 
+        verbose_name="Головне зображення"
+    )
     link_for_money = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -409,10 +415,21 @@ class Report(models.Model):
     def __str__(self):
         return f"Report for {self.fundraising.title}"
 
+    def report_image_path(instance, filename):
+        # Create a unique path for each report image
+        return f'reports/{instance.fundraising.id}/{uuid.uuid4()}/{filename}'
+    
+    def report_video_path(instance, filename):
+        # Create a unique path for each report video
+        return f'reports/{instance.fundraising.id}/videos/{uuid.uuid4()}/{filename}'
+
 class ReportImage(models.Model):
     """Model for report images"""
     report = models.ForeignKey(Report, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='report_images/')
+    image = models.ImageField(
+        upload_to=Report.report_image_path, 
+        verbose_name="Фото звіту"
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -420,7 +437,10 @@ class ReportImage(models.Model):
 
 class ReportVideo(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='videos')
-    video = models.FileField(upload_to='report_videos/')
+    video = models.FileField(
+        upload_to=Report.report_video_path, 
+        verbose_name="Відео звіту"
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

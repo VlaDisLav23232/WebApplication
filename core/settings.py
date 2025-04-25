@@ -27,11 +27,12 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-ecr(bu-4bz!15=(vc#txrl9)y@tu0z^(ggik1yuzdlzv#if8z@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# Set DEBUG to True during development, change to False for production
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# Configure media files settings - ensure these are before STATICFILES related settings
+# Media files configuration - ensure these are before STATICFILES related settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
