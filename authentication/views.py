@@ -328,7 +328,13 @@ def edit_profile(request):
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            
+            # Special handling for avatar file
+            if 'avatar' in request.FILES:
+                user.avatar = request.FILES['avatar']
+                
+            user.save()
             messages.success(request, 'Профіль успішно оновлено!')
             return redirect('profile_page')
     else:

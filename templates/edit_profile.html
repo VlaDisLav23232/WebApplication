@@ -384,7 +384,7 @@
                 <div class="form-group">
                     <div class="avatar-section">
                         {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview" id="avatarPreview">
+                            <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview" id="avatarPreview" onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}';">
                         {% else %}
                             <img src="{% static 'pictures/profile_page/default.png' %}" alt="Default Avatar" class="avatar-preview" id="avatarPreview">
                         {% endif %}

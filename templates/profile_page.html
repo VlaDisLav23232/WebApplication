@@ -967,7 +967,7 @@
             <div class="profile-main-content">
                 <div class="profile-avatar-large">
                     {% if profile_user.avatar %}
-                        <img src="{{ profile_user.avatar.url }}" alt="Фото профілю {{ profile_user.username }}"/>
+                        <img src="{{ profile_user.avatar.url }}" alt="Фото профілю {{ profile_user.username }}" onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}';" />
                     {% else %}
                         <img src="{% static 'pictures/profile_page/default.png' %}" alt="Фото профілю"/>
                     {% endif %}

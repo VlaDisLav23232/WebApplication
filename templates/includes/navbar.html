@@ -233,7 +233,7 @@
             <a href="{% url 'profile_page' %}">
                 <div class="profile-pic">
                     {% if user.avatar %}
-                        <img src="{{ user.avatar.url }}" alt="Profile">
+                        <img src="{{ user.avatar.url }}" alt="Profile" onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}';" />
                     {% else %}
                         <img src="{% static 'pictures/profile_page/default.png' %}" alt="Profile">
                     {% endif %}

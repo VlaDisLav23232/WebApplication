@@ -21,7 +21,13 @@ class CustomUser(AbstractUser):
     # Contact information
     phone = models.CharField(max_length=15, unique=True,\
                         null=True, blank=True, verbose_name="Номер телефону")
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, verbose_name="Аватар")
+    avatar = models.ImageField(
+        upload_to='avatars/%Y/%m/', 
+        null=True, 
+        blank=True, 
+        verbose_name="Аватар",
+        default='avatars/default.png'
+    )
 
     # Additional information
     bio = models.TextField(max_length=500, blank=True, null=True, verbose_name="Про себе")
