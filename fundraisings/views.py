@@ -101,6 +101,7 @@ def delete_fundraising(request, pk):
     return render(request, 'confirm_delete.html', {'fundraising': fundraising})
 
 
+@login_required
 def create_report(request, fundraising_id=None):
     """
     View to create a report for a fundraising campaign.
@@ -118,11 +119,7 @@ def create_report(request, fundraising_id=None):
     # Get all fundraisings created by the user for the dropdown if no specific fundraising is selected
     user_fundraisings = None
     if not fundraising:
-        if request.user.is_authenticated:
-            user_fundraisings = Fundraising.objects.filter(creator=request.user)
-        else:
-            messages.error(request, "Ви повинні увійти в систему, щоб створити звіт.")
-            return redirect('login')
+        user_fundraisings = Fundraising.objects.filter(creator=request.user)
     
     if request.method == 'POST':
         # Process the form data
@@ -301,6 +298,7 @@ def update_user_statistics(user):
         print(f"Error updating user statistics: {e}")
 
 
+@login_required
 def fundraisings(request):
     # Get filter parameters from the request
     sort_option = request.GET.get('sort', 'newest')
@@ -362,6 +360,7 @@ def fundraisings(request):
     return render(request, 'fundraisings.html', context)
 
 
+@login_required
 def active_fundraisings(request):
     """View to display all active fundraisings"""
     fundraisings = Fundraising.objects.filter(is_active=True).order_by('-created_at')
@@ -493,6 +492,7 @@ def get_page_range(paginator, current_page, margin=2):
     return pages
 
 
+@login_required
 def reports(request):
     # Get all fundraisings that have a report
     fundraisings_with_reports = Fundraising.objects.filter(report__isnull=False)
