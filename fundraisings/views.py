@@ -146,11 +146,16 @@ def create_report(request, fundraising_id=None):
             # Process the single image upload
             if 'image' in request.FILES:
                 image = request.FILES['image']
-                report_image = ReportImage.objects.create(
-                    report=report,
-                    image=image
-                )
-                print(f"Created report image: {report_image}")
+                try:
+                    report_image = ReportImage.objects.create(
+                        report=report,
+                        image=image
+                    )
+                    print(f"Created report image: {report_image}")
+                except Exception as e:
+                    print(f"Error creating report image: {e}")
+                    import traceback
+                    print(traceback.format_exc())
             
             # Process optional video upload
             if 'video' in request.FILES and request.FILES['video']:
@@ -159,11 +164,16 @@ def create_report(request, fundraising_id=None):
                 # Validate video file format
                 valid_formats = ['video/mp4', 'video/webm']
                 if video.content_type in valid_formats:
-                    report_video = ReportVideo.objects.create(
-                        report=report,
-                        video=video
-                    )
-                    print(f"Created report video: {report_video}")
+                    try:
+                        report_video = ReportVideo.objects.create(
+                            report=report,
+                            video=video
+                        )
+                        print(f"Created report video: {report_video}")
+                    except Exception as e:
+                        print(f"Error creating report video: {e}")
+                        import traceback
+                        print(traceback.format_exc())
                 else:
                     print(f"Invalid video format: {video.content_type}")
             

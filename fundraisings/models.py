@@ -420,13 +420,15 @@ class Report(models.Model):
     def __str__(self):
         return f"Report for {self.fundraising.title}"
 
+    @staticmethod
     def report_image_path(instance, filename):
-        # Create a unique path for each report image
-        return f'reports/{instance.fundraising.id}/{uuid.uuid4()}/{filename}'
+        # Access fundraising through the report relationship
+        return f'reports/{instance.report.fundraising.id}/{uuid.uuid4()}/{filename}'
     
+    @staticmethod
     def report_video_path(instance, filename):
-        # Create a unique path for each report video
-        return f'reports/{instance.fundraising.id}/videos/{uuid.uuid4()}/{filename}'
+        # Access fundraising through the report relationship
+        return f'reports/{instance.report.fundraising.id}/videos/{uuid.uuid4()}/{filename}'
 
 class ReportImage(models.Model):
     """Model for report images"""
