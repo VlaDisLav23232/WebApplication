@@ -36,6 +36,10 @@ ALLOWED_HOSTS = ['*']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Ensure media directories exist
+os.makedirs(MEDIA_ROOT, exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'avatars'), exist_ok=True)
+
 # Static files settings
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -74,6 +78,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'core.middleware.MediaFileMiddleware',  # Add this line for custom media handling
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

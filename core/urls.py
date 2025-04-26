@@ -23,6 +23,8 @@ from django.conf import settings   # Application settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns  # Static files serving
 from django.conf.urls.static import static
 from fundraisings.views import *
+from django.views.static import serve
+import os
 
 # Define URL patterns
 urlpatterns = [
@@ -61,6 +63,16 @@ if settings.DEBUG:
 
 # Serve static files using staticfiles_urlpatterns
 urlpatterns += staticfiles_urlpatterns()
+
+# Updated media file serving that works in both development and production
+urlpatterns += [
+    path('media/<path:path>', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+]
+
+# Ensure that the media directory exists
+os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
 
 # Simplify the media and static files configuration
 # This makes the URLs work regardless of DEBUG setting
