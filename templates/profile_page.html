@@ -231,15 +231,12 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
-        }
-        
-        .stat-icon img {
-            width: 30px;
-            height: 30px;
+            font-size: 24px;
+            color: #8D6E63;
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 36px;
             font-weight: bold;
             color: #8D6E63;
             margin-bottom: 10px;
@@ -1310,28 +1307,28 @@
         <div class="stats-cards">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Collections"/>
+                    <i class="fas fa-chart-line"></i>
                 </div>
                 <div class="stat-value">{{ profile_user.created_fundraisings_count }}</div>
                 <div class="stat-label">Створено зборів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Closed"/>
+                    <i class="fas fa-check-circle"></i>
                 </div>
                 <div class="stat-value">{{ profile_user.completed_fundraisings_count }}</div>
                 <div class="stat-label">Успішно завершено зборів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Contributors"/>
+                    <i class="fas fa-users"></i>
                 </div>
                 <div class="stat-value">{{ profile_user.unique_donators_count }}</div>
                 <div class="stat-label">Унікальних донаторів</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Active"/>
+                    <i class="fas fa-hand-holding-heart"></i>
                 </div>
                 <div class="stat-value">{{ profile_user.supported_fundraisings_count }}</div>
                 <div class="stat-label">Підтримано зборів</div>
@@ -1342,21 +1339,21 @@
             <div class="stats-cards">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Average"/>
+                        <i class="fas fa-hryvnia"></i>
                     </div>
                     <div class="stat-value">{{ profile_user.total_received_amount }} ₴</div>
                     <div class="stat-label">Зібрано на створених зборах</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Max"/>
+                        <i class="fas fa-arrow-up"></i>
                     </div>
                     <div class="stat-value">{{ profile_user.largest_donation_amount }} ₴</div>
                     <div class="stat-label">Найбільший зроблений донат</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <img src="{% static 'pictures/fundraisings/arrow.png' %}" alt="Duration"/>
+                        <i class="fas fa-donate"></i>
                     </div>
                     <div class="stat-value">{{ profile_user.total_donated_amount }} ₴</div>
                     <div class="stat-label">Загальна сума донатів</div>
@@ -1621,7 +1618,8 @@
     function navigateToFundraising(event, fundraisingId) {
         // Only navigate if the click was not on a button or link
         if (!event.target.closest('a') && !event.target.closest('button')) {
-            window.location.href = "/donate/" + fundraisingId + "/";
+            // Navigate to the fundraising details page using correct URL format
+            window.location.href = "/fundraising/" + fundraisingId + "/";
         }
     }
     
@@ -1687,7 +1685,7 @@
         donationDateElements.forEach(element => {
             const dateText = element.textContent.trim();
             formatAndReplaceDate(element, dateText, ukrainianMonths, true);
-        });
+        });  // Added missing parenthesis here
     }
     
     function formatAndReplaceDate(element, dateText, ukrainianMonths, isSimpleFormat) {

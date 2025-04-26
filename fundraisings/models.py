@@ -109,6 +109,20 @@ class Fundraising(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        
+        if is_new:
+            # Update creator's statistics when a new fundraising is created
+            try:
+                # Import here to avoid circular imports
+                from authentication.views import update_user_statistics
+                update_user_statistics(self.creator)
+            except (ImportError, Exception) as e:
+                print(f"Error updating user statistics: {e}")
+                pass
 
 class Donation(models.Model):
     fundraising = models.ForeignKey(Fundraising, on_delete=models.CASCADE, related_name='donations')
@@ -429,6 +443,23 @@ class Report(models.Model):
     def report_video_path(instance, filename):
         # Access fundraising through the report relationship
         return f'reports/{instance.report.fundraising.id}/videos/{uuid.uuid4()}/{filename}'
+        
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        
+        # If this is a new report, update the fundraising status and update statistics
+        if is_new:
+            # Set fundraising as completed
+            self.fundraising.status = 'completed'
+            self.fundraising.save()
+            
+            # Update user statistics for the fundraising creator
+            try:
+                from authentication.views import update_user_statistics
+                update_user_statistics(self.fundraising.creator)
+            except (ImportError, Exception) as e:
+                print(f"Error updating user statistics: {e}")
 
 class ReportImage(models.Model):
     """Model for report images"""

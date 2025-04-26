@@ -461,6 +461,11 @@
                 padding: 40px 60px;
             }
             
+            .card {
+                height: auto;
+                min-height: 420px;
+            }
+            
             .banner-title {
                 font-size: 80px;
             }
@@ -488,6 +493,15 @@
             .filter-row {
                 flex-direction: column;
             }
+
+            .card-title {
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .card-image {
+                height: 160px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -507,11 +521,20 @@
             .cards-container {
                 grid-template-columns: 1fr;
                 padding: 30px 40px;
+                gap: 25px;
             }
             
             .filter-container {
                 margin: 30px 40px 10px 40px;
                 padding: 15px;
+            }
+            
+            .card {
+                min-height: 400px;
+            }
+            
+            .card-image {
+                height: 180px;
             }
         }
         
@@ -546,6 +569,51 @@
             
             .filter-buttons {
                 flex-direction: column;
+            }
+            
+            .card {
+                min-height: 380px;
+            }
+            
+            .fundraising-value {
+                font-size: 16px;
+            }
+            
+            .card-date {
+                font-size: 13px;
+            }
+            
+            .progress-percentage {
+                font-size: 13px;
+            }
+            
+            .card-content {
+                padding: 12px 15px;
+            }
+        }
+
+        /* Fix font sizes on very small screens */
+        @media (max-width: 380px) {
+            .card-title {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .fundraising-value {
+                font-size: 14px;
+            }
+            
+            .fundraising-label {
+                font-size: 11px;
+            }
+            
+            .card-date {
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                padding: 8px 0;
+                font-size: 13px;
             }
         }
 
@@ -835,7 +903,8 @@
         function navigateToFundraising(event, fundraisingId) {
             // Only navigate if the click was not on a button or link
             if (!event.target.closest('a') && !event.target.closest('button')) {
-                window.location.href = "/donate/" + fundraisingId + "/";
+                // Navigate to the fundraising details page using correct URL format
+                window.location.href = "/fundraising/" + fundraisingId + "/";
             }
         }
     </script>

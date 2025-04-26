@@ -34,7 +34,8 @@
     function navigateToFundraising(event, fundraisingId) {
         // Only navigate if the click was not on a button or link
         if (!event.target.closest('a') && !event.target.closest('button')) {
-            window.location.href = "/donate/" + fundraisingId + "/";
+            // Navigate to the fundraising details page using correct URL format
+            window.location.href = "/fundraising/" + fundraisingId + "/";
         }
     }
 </script>

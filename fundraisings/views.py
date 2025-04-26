@@ -48,6 +48,12 @@ def create_fundraising(request):
                 link_for_money=link_for_money,
             )
             
+            # Explicitly update user statistics after creating fundraising
+            update_user_statistics(request.user)
+            
+            # Check for achievements
+            Achievement.check_achievements(request.user)
+            
             messages.success(request, 'Збір успішно створено!')
             return redirect('donate', pk=fundraising.pk)
             
@@ -177,6 +183,12 @@ def create_report(request, fundraising_id=None):
             # Close the fundraising
             report_fundraising.status = 'completed'
             report_fundraising.save()
+            
+            # Update user statistics to reflect completed fundraising
+            update_user_statistics(report_fundraising.creator)
+            
+            # Check for achievements related to completed fundraisings
+            Achievement.check_achievements(report_fundraising.creator)
             
             messages.success(request, 'Звіт успішно створено! Збір було закрито.')
             return redirect('donate', pk=report_fundraising.pk)
