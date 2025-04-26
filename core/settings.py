@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ecr(bu-4bz!15=(vc#txrl9)y@tu0z^(ggik1yuzdlzv#if8z@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set DEBUG to True during development, change to False for production
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -80,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'authentication.middleware.AuthenticationMiddleware',  # Add custom authentication middleware
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -111,6 +112,13 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
 }
+
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.sqlite3',
+#          'NAME': BASE_DIR / 'db.sqlite3',
+#      }
+#  }
 
 
 # Password validation

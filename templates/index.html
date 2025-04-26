@@ -422,7 +422,7 @@
             max-width: 80%;
         }
 
-        /* About Us Section */
+        /* About Us Section - Modified */
         .about-section {
             background-color: white;
             padding: 60px 0;
@@ -440,24 +440,29 @@
         .about-content {
             flex: 1;
             padding-right: 40px;
+            max-width: 600px;
         }
 
+        /* Updated About Images Styles for 4 images in a more compact layout */
         .about-images {
-            flex: 1;
-            display: flex;
-            gap: 20px;
+            flex: 0 0 40%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 15px;
+            max-width: 450px;
         }
 
         .about-image {
-            width: 45%;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(93, 64, 55, 0.2);
+            aspect-ratio: 1;
         }
 
         .about-image img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
@@ -492,7 +497,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Footer Styles */
+        /* Footer styles from profile_page.html */
         .footer {
             background-color: #5D4037;
             color: white;
@@ -599,15 +604,18 @@
             .about-container {
                 flex-direction: column;
                 gap: 30px;
+                align-items: center;
             }
             
             .about-content {
                 padding-right: 0;
+                max-width: 100%;
+                text-align: center;
             }
             
             .about-images {
+                max-width: 500px;
                 width: 100%;
-                justify-content: center;
             }
         }
         
@@ -656,6 +664,21 @@
             
             .about-text {
                 font-size: 15px;
+            }
+            
+            .about-images {
+                grid-gap: 10px;
+                max-width: 400px;
+            }
+            
+            /* Footer responsive styles */
+            .footer {
+                flex-direction: column;
+                padding: 30px 20px;
+            }
+            
+            .footer-column {
+                margin-bottom: 20px;
             }
         }
         
@@ -712,6 +735,11 @@
                 height: 360px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             }
+            
+            .about-images {
+                grid-gap: 8px;
+                max-width: 350px;
+            }
         }
         
         @media (max-width: 400px) {
@@ -762,6 +790,11 @@
             .create-card-subtext {
                 font-size: 12px;
                 max-width: 95%;
+            }
+            
+            .about-images {
+                grid-gap: 6px;
+                max-width: 280px;
             }
         }
     </style>
@@ -814,7 +847,7 @@
         </div>
     </div>
 
-    <!-- About Us Section -->
+    <!-- About Us Section - Layout adjusted -->
     <div class="about-section">
         <div class="about-container">
             <div class="about-content">
@@ -825,10 +858,16 @@
             </div>
             <div class="about-images">
                 <div class="about-image">
-                    <img src="{% static 'pictures/profile_page/porosh.jpg' %}" alt="About Us Image 1">
+                    <img src="{% static 'pictures/about_us/vlad.jpg' %}" alt="About Us Image 1">
                 </div>
                 <div class="about-image">
-                    <img src="{% static 'pictures/profile_page/porosh.jpg' %}" alt="About Us Image 2">
+                    <img src="{% static 'pictures/about_us/marko.jpg' %}" alt="About Us Image 2">
+                </div>
+                <div class="about-image">
+                    <img src="{% static 'pictures/about_us/max1.jpg' %}" alt="About Us Image 3">
+                </div>
+                <div class="about-image">
+                    <img src="{% static 'pictures/about_us/max2.jpg' %}" alt="About Us Image 4">
                 </div>
             </div>
         </div>
