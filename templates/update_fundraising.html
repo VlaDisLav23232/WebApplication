@@ -645,7 +645,7 @@
                     {% if fundraising.main_image %}
                     <div class="current-image">
                         <img src="{{ fundraising.main_image.url }}" alt="Поточне головне зображення" class="thumbnail"
-                             onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';">
+                             onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}'; console.log('Fundraising image load failed, using default');">
                         <p>Поточне зображення</p>
                     </div>
                     {% endif %}
@@ -847,6 +847,21 @@
                 }
                 
                 // Let the form submit normally if validation passes
+            });
+
+            // Add global error handling for all images
+            document.querySelectorAll('img').forEach(img => {
+                if (!img.hasAttribute('onerror')) {
+                    img.onerror = function() {
+                        this.onerror = null; // Prevent infinite loops
+                        if (this.classList.contains('thumbnail') || this.src.includes('fundraising')) {
+                            this.src = "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                        } else {
+                            this.src = "{% static 'pictures/profile_page/default.png' %}";
+                        }
+                        console.log('Image load error, using default for:', this.src);
+                    };
+                }
             });
         });
     </script>

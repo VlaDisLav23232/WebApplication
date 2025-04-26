@@ -1314,7 +1314,7 @@
             <!-- Вміст вкладки "Мета збору" -->
             <div class="tab-content active" id="goal">
                 <img class="fundraising-image" src="{{ fundraising.main_image.url }}" alt="Головне зображення" 
-                     onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';">
+                     onerror="this.onerror=null; this.src='{% static 'pictures/fundraisings/default_image.jpg' %}';"/>
                 <div class="fundraising-description">
                     <p>{{ fundraising.description }}</p>
                 </div>
@@ -1525,7 +1525,8 @@
         <div class="cards-container">
             {% for fundraising in other_fundraisings %}
                 <div class="card{% if forloop.counter > 3 %} hidden-card{% endif %}" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
-                    <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
+                    <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
+                         onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                         {% if fundraising.primary_category %}
                         <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                             {{ fundraising.primary_category.name }}
@@ -1738,6 +1739,36 @@
                             console.log("Couldn't parse report date:", datePart);
                         }
                     }
+                }
+            });
+            
+            // Handle all image errors globally
+            document.querySelectorAll('img').forEach(img => {
+                img.onerror = function() {
+                    // Different fallback based on image type/class
+                    if (this.classList.contains('profile-pic') || this.src.includes('avatars')) {
+                        this.src = "{% static 'pictures/profile_page/default.png' %}";
+                    } else if (this.parentElement.classList.contains('fundraising-image') || 
+                               this.parentElement.classList.contains('card-image') || 
+                               this.src.includes('fundraisings')) {
+                        this.src = "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                    }
+                    // Remove onerror to prevent loops
+                    this.onerror = null;
+                };
+            });
+            
+            // Handle background images for card elements
+            document.querySelectorAll('.card-image').forEach(cardImg => {
+                if (cardImg.style.backgroundImage) {
+                    const img = new Image();
+                    img.onerror = function() {
+                        cardImg.style.backgroundImage = "url({% static 'pictures/fundraisings/default_image.jpg' %})";
+                    };
+                    
+                    // Extract the URL from the background-image style
+                    let url = cardImg.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+                    img.src = url;
                 }
             });
         });

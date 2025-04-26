@@ -623,8 +623,8 @@
     <div class="cards-container">
         {% for fundraising in fundraisings %}
         <div class="card" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
-            <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
-                 onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
+            <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');"
+                 data-default-image="{% static 'pictures/fundraisings/default_image.jpg' %}">
                 {% if fundraising.primary_category %}
                 <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
                     {{ fundraising.primary_category.name }}
@@ -729,6 +729,9 @@
                 // Прокручуємо до контейнера фільтрів
                 document.getElementById('filter-section').scrollIntoView();
             }
+
+            // Handle all card background images
+            handleCardImages();
         });
         
         // Function to format dates to Ukrainian format
@@ -774,6 +777,38 @@
                     }
                 }
             });
+        }
+        
+        function handleCardImages() {
+            document.querySelectorAll('.card-image').forEach(cardImage => {
+                if (cardImage.style.backgroundImage) {
+                    const url = cardImage.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+                    const defaultImage = cardImage.getAttribute('data-default-image') || "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                    
+                    // Create a test image to check if the background image loads
+                    const testImage = new Image();
+                    testImage.onerror = function() {
+                        console.log('Failed to load image:', url);
+                        cardImage.style.backgroundImage = `url('${defaultImage}')`;
+                    };
+                    testImage.src = url;
+                } else {
+                    const defaultImage = cardImage.getAttribute('data-default-image') || "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                    cardImage.style.backgroundImage = `url('${defaultImage}')`;
+                }
+            });
+            
+            // Also add a CSS fallback for all images
+            const style = document.createElement('style');
+            style.textContent = `
+                .card-image {
+                    background-color: #e0e0e0;
+                    background-image: url('{% static "pictures/fundraisings/default_image.jpg" %}');
+                    background-size: cover;
+                    background-position: center;
+                }
+            `;
+            document.head.appendChild(style);
         }
         
         // Function to reset filters

@@ -821,6 +821,35 @@
                 // Прокручуємо до контейнера фільтрів
                 document.getElementById('filter-section').scrollIntoView();
             }
+            
+            // Handle background images for all card elements
+            document.querySelectorAll('.card-image').forEach(function(element) {
+                if (element.style.backgroundImage) {
+                    const img = new Image();
+                    const imgUrl = element.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+                    
+                    img.onerror = function() {
+                        console.log('Background image failed to load, using default:', imgUrl);
+                        element.style.backgroundImage = "url('{% static 'pictures/fundraisings/default_image.jpg' %}')";
+                    };
+                    
+                    img.src = imgUrl;
+                } else {
+                    element.style.backgroundImage = "url('{% static 'pictures/fundraisings/default_image.jpg' %}')";
+                }
+            });
+            
+            // Add fallback styling for card images
+            document.head.insertAdjacentHTML('beforeend', `
+                <style>
+                    .card-image {
+                        background-color: #e0e0e0;
+                    }
+                    .card-image.error-loading {
+                        background-image: url('{% static "pictures/fundraisings/default_image.jpg" %}') !important;
+                    }
+                </style>
+            `);
         });
         
         // Function to format dates to Ukrainian format

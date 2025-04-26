@@ -384,7 +384,8 @@
                 <div class="form-group">
                     <div class="avatar-section">
                         {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview" id="avatarPreview" onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}';">
+                            <img src="{{ user.avatar.url }}" alt="Avatar Preview" class="avatar-preview" id="avatarPreview" 
+                                 onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}'; console.log('Avatar load failed, using default');">
                         {% else %}
                             <img src="{% static 'pictures/profile_page/default.png' %}" alt="Default Avatar" class="avatar-preview" id="avatarPreview">
                         {% endif %}
@@ -656,6 +657,30 @@
             }
         `;
         document.head.appendChild(styleElement);
+
+        // Add error handler for all images
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle image loading errors globally
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    // Don't handle images that already have onerror attributes
+                    if (!this.hasAttribute('data-error-handled')) {
+                        this.setAttribute('data-error-handled', 'true');
+                        
+                        // If it's an avatar/profile image
+                        if (this.classList.contains('avatar-preview') || 
+                            this.src.includes('avatar') || 
+                            this.parentElement.classList.contains('profile-pic')) {
+                            this.src = "{% static 'pictures/profile_page/default.png' %}";
+                        }
+                        // For other images, use a generic default
+                        else {
+                            this.src = "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                        }
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>

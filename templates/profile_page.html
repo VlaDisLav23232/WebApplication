@@ -967,7 +967,8 @@
             <div class="profile-main-content">
                 <div class="profile-avatar-large">
                     {% if profile_user.avatar %}
-                        <img src="{{ profile_user.avatar.url }}" alt="Фото профілю {{ profile_user.username }}" onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}';" />
+                        <img src="{{ profile_user.avatar.url }}" alt="Фото профілю {{ profile_user.username }}" 
+                             onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}'; console.log('Profile avatar load failed');" />
                     {% else %}
                         <img src="{% static 'pictures/profile_page/default.png' %}" alt="Фото профілю"/>
                     {% endif %}
@@ -1626,6 +1627,33 @@
     
     document.addEventListener('DOMContentLoaded', function() {
         formatDatesToUkrainian();
+
+        // Add comprehensive image error handling for all images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                // Handle different image types with appropriate defaults
+                if (this.src.includes('avatar') || this.parentElement.classList.contains('profile-avatar-large') || 
+                    this.parentElement.classList.contains('profile-pic')) {
+                    this.src = "{% static 'pictures/profile_page/default.png' %}";
+                } else if (this.src.includes('fundraising') || this.parentElement.classList.contains('card-image')) {
+                    this.src = "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                }
+                this.onerror = null; // Prevent loops
+            });
+        });
+        
+        // Handle background images for cards
+        document.querySelectorAll('.card-image').forEach(element => {
+            if (element.style.backgroundImage) {
+                const testImg = new Image();
+                const imgUrl = element.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+                
+                testImg.onerror = function() {
+                    element.style.backgroundImage = "url('{% static 'pictures/fundraisings/default_image.jpg' %}')";
+                };
+                testImg.src = imgUrl;
+            }
+        });
     });
     
     function formatDatesToUkrainian() {

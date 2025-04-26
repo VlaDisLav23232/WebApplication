@@ -233,7 +233,8 @@
             <a href="{% url 'profile_page' %}">
                 <div class="profile-pic">
                     {% if user.avatar %}
-                        <img src="{{ user.avatar.url }}" alt="Profile" onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}';" />
+                        <img src="{{ user.avatar.url }}" alt="Profile" 
+                             onerror="this.onerror=null; this.src='{% static 'pictures/profile_page/default.png' %}'; console.log('Avatar load error, using default');" />
                     {% else %}
                         <img src="{% static 'pictures/profile_page/default.png' %}" alt="Profile">
                     {% endif %}
@@ -296,5 +297,15 @@
                 }
             });
         }
+
+        // Add global image error handling
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                if (this.src.includes('avatar') || this.parentElement.classList.contains('profile-pic')) {
+                    this.src = "{% static 'pictures/profile_page/default.png' %}";
+                }
+                this.onerror = null; // Prevent infinite loops
+            });
+        });
     });
 </script>
