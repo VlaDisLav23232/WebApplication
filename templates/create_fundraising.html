@@ -663,8 +663,8 @@
                     <!-- Radio buttons for single category selection with name attribute properly set-->
                     <div class="category-options">
                         {% for category in categories %}
-                        <div class="category-option" data-category-id="{{ category.id }}">
-                            <input type="radio" name="primary_category" value="{{ category.id }}" id="category-{{ category.id }}" class="category-radio" required>
+                        <div class="category-option" data-category-id="{{ category.id }}" onclick="selectCategory(this, {{ category.id }})">
+                            <input type="radio" name="primary_category" value="{{ category.id }}" id="category-{{ category.id }}" class="category-radio" required style="margin-right: 10px;">
                             <label for="category-{{ category.id }}" class="category-label">{{ category.name }}</label>
                         </div>
                         {% endfor %}
@@ -741,7 +741,7 @@
 
             <div class="form-actions">
                 <button type="button" class="form-btn btn-secondary" onclick="window.history.back()">СКАСУВАТИ</button>
-                <button type="submit" class="form-btn btn-primary">СТВОРИТИ ЗБІР</button>
+                <button type="submit" class="form-btn btn-primary" id="submit-button">СТВОРИТИ ЗБІР</button>
             </div>
         </form>
     </div>
@@ -776,6 +776,11 @@
             // Handle file upload click
             const mainImageUpload = document.getElementById('main-image-upload');
             const mainImageInput = document.getElementById('main-image');
+
+            // Set minimum date for end_date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('end-date').min = tomorrow.toISOString().split('T')[0];
 
             mainImageUpload.addEventListener('click', function() {
                 mainImageInput.click();
@@ -849,90 +854,50 @@
                 }
             });
             
-            // Improved category selection with radio buttons
-            const categoryOptions = document.querySelectorAll('.category-option');
-            const categoryPreview = document.getElementById('selected-category-preview');
-            const categoryNameSpan = document.getElementById('selected-category-name');
-            
-            categoryOptions.forEach(option => {
-                option.addEventListener('click', function(e) {
-                    // Clear all selections first
-                    categoryOptions.forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Select this option
-                    const radio = this.querySelector('.category-radio');
-                    radio.checked = true;
-                    this.classList.add('selected');
-                    
-                    // Update preview
-                    const categoryName = this.querySelector('.category-label').textContent;
-                    categoryNameSpan.textContent = categoryName;
-                    categoryPreview.style.display = 'inline-block';
-                    
-                    // Set the background color based on the category's color if available
-                    const categoryId = this.getAttribute('data-category-id');
-                    // You could fetch color from backend or set it in data attribute
-                    
-                    // Form validation - ensure category is selected
-                    document.querySelectorAll('[name="primary_category"]').forEach(input => {
-                        input.setCustomValidity('');
-                    });
-                });
-                
-                // Handle radio button click
-                const radio = option.querySelector('.category-radio');
-                radio.addEventListener('change', function() {
-                    categoryOptions.forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    if (this.checked) {
-                        option.classList.add('selected');
-                        const categoryName = option.querySelector('.category-label').textContent;
-                        categoryNameSpan.textContent = categoryName;
-                        categoryPreview.style.display = 'inline-block';
-                    }
-                });
-            });
-            
-            // Ensure form validation includes category selection
+            // Form validation on submit
             document.querySelector('form').addEventListener('submit', function(e) {
-                const categorySelected = document.querySelector('[name="primary_category"]:checked');
+                const categorySelected = document.querySelector('input[name="primary_category"]:checked');
                 if (!categorySelected) {
                     e.preventDefault();
-                    document.querySelectorAll('[name="primary_category"]')[0].setCustomValidity('Будь ласка, оберіть категорію');
-                    document.querySelectorAll('[name="primary_category"]')[0].reportValidity();
+                    alert('Будь ласка, оберіть категорію збору');
+                    return false;
                 }
-            });
-            
-            // Dynamic progress stepper
-            const sections = document.querySelectorAll('.form-section');
-            const steps = document.querySelectorAll('.step');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const sectionId = entry.target.id;
-                        const stepNumber = parseInt(sectionId.replace('section', ''));
-                        
-                        // Update active step
-                        steps.forEach((step, index) => {
-                            if (index + 1 <= stepNumber) {
-                                step.classList.add('active');
-                            } else {
-                                step.classList.remove('active');
-                            }
-                        });
-                    }
-                });
-            }, { threshold: 0.3 });
-            
-            sections.forEach(section => {
-                observer.observe(section);
+                
+                // Validate other required fields
+                const title = document.getElementById('fundraising-title').value;
+                const description = document.getElementById('fundraising-description').value;
+                const neededSum = document.getElementById('needed_sum').value;
+                const endDate = document.getElementById('end-date').value;
+                const mainImage = document.getElementById('main-image').files[0];
+                const confirmTerms = document.getElementById('confirm-terms').checked;
+                
+                if (!title || !description || !neededSum || !endDate || !mainImage || !confirmTerms) {
+                    e.preventDefault();
+                    alert('Будь ласка, заповніть всі обов\'язкові поля');
+                    return false;
+                }
+                
+                return true;
             });
         });
+        
+        // Function to handle category selection
+        function selectCategory(element, categoryId) {
+            // Clear all selections first
+            document.querySelectorAll('.category-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Select this option
+            element.classList.add('selected');
+            const radio = document.getElementById('category-' + categoryId);
+            radio.checked = true;
+            
+            // Update preview
+            const categoryName = element.querySelector('.category-label').textContent;
+            document.getElementById('selected-category-name').textContent = categoryName;
+            document.getElementById('selected-category-preview').style.display = 'inline-block';
+        }
     </script>
 </body>
 </html>

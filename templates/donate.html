@@ -1524,7 +1524,7 @@
         <h2 class="section-title">Інші збори</h2>
         <div class="cards-container">
             {% for fundraising in other_fundraisings %}
-                <div class="card{% if forloop.counter > 3 %} hidden-card{% endif %}">
+                <div class="card{% if forloop.counter > 3 %} hidden-card{% endif %}" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
                     <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');">
                         {% if fundraising.primary_category %}
                         <div class="category-tag card-category" style="background-color: {{ fundraising.primary_category.color_code|default:'#5D4037' }};">
@@ -1840,6 +1840,13 @@
                 }
             } catch (e) {
                 console.log("Couldn't parse date:", dateText);
+            }
+        }
+
+        function navigateToFundraising(event, fundraisingId) {
+            // Only navigate if the click was not on a button or link
+            if (!event.target.closest('a') && !event.target.closest('button')) {
+                window.location.href = "/donate/" + fundraisingId + "/";
             }
         }
     </script>

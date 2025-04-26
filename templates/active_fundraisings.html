@@ -7,7 +7,7 @@
     <div class="fundraisings-grid">
         {% if fundraisings %}
             {% for fundraising in fundraisings %}
-                <div class="fundraising-card">
+                <div class="fundraising-card" onclick="navigateToFundraising(event, {{ fundraising.id }})" style="cursor: pointer;">
                     {% if fundraising.image %}
                         <img src="{{ fundraising.image.url }}" alt="{{ fundraising.title }}" class="fundraising-image">
                     {% endif %}
@@ -29,4 +29,13 @@
         {% endif %}
     </div>
 </div>
+
+<script>
+    function navigateToFundraising(event, fundraisingId) {
+        // Only navigate if the click was not on a button or link
+        if (!event.target.closest('a') && !event.target.closest('button')) {
+            window.location.href = "/donate/" + fundraisingId + "/";
+        }
+    }
+</script>
 {% endblock %}

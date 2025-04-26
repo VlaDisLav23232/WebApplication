@@ -622,7 +622,7 @@
 
     <div class="cards-container">
         {% for fundraising in fundraisings %}
-        <div class="card">
+        <div class="card" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
             <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
                  onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                 {% if fundraising.primary_category %}
@@ -794,6 +794,13 @@
             if (window.location.hash === '#filter-section') {
                 document.getElementById('filter-section').scrollIntoView();
                 localStorage.removeItem('shouldScroll');
+            }
+        }
+        
+        function navigateToFundraising(event, fundraisingId) {
+            // Only navigate if the click was not on a button or link
+            if (!event.target.closest('a') && !event.target.closest('button')) {
+                window.location.href = "/donate/" + fundraisingId + "/";
             }
         }
     </script>

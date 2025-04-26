@@ -1059,7 +1059,7 @@
             {% if user_fundraisings %}
                 {% for fundraising in user_fundraisings|slice:":3" %}
                     {% if not fundraising.has_report %}
-                    <div class="card">
+                    <div class="card" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
                         <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
                              onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                             {% if fundraising.primary_category %}
@@ -1131,7 +1131,7 @@
             <div class="collections">
                 {% for fundraising in user_fundraisings %}
                     {% if not fundraising.has_report and forloop.counter > 3 %}
-                    <div class="card">
+                    <div class="card" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
                         <div class="card-image" style="background-image: url('{{ fundraising.main_image.url }}');" 
                              onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                             {% if fundraising.primary_category %}
@@ -1193,7 +1193,7 @@
         <div class="collections">
             {% if closed_fundraisings %}
                 {% for fundraising in closed_fundraisings|slice:":3" %}
-                <div class="card">
+                <div class="card" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
                     <div class="card-image closed" style="background-image: url('{{ fundraising.main_image.url }}');" 
                          onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                         {% if fundraising.primary_category %}
@@ -1248,7 +1248,7 @@
             <div class="collections">
                 {% for fundraising in closed_fundraisings %}
                     {% if forloop.counter > 3 %}
-                    <div class="card">
+                    <div class="card" onclick="navigateToFundraising(event, {{ fundraising.pk }})" style="cursor: pointer;">
                         <div class="card-image closed" style="background-image: url('{{ fundraising.main_image.url }}');" 
                              onerror="this.style.backgroundImage='url({% static 'pictures/fundraisings/default_image.jpg' %})';">
                             {% if fundraising.primary_category %}
@@ -1614,6 +1614,13 @@
         event.preventDefault();
         if (confirm("Ви дійсно бажаєте вийти зі свого облікового запису?")) {
             window.location.href = "{% url 'logout' %}";
+        }
+    }
+    
+    function navigateToFundraising(event, fundraisingId) {
+        // Only navigate if the click was not on a button or link
+        if (!event.target.closest('a') && !event.target.closest('button')) {
+            window.location.href = "/donate/" + fundraisingId + "/";
         }
     }
     
