@@ -109,7 +109,30 @@ def register_page(request):
                 counter += 1
                 
             user.set_password(form.cleaned_data['password'])
+            
+            # Make sure the default avatar path is accessible
+            # This ensures media files will work correctly for all users
+            from django.conf import settings
+            import os
+            
+            # Check if default avatar file exists and is accessible
+            default_avatar_path = os.path.join(settings.MEDIA_ROOT, 'avatars', 'default.png')
+            if not os.path.exists(default_avatar_path):
+                # If default avatar directory doesn't exist, create it
+                os.makedirs(os.path.dirname(default_avatar_path), exist_ok=True)
+                
+                # Copy default avatar from static files if available
+                try:
+                    from shutil import copyfile
+                    static_default = os.path.join(settings.STATIC_ROOT, 'pictures', 'profile_page', 'default_avatar.png')
+                    if os.path.exists(static_default):
+                        copyfile(static_default, default_avatar_path)
+                except Exception as e:
+                    print(f"Could not copy default avatar: {e}")
+            
+            # Save the user after making sure media paths are sorted
             user.save()
+            
             login(request, user)
             return redirect('/home/')
     else:

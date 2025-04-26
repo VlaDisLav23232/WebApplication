@@ -848,35 +848,48 @@
         }
         
         function handleCardImages() {
+            const defaultImagePath = "{% static 'pictures/fundraisings/default_image.jpg' %}";
+            
             document.querySelectorAll('.card-image').forEach(cardImage => {
                 if (cardImage.style.backgroundImage) {
-                    const url = cardImage.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
-                    const defaultImage = cardImage.getAttribute('data-default-image') || "{% static 'pictures/fundraisings/default_image.jpg' %}";
+                    // Extract the image URL from the style
+                    let url = cardImage.style.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
                     
-                    // Create a test image to check if the background image loads
-                    const testImage = new Image();
-                    testImage.onerror = function() {
-                        console.log('Failed to load image:', url);
-                        cardImage.style.backgroundImage = `url('${defaultImage}')`;
+                    // Fix common URL issues
+                    if (url.startsWith('/media/') && !url.startsWith('http')) {
+                        // Convert relative media URLs to absolute URLs
+                        url = window.location.origin + url;
+                    }
+                    
+                    // Try loading the image with the fixed URL
+                    const img = new Image();
+                    img.onload = function() {
+                        cardImage.style.backgroundImage = `url('${url}')`;
                     };
-                    testImage.src = url;
+                    img.onerror = function() {
+                        // If the image fails to load, try with a different URL format
+                        if (url.includes('/media/')) {
+                            // Some servers might have different media URL configurations
+                            const alternativeUrl = url.replace('/media/', '/static/media/');
+                            const altImg = new Image();
+                            altImg.onload = function() {
+                                cardImage.style.backgroundImage = `url('${alternativeUrl}')`;
+                            };
+                            altImg.onerror = function() {
+                                // If all else fails, use the default image
+                                cardImage.style.backgroundImage = `url('${defaultImagePath}')`;
+                            };
+                            altImg.src = alternativeUrl;
+                        } else {
+                            // Use default image as fallback
+                            cardImage.style.backgroundImage = `url('${defaultImagePath}')`;
+                        }
+                    };
+                    img.src = url;
                 } else {
-                    const defaultImage = cardImage.getAttribute('data-default-image') || "{% static 'pictures/fundraisings/default_image.jpg' %}";
-                    cardImage.style.backgroundImage = `url('${defaultImage}')`;
+                    cardImage.style.backgroundImage = `url('${defaultImagePath}')`;
                 }
             });
-            
-            // Also add a CSS fallback for all images
-            const style = document.createElement('style');
-            style.textContent = `
-                .card-image {
-                    background-color: #e0e0e0;
-                    background-image: url('{% static "pictures/fundraisings/default_image.jpg" %}');
-                    background-size: cover;
-                    background-position: center;
-                }
-            `;
-            document.head.appendChild(style);
         }
         
         // Function to reset filters
